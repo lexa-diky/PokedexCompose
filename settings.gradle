@@ -1,0 +1,23 @@
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        jcenter() // Warning: this repository is going to shut down soon
+    }
+}
+rootProject.name = "pokedex"
+
+include ':app'
+
+include ':core'
+include ':core-network'
+
+include ':uikit'
+include ':navigation'
+
+include ':domain-pokemon'
+
+include ':feature-pokemon-list'
+include ':feature-news-list'
+include ':feature-move-list'

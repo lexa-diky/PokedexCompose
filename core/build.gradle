@@ -1,0 +1,25 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+apply from: '../buildSrc/android-library.groovy'
+androidLibraryModule(false)
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+
+    // Arrow
+    api "io.arrow-kt:arrow-core:0.13.2"
+
+    // DI
+    api 'org.kodein.di:kodein-di-framework-compose:7.5.0'
+
+    // Coroutines
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1'
+
+    // Kotlin Date Tine
+    api "org.jetbrains.kotlinx:kotlinx-datetime:0.2.1"
+}
