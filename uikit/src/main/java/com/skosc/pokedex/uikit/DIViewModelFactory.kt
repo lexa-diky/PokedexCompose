@@ -19,3 +19,14 @@ inline fun <reified VM : ViewModel> diViewModel(): VM {
 
     return provider.get(VM::class.java)
 }
+
+@Composable
+inline fun <reified VM : ViewModel> localViewModel(crossinline provider: () -> VM): VM {
+    val storeOwner = LocalViewModelStoreOwner.current!!
+
+    val provider = ViewModelProvider(storeOwner, object : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T = provider() as T
+    })
+
+    return provider.get(VM::class.java)
+}

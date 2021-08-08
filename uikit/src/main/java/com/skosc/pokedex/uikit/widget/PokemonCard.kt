@@ -11,9 +11,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberImagePainter
 import com.skosc.pokedex.uikit.R
@@ -27,7 +29,7 @@ import com.skosc.pokedex.uikit.titlecase
 fun PokemonCard(
     name: String,
     id: Int,
-    types: List<String>,
+    tags: List<String>,
     imageUrl: String,
     backgroundColor: Color,
     modifier: Modifier = Modifier
@@ -43,13 +45,17 @@ fun PokemonCard(
 
         val (nameRef, idRef, typeListRef, pokeballRef) = createRefs()
 
+        this.createHorizontalChain(nameRef, idRef, chainStyle = ChainStyle.SpreadInside)
+
         Text(
             text = name.titlecase(),
             color = Color.White,
             fontWeight = FontWeight.Bold,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
             modifier = Modifier.constrainAs(nameRef) {
                 top.linkTo(parent.top)
-                start.linkTo(parent.start)
+                start.linkTo(parent.start, margin = 16.dp)
             }
         )
 
@@ -57,7 +63,7 @@ fun PokemonCard(
             text = "#00$id",
             color = Color.Black.copy(alpha = 0.2f),
             modifier = Modifier.constrainAs(idRef) {
-                start.linkTo(nameRef.end, margin = 24.dp)
+                start.linkTo(nameRef.end, margin = 16.dp)
                 end.linkTo(parent.end)
                 top.linkTo(parent.top)
             }
@@ -69,9 +75,9 @@ fun PokemonCard(
                 top.linkTo(nameRef.bottom, margin = 4.dp)
             }
         ) {
-            types.forEachIndexed { idx, type ->
+            tags.forEachIndexed { idx, type ->
                 TypeChip(type)
-                if (types.lastIndex != id) {
+                if (tags.lastIndex != id) {
                     Spacer(modifier = Modifier.size(4.dp))
                 }
             }
@@ -126,11 +132,13 @@ private fun TypeChip(type: String) {
 @Composable
 @Preview(showBackground = true)
 private fun PokemonCardPreview() {
-    PokemonCard(
-        name = "Pikachu",
-        id = 0,
-        types = listOf("Grass", "Fire"),
-        backgroundColor = PokeColor.Teal,
-        imageUrl = ""
-    )
+    Box(modifier = Modifier.width(200.dp)) {
+        PokemonCard(
+            name = "MegaSuperPikachu",
+            id = 0,
+            tags = listOf("Grass", "Fire"),
+            backgroundColor = PokeColor.Teal,
+            imageUrl = ""
+        )
+    }
 }

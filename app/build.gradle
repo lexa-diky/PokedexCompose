@@ -58,6 +58,7 @@ dependencies {
     implementation project(":domain-pokemon")
     implementation project(":feature-pokemon-list")
     implementation project(":feature-news-list")
+    implementation project(":feature-item-list")
     implementation project(path: ':feature-move-list')
 
     // AndroidX

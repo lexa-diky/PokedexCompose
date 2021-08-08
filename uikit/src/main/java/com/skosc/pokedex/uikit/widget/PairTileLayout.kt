@@ -3,12 +3,14 @@ package com.skosc.pokedex.uikit.widget
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemsIndexed
+import org.intellij.lang.annotations.JdkConstants
 
-fun <T: Any> LazyListScope.PairTileLayout(
+fun <T : Any> LazyListScope.PairTileLayout(
     items: LazyPagingItems<T>,
     content: @Composable (Int, T) -> Unit
 ) {
@@ -20,13 +22,24 @@ fun <T: Any> LazyListScope.PairTileLayout(
             } else {
                 if (prev != null) {
                     Row(
-                        modifier = Modifier.padding(horizontal = 32.dp)
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        modifier = Modifier
+                            .padding(horizontal = 32.dp)
+                            .fillMaxSize()
                     ) {
-                        Box(modifier = Modifier.weight(1f)) {
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .wrapContentSize()
+                        ) {
                             content(idx, prev!!)
                         }
-                        Spacer(modifier = Modifier.size(8.dp))
-                        Box(modifier = Modifier.weight(1f)) {
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .wrapContentSize()
+                        ) {
                             content(idx, item!!)
                         }
                     }

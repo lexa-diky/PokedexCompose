@@ -1,18 +1,15 @@
 package com.skosc.pokedex.usecase
 
-import com.skosc.pokedex.R
+import com.skosc.pokedex.*
 import com.skosc.pokedex.enity.domain.MenuEntry
 import com.skosc.pokedex.enity.ui.BoxCard
 import com.skosc.pokedex.enity.ui.BoxCardList
 import com.skosc.pokedex.repository.ColorPalletResolver
 import com.skosc.pokedex.repository.MenuRepository
 import com.skosc.pokedex.core.resources.ResourceResolver
-import com.skosc.pokedex.moveList
 import com.skosc.pokedex.navigation.Destination
 import com.skosc.pokedex.navigation.ParcelableVoid
 import com.skosc.pokedex.navigation.root.RootDestination
-import com.skosc.pokedex.pokemonList
-import com.skosc.pokedex.root
 
 class LoadBoxCards(
     private val menuRepository: MenuRepository,
@@ -37,6 +34,7 @@ class LoadBoxCards(
     private fun MenuEntry.getDestination(): Destination<ParcelableVoid> = when(this) {
         MenuEntry.Pokemon -> root.pokemonList
         MenuEntry.Moves -> root.moveList
+        MenuEntry.Items -> root.itemList
         else -> RootDestination
     }
 

@@ -5,11 +5,10 @@ import com.skosc.pokedex.core.network.entity.activeNetwork
 import com.skosc.pokedex.core.network.heavyCache
 import com.skosc.pokedex.core.util.await
 import com.skosc.pokedex.core.util.unwrapToString
+import com.skosc.pokedex.domain.pokemon.entity.PokemonItem
 import com.skosc.pokedex.domain.pokemon.entity.PokemonMove
-import com.skosc.pokedex.domain.pokemon.entity.network.PokeApiPokemon
-import com.skosc.pokedex.domain.pokemon.entity.network.PokeApiPokemonMove
-import com.skosc.pokedex.domain.pokemon.entity.network.PokeApiPokemonSpec
-import com.skosc.pokedex.domain.pokemon.entity.network.PokeApiPokemonSpecies
+import com.skosc.pokedex.domain.pokemon.entity.network.*
+import com.skosc.pokedex.domain.pokemon.mapper.PokeApiItemMapper
 import com.skosc.pokedex.domain.pokemon.mapper.PokeApiMoveMapper
 import io.ktor.client.*
 import io.ktor.client.request.*
@@ -44,6 +43,12 @@ class PokeApiService(private val client: HttpClient) {
 
     suspend fun getMove(id: Int): PokeApiPokemonMove {
         return getMove(Either.Left(id))
+    }
+
+    suspend fun getItem(id: Int): PokeApiItem {
+        return client.get("https://pokeapi.co/api/v2/item/$id") {
+            heavyCache()
+        }
     }
 
     private suspend fun getMove(idOrName: Either<Int, String>): PokeApiPokemonMove {
