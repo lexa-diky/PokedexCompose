@@ -14,7 +14,7 @@ object PokeApiPokemonMapper {
            name = spec.pokemon.name,
            imageUrl = spec.pokemon.sprites.frontDefault,
            types = spec.pokemon.types.map { it.type.name },
-           color = PokemonColor(spec.species.color.name),
+           color = PokemonColor(spec.species.color?.name ?: "red"),
            moves = spec.moves.activeMap { PokeApiMoveMapper.map(it) }
        )
     }

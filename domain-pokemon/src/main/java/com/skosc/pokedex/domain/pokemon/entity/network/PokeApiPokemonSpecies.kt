@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PokeApiPokemonSpecies(
     @SerialName("color")
-    val color: Color
+    val color: Color? = Color("red")
 ) {
 
     @Serializable

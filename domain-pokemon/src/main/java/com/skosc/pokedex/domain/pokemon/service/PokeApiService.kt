@@ -5,6 +5,7 @@ import com.skosc.pokedex.core.network.entity.activeNetwork
 import com.skosc.pokedex.core.network.heavyCache
 import com.skosc.pokedex.core.util.await
 import com.skosc.pokedex.core.util.unwrapToString
+import com.skosc.pokedex.domain.pokemon.entity.Pokemon
 import com.skosc.pokedex.domain.pokemon.entity.PokemonItem
 import com.skosc.pokedex.domain.pokemon.entity.PokemonMove
 import com.skosc.pokedex.domain.pokemon.entity.network.*
