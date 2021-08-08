@@ -9,26 +9,34 @@ import com.skosc.pokedex.domain.pokemon.mapper.PokeApiMoveMapper
 import com.skosc.pokedex.domain.pokemon.mapper.PokeApiPokemonMapper
 import com.skosc.pokedex.domain.pokemon.paging.PokeApiDataSource
 import com.skosc.pokedex.domain.pokemon.service.PokeApiService
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 
 class PokemonRepository(private val service: PokeApiService) {
 
     fun getPokemonPagingSource(): PagingSource<Int, Pokemon> {
         return PokeApiDataSource({ offset, limit ->
-            offsetRange(offset, limit).map { service.getPokemon(it) }
+            asyncLoad(offset, limit) { service.getPokemon(it) }
+                .sortedBy { it.pokemon.id }
         }, PokeApiPokemonMapper::map)
     }
 
     fun getMovePagingSource(): PagingSource<Int, PokemonMove> {
         return PokeApiDataSource({ offset, limit ->
-            offsetRange(offset, limit).map { service.getMove(it) }
+            asyncLoad(offset, limit) { service.getMove(it) }
+                .sortedBy { it.id }
         }, PokeApiMoveMapper::map)
     }
 
     fun getItemPagingSource(): PagingSource<Int, PokemonItem> {
         return PokeApiDataSource({ offset, limit ->
-            offsetRange(offset, limit).map { service.getItem(it) }
+            asyncLoad(offset, limit) { service.getItem(it) }
+                .sortedBy { it.id }
         }, PokeApiItemMapper::map)
     }
 
-    private fun offsetRange(offset: Int, limit: Int) = (offset..(limit + offset))
+    private suspend fun <T> asyncLoad(offset: Int, limit: Int, request: suspend (Int) -> T) = coroutineScope {
+        (offset..(limit + offset)).map { idx -> async { request(idx) } }.awaitAll()
+    }
 }
