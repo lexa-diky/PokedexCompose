@@ -13,12 +13,12 @@ class PokemonMoveDataSource(private val pokeApiService: PokeApiService) : Paging
         return try {
             val nextPage = params.key ?: 1
 
-            val pokemon = (nextPage..params.loadSize)
+            val moves = (nextPage..params.loadSize)
                 .map { pokeApiService.getMove(it + 1) }
                 .map { PokeApiMoveMapper.map(it) }
 
             LoadResult.Page(
-                data = pokemon,
+                data = moves,
                 prevKey = if (nextPage == 1) null else nextPage - 1,
                 nextKey = params.loadSize + nextPage + 1
             )

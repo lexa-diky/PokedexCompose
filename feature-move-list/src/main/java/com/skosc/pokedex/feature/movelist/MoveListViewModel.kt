@@ -29,6 +29,6 @@ class MoveListViewModel(private val source: PokemonMoveDataSource) : ViewModel()
 
     private fun createPager(): Pager<Int, PokemonMove> = Pager(
         pagingSourceFactory = { source },
-        config = PagingConfig(5)
+        config = PagingConfig(15)
     )
 }

@@ -1,6 +1,7 @@
 package com.skosc.pokedex.domain.pokemon.service
 
 import arrow.core.Either
+import com.skosc.pokedex.core.network.entity.activeNetwork
 import com.skosc.pokedex.core.network.heavyCache
 import com.skosc.pokedex.core.util.await
 import com.skosc.pokedex.core.util.unwrapToString
@@ -35,7 +36,7 @@ class PokeApiService(private val client: HttpClient) {
         val (pokemon, species) = await(pokemonDef, speciesDef)
 
         val moves = pokemon.moves.map {
-            getMove(Either.Right(it.move.name))
+            activeNetwork { getMove(Either.Right(it.move.name)) }
         }
 
         PokeApiPokemonSpec(pokemon, species, moves)
