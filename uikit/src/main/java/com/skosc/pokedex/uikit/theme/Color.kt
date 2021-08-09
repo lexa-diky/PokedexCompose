@@ -22,6 +22,8 @@ object PokeColor {
     val Green = Color(0xFF6AD30D)
     val Magenta = Color(0xFF9E0DD3)
 
+    val Default = Teal
+
     val all = listOf(Purple, Teal, Yellow, Red, Green, Magenta)
 
     fun fromName(name: String): Color = when(name) {

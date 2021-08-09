@@ -3,6 +3,7 @@ package com.skosc.pokedex.feature.core.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -11,6 +12,7 @@ class GenericListPageViewModel<T : Any>(private val spec: GenericListSpec<T>) : 
     fun items(): Flow<PagingData<BaseListItem>> {
         return createPager().flow
             .cachedIn(viewModelScope)
+            .flowOn(Dispatchers.IO)
             .map { data ->
                 data.map { item -> spec.itemMapper(item) }
             }
@@ -18,6 +20,6 @@ class GenericListPageViewModel<T : Any>(private val spec: GenericListSpec<T>) : 
 
     private fun createPager(): Pager<Int, T> = Pager(
         pagingSourceFactory = { spec.source },
-        config = PagingConfig(pageSize = 10)
+        config = PagingConfig(pageSize = 10, enablePlaceholders = true)
     )
 }

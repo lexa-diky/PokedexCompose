@@ -9,7 +9,7 @@ import org.kodein.di.instance
 
 @Composable
 inline fun <reified T: Any> rememberGenericListSpec(
-    noinline mapper: (T) -> BaseListItem
+    mapper: BaseListItemMapper<T>
 ): GenericListSpec<T> {
     val source = LocalDI.current.di.direct.instance<PagingSource<Int, T>>()
     val spec = remember {
