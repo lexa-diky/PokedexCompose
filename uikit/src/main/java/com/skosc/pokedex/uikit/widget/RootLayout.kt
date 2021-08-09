@@ -6,6 +6,8 @@ import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,7 +22,7 @@ import com.skosc.pokedex.uikit.animation.animateRotation
 private const val HEADER_KEY = "__ROOT_LAYOUT_HEADER_KEY"
 
 @Composable
-fun RootLayout(header: String, items: LazyListScope.() -> Unit) {
+fun RootLayout(header: String, items: LazyListScope.(LazyListState) -> Unit) {
     val rotation = animateRotation(OvershootInterpolator())
 
     Box {
@@ -35,14 +37,15 @@ fun RootLayout(header: String, items: LazyListScope.() -> Unit) {
                 .rotate(rotation)
         )
 
+        val lazyState = rememberLazyListState()
         LazyColumn(
+            state = lazyState,
             modifier = Modifier.fillMaxSize()
-
         ) {
             item(HEADER_KEY) {
                 PokeHeader(header, modifier = Modifier.padding(start = 32.dp, top = 32.dp))
             }
-            items()
+            items(lazyState)
         }
     }
 }

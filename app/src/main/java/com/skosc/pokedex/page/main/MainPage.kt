@@ -39,11 +39,9 @@ import com.skosc.pokedex.newsList
 import com.skosc.pokedex.root
 import com.skosc.pokedex.uikit.image.CropTransparentTransformation
 import com.skosc.pokedex.uikit.theme.BackgroundAccent
-import com.skosc.pokedex.uikit.widget.PokeLink
-import com.skosc.pokedex.uikit.widget.RootLayout
-import com.skosc.pokedex.uikit.widget.SubPokeHeader
 import com.skosc.pokedex.uikit.diViewModel
-import com.skosc.pokedex.uikit.widget.NewsBlock
+import com.skosc.pokedex.uikit.theme.CardShape
+import com.skosc.pokedex.uikit.widget.*
 import com.skosc.pokedex.widget.*
 
 fun NavGraphBuilder.MainPage() = composable(root.path) {
@@ -94,9 +92,14 @@ private fun CardBox(cards: BoxCardList, onQueryUpdated: (String) -> Unit) {
     ) {
         Column(
             modifier = Modifier
-                .background(BackgroundAccent, RoundedCornerShape(16.dp))
+                .background(BackgroundAccent, CardShape)
         ) {
-            SearchField(onQueryUpdated)
+            SearchField(
+                onQueryUpdated = onQueryUpdated,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, top = 32.dp)
+            )
             Spacer(modifier = Modifier.size(16.dp))
             MenuCards(cards)
         }
@@ -182,30 +185,6 @@ private fun SmallMenuCards(cards: List<BoxCard.Menu>) {
             }
         }
     }
-}
-
-@Composable
-private fun SearchField(onQueryUpdated: (String) -> Unit) {
-    val query = remember { mutableStateOf("") }
-
-    TextField(
-        value = query.value,
-        onValueChange = { newQuery ->
-            query.value = newQuery
-            onQueryUpdated(newQuery)
-        },
-        shape = RoundedCornerShape(16.dp),
-        placeholder = { Text("Query") },
-        leadingIcon = { Image(Icons.Default.Search, "search icon") },
-        colors = TextFieldDefaults.textFieldColors(
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, top = 32.dp)
-    )
 }
 
 @Composable

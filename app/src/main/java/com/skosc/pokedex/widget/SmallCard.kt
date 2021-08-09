@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,8 +27,8 @@ fun SmallCard(
 ) {
     ConstraintLayout(
         modifier = modifier
-            .background(color, CardShape)
-            .clip(CardShape)
+            .background(color, PokeCardShape)
+            .clip(PokeCardShape)
             .clickable { onClick() }
     ) {
         val (textConst, topIconConst) = createRefs()

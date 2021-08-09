@@ -19,7 +19,7 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberImagePainter
 import com.skosc.pokedex.uikit.R
-import com.skosc.pokedex.uikit.theme.CardShape
+import com.skosc.pokedex.uikit.theme.PokeCardShape
 import com.skosc.pokedex.uikit.theme.ChipShape
 import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.theme.ShadowWhite
@@ -37,8 +37,8 @@ fun PokemonCard(
 
     ConstraintLayout(
         modifier = modifier
-            .background(backgroundColor, CardShape)
-            .clip(CardShape)
+            .background(backgroundColor, PokeCardShape)
+            .clip(PokeCardShape)
             .padding(16.dp)
             .defaultMinSize(minHeight = 100.dp)
     ) {

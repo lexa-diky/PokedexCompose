@@ -11,5 +11,6 @@ val Shapes = Shapes(
     large = RoundedCornerShape(0.dp)
 )
 
-val CardShape = RoundedCornerShape(30.dp)
+val CardShape = RoundedCornerShape(12.dp)
+val PokeCardShape = RoundedCornerShape(30.dp)
 val ChipShape = RoundedCornerShape(12.dp)
