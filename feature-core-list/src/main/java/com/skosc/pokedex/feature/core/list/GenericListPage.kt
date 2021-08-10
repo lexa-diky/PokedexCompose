@@ -1,6 +1,5 @@
 package com.skosc.pokedex.feature.core.list
 
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -22,6 +21,8 @@ import com.skosc.pokedex.uikit.widget.RootLayout
 import com.skosc.pokedex.uikit.widget.SearchField
 import kotlinx.coroutines.flow.flowOf
 
+private const val SEARCH_ITEM_KEY = "__SEARCH_ITEM_KEY"
+
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
 fun <T : Any> GenericItemListPage(header: String, spec: GenericListSpec<T>) {
@@ -32,27 +33,21 @@ fun <T : Any> GenericItemListPage(header: String, spec: GenericListSpec<T>) {
     val placeholderItems = remember { makePlaceholders() }.collectAsLazyPagingItems()
 
     RootLayout(header = header) { state ->
+
         item { Spacer(modifier = Modifier.size(16.dp)) }
-
-        stickyHeader {
-            SearchBlock(state.isScrollInProgress)
-        }
-
-
 
         PairTileLayout(
             displayItems = pagingItems,
             placeholderItems = placeholderItems,
             displayContent = { idx, item ->
-                val color by animateColorAsState(item.color)
-
                 PokemonCard(
                     name = item.name,
-                    id = item.order,
+                    order = item.order,
                     tags = item.tags,
-                    backgroundColor = color,
+                    backgroundColor = item.color,
                     imageUrl = item.image,
                     modifier = Modifier.width(200.dp)
+                        .height(125.dp)
                 )
             },
         )

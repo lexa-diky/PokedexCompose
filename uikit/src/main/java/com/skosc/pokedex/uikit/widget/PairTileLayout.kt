@@ -1,5 +1,6 @@
 package com.skosc.pokedex.uikit.widget
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
@@ -53,12 +54,11 @@ private fun <T : Any> LazyListScope.DisplayState(
                             content(idx, item!!)
                         }
                     }
-
                     prev = null
+
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
             }
-
-            Spacer(modifier = Modifier.size(4.dp))
         }
     }
 }
