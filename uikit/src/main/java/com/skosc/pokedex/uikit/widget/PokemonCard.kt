@@ -68,15 +68,11 @@ fun PokemonCard(
                 }
         )
 
-        Text(
-            text = formatAsOrder(order),
-            color = Color.Black.copy(alpha = 0.2f),
-            modifier = Modifier.constrainAs(idRef) {
-                start.linkTo(nameRef.end, margin = 16.dp)
-                end.linkTo(parent.end)
-                top.linkTo(parent.top)
-            }
-        )
+        OrderText(order = order, modifier = Modifier.constrainAs(idRef) {
+            start.linkTo(nameRef.end, margin = 16.dp)
+            end.linkTo(parent.end)
+            top.linkTo(parent.top)
+        })
 
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -125,28 +121,7 @@ fun PokemonCard(
     }
 }
 
-private fun formatAsOrder(order: Int): String {
-    return when {
-        order < 10 -> "#00$order"
-        order < 100 -> "#0$order"
-        else -> "#$order"
-    }
-}
 
-@Composable
-private fun TypeChip(type: String) {
-    Text(
-        text = type,
-        fontSize = 11.sp,
-        color = Color.White,
-        modifier = Modifier
-            .background(
-                Color.White.copy(alpha = 0.2f),
-                ChipShape
-            )
-            .padding(8.dp)
-    )
-}
 
 @Composable
 @Preview(showBackground = true)

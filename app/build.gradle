@@ -59,7 +59,8 @@ dependencies {
     implementation project(":feature-pokemon-list")
     implementation project(":feature-news-list")
     implementation project(":feature-item-list")
-    implementation project(path: ':feature-move-list')
+    implementation project(':feature-move-list')
+    implementation project(':feature-core-details')
 
     // AndroidX
     implementation 'androidx.core:core-ktx:1.6.0'

@@ -27,7 +27,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
-import coil.transform.RoundedCornersTransformation
 import com.skosc.pokedex.enity.domain.SearchResultIcon
 import com.skosc.pokedex.enity.ui.BoxCard
 import com.skosc.pokedex.enity.ui.BoxCardList
@@ -38,9 +37,9 @@ import com.skosc.pokedex.navigation.navigate
 import com.skosc.pokedex.newsList
 import com.skosc.pokedex.root
 import com.skosc.pokedex.uikit.image.CropTransparentTransformation
-import com.skosc.pokedex.uikit.theme.BackgroundAccent
 import com.skosc.pokedex.uikit.diViewModel
 import com.skosc.pokedex.uikit.theme.CardShape
+import com.skosc.pokedex.uikit.theme.UIColor
 import com.skosc.pokedex.uikit.widget.*
 import com.skosc.pokedex.widget.*
 
@@ -92,7 +91,7 @@ private fun CardBox(cards: BoxCardList, onQueryUpdated: (String) -> Unit) {
     ) {
         Column(
             modifier = Modifier
-                .background(BackgroundAccent, CardShape)
+                .background(UIColor.BackgroundAccent, CardShape)
         ) {
             SearchField(
                 onQueryUpdated = onQueryUpdated,

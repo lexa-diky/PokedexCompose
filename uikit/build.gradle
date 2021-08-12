@@ -16,6 +16,8 @@ dependencies {
     // Design
     api 'com.google.android.material:material:1.4.0'
     implementation 'androidx.palette:palette:1.0.0'
+    api "com.google.accompanist:accompanist-pager:0.16.1"
+    api "com.google.accompanist:accompanist-pager-indicators:0.16.1"
 
     // Compose
     api "androidx.compose.ui:ui:$compose_version"

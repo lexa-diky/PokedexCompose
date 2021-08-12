@@ -19,8 +19,10 @@ include ':navigation'
 include ':domain-pokemon'
 
 include ':feature-core-list'
+include ':feature-core-details'
 
 include ':feature-pokemon-list'
+include ':feature-pokemon-details'
 include ':feature-news-list'
 include ':feature-move-list'
 include ':feature-item-list'

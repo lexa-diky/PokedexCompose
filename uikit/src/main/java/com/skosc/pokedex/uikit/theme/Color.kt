@@ -7,11 +7,15 @@ val Purple200 = Color(0xFFBB86FC)
 val Purple500 = Color(0xFF6200EE)
 val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
-val Background = Color(0xFFF7F7F7)
-val BackgroundAccent = Color(0xFFFFFFFF)
 val Link = Color(0xFF4286F4)
 val ShadowWhite = Color.White.copy(alpha = 0.2f)
-val ShadowWitheBackground = Color(0xFFEBEBEB)
+val ShadowWitheBackground = Color(0x41FFFFFF)
+
+object UIColor {
+    val Background = Color(0xFFF7F7F7)
+    val BackgroundAccent = Color(0xFFFFFFFF)
+    val ShadowBlack = Color.Black.copy(alpha = 0.4f)
+}
 
 object PokeColor {
 
@@ -21,10 +25,11 @@ object PokeColor {
     val Red = Color(0xFFF73535)
     val Green = Color(0xFF6AD30D)
     val Magenta = Color(0xFF9E0DD3)
+    val SoftSwampGreen = Color(0xFF43DBB0)
 
     val Default = Teal
 
-    val all = listOf(Purple, Teal, Yellow, Red, Green, Magenta)
+    val all = listOf(Purple, Teal, Yellow, Red, Green, Magenta, SoftSwampGreen)
 
     fun fromName(name: String): Color = when(name) {
         "red" -> Red

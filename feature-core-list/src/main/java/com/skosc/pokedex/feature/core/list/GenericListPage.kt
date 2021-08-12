@@ -13,8 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.skosc.pokedex.uikit.localViewModel
-import com.skosc.pokedex.uikit.theme.BackgroundAccent
 import com.skosc.pokedex.uikit.theme.CardShape
+import com.skosc.pokedex.uikit.theme.UIColor
 import com.skosc.pokedex.uikit.widget.PairTileLayout
 import com.skosc.pokedex.uikit.widget.PokemonCard
 import com.skosc.pokedex.uikit.widget.RootLayout
@@ -73,7 +73,7 @@ private fun SearchBlock(isScrollInProgress: Boolean) {
     ) {
         Column(
             modifier = Modifier
-                .background(BackgroundAccent, CardShape)
+                .background(UIColor.BackgroundAccent, CardShape)
         ) {
             SearchField(
                 onQueryUpdated = {},

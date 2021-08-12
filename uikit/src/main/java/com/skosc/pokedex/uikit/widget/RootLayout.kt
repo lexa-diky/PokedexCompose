@@ -23,18 +23,14 @@ private const val HEADER_KEY = "__ROOT_LAYOUT_HEADER_KEY"
 
 @Composable
 fun RootLayout(header: String, items: LazyListScope.(LazyListState) -> Unit) {
-    val rotation = animateRotation(OvershootInterpolator())
 
     Box {
-        Image(
-            painter = painterResource(id = R.drawable.ic_pokeball_filed),
-            contentDescription = null,
-            colorFilter = ColorFilter.tint(ShadowWitheBackground),
+
+        RotatingPokeBall(
             modifier = Modifier
                 .size(200.dp, 200.dp)
                 .align(Alignment.TopEnd)
                 .offset(64.dp, (-64).dp)
-                .rotate(rotation)
         )
 
         val lazyState = rememberLazyListState()
