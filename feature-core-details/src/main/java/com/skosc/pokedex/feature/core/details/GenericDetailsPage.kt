@@ -3,6 +3,7 @@ package com.skosc.pokedex.feature.core.details
 import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
@@ -31,6 +32,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.skosc.pokedex.feature.core.details.entity.BaseDetailsItem
+import com.skosc.pokedex.feature.core.details.entity.DetailsHeaderItem
 import com.skosc.pokedex.feature.core.details.entity.DetailsPageItem
 import com.skosc.pokedex.feature.core.details.entity.TabRowItem
 import com.skosc.pokedex.uikit.image.CropTransparentTransformation
@@ -48,7 +50,7 @@ private val ITEM_CONTENT_SHEET = "__ITEM_CONTENT_SHEET"
 
 @Composable
 fun GenericDetailsPage(details: BaseDetailsItem) {
-    Box(modifier = Modifier.background(PokeColor.SoftSwampGreen)) {
+    Box(modifier = Modifier.background(PokeColor.SoftSwampGreen).fillMaxSize()) {
         val lazyListState = rememberLazyListState()
 
         LazyColumn(
@@ -57,22 +59,28 @@ fun GenericDetailsPage(details: BaseDetailsItem) {
         ) {
             item(ITEM_HEADER) {
                 DetailsHeader(
-                    order = 1,
-                    title = "Bulbazaur",
-                    tags = listOf("Grass", "Normal"),
+                    order = details.header.order,
+                    title = details.header.title,
+                    tags = details.header.tags,
                     modifier = Modifier.padding(top = 32.dp, start = 32.dp, end = 32.dp)
                 )
             }
 
-            val pokeballOffset = lazyListState.layoutInfo.visibleItemsInfo.firstOrNull { it.key == ITEM_POKE_BALL }?.offset ?: -10000000
-            val sheetOffset = lazyListState.layoutInfo.visibleItemsInfo.firstOrNull { it.key == ITEM_CONTENT_SHEET }?.offset ?: -10000000
-            val headerVisibilityInfo = lazyListState.layoutInfo.visibleItemsInfo.firstOrNull { it.key == ITEM_HEADER }
+            val pokeballOffset =
+                lazyListState.layoutInfo.visibleItemsInfo.firstOrNull { it.key == ITEM_POKE_BALL }?.offset
+                    ?: -10000000
+            val sheetOffset =
+                lazyListState.layoutInfo.visibleItemsInfo.firstOrNull { it.key == ITEM_CONTENT_SHEET }?.offset
+                    ?: -10000000
+            val headerVisibilityInfo =
+                lazyListState.layoutInfo.visibleItemsInfo.firstOrNull { it.key == ITEM_HEADER }
 
             item(ITEM_POKE_BALL) {
                 val relation = abs(pokeballOffset).toFloat() / abs(sheetOffset).toFloat()
                 val alpha by animateFloatAsState(if (relation > 0.3f && headerVisibilityInfo == null) 0f else 1f)
 
                 PokemonImage(
+                    imageUrl = details.header.image,
                     modifier = Modifier
                         .size(200.dp)
                         .zIndex(1f)
@@ -81,7 +89,12 @@ fun GenericDetailsPage(details: BaseDetailsItem) {
             }
 
             item(ITEM_CONTENT_SHEET) {
-                BottomSheetImpl(details.pages, modifier = Modifier.height(6000.dp).offset(y = -52.dp))
+                BottomSheetImpl(
+                    details.pages,
+                    modifier = Modifier
+                        .offset(y = -52.dp)
+                        .animateContentSize()
+                )
             }
         }
     }
@@ -89,7 +102,7 @@ fun GenericDetailsPage(details: BaseDetailsItem) {
 
 @Composable
 @OptIn(ExperimentalAnimationApi::class)
-private fun PokemonImage(modifier: Modifier = Modifier) {
+private fun PokemonImage(imageUrl: String, modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
@@ -100,7 +113,7 @@ private fun PokemonImage(modifier: Modifier = Modifier) {
         )
 
         Image(
-            painter = rememberImagePainter(data = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png") {
+            painter = rememberImagePainter(data = imageUrl) {
                 transformations(CropTransparentTransformation())
                 fadeIn()
             },
@@ -136,6 +149,10 @@ private fun DetailsHeader(
 @Composable
 @OptIn(ExperimentalPagerApi::class)
 private fun BottomSheetImpl(pages: List<DetailsPageItem>, modifier: Modifier = Modifier) {
+    if (pages.isEmpty()) {
+        return
+    }
+
     DetailsBottomSheet(modifier = modifier) {
         val titles = pages.map { it.title }
 
@@ -156,15 +173,16 @@ private fun BottomSheetImpl(pages: List<DetailsPageItem>, modifier: Modifier = M
                     .padding(start = 32.dp, end = 32.dp, top = 32.dp)
             )
 
-            HorizontalPager(state = pagerState) { page ->
-                Box(
+            HorizontalPager(
+                state = pagerState,
+                verticalAlignment = Alignment.Top
+            ) { page ->
+                Column(
                     modifier = Modifier
                         .padding(16.dp)
                         .fillMaxWidth()
-                        .fillMaxHeight()
-                        .background(Color.Magenta)
                 ) {
-                    Text(text = titles[page].title)
+                    pages[page].content()
                 }
             }
         }
@@ -233,23 +251,30 @@ private fun DetailsBottomSheet(modifier: Modifier = Modifier, content: @Composab
 
 @Composable
 @Preview(name = "Generics Details Page", showBackground = true, showSystemUi = true)
-private fun Preview_GenericDetailsPage() {
-    GenericDetailsPage(BaseDetailsItem(listOf(
-        DetailsPageItem(
-            title = TabRowItem("About"),
-            content = { Text("About Content") }
+fun Preview_GenericDetailsPage() {
+    GenericDetailsPage(BaseDetailsItem(
+        header = DetailsHeaderItem(
+            title = "Bulbasaur",
+            order = 1,
+            tags = listOf("Grass", "Normal"),
+            image = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
         ),
-        DetailsPageItem(
-            title = TabRowItem("Stats"),
-            content = { Text("Stats Content") }
-        ),
-        DetailsPageItem(
-            title = TabRowItem("Evolution"),
-            content = { Text("Evolution Content") }
-        ),
-        DetailsPageItem(
-            title = TabRowItem("Search"),
-            content = { Text("Search Content") }
-        ),
-    )))
+        pages = listOf(
+            DetailsPageItem(
+                title = TabRowItem("About"),
+                content = { Text("About Content") }
+            ),
+            DetailsPageItem(
+                title = TabRowItem("Stats"),
+                content = { Text("Stats Content") }
+            ),
+            DetailsPageItem(
+                title = TabRowItem("Evolution"),
+                content = { Text("Evolution Content") }
+            ),
+            DetailsPageItem(
+                title = TabRowItem("Search"),
+                content = { Text("Search Content") }
+            ),
+        )))
 }

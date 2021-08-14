@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PokeApiSprites(
+internal data class PokeApiSprites(
     @SerialName("default")
     val default: String
 )

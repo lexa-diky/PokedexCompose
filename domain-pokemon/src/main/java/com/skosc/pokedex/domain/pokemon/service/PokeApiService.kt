@@ -16,7 +16,7 @@ import io.ktor.client.request.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
-class PokeApiService(private val client: HttpClient) {
+internal class PokeApiService(private val client: HttpClient) {
 
     suspend fun getPokemon(id: Int): PokeApiPokemonSpec = coroutineScope {
 

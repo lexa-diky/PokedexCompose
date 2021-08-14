@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PokeApiPagedResponse<T>(
+internal data class PokeApiPagedResponse<T>(
     @SerialName("results")
     val results: List<T>
 )

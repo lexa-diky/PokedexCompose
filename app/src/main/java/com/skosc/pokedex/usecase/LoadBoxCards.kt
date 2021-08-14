@@ -8,7 +8,6 @@ import com.skosc.pokedex.repository.ColorPalletResolver
 import com.skosc.pokedex.repository.MenuRepository
 import com.skosc.pokedex.core.resources.ResourceResolver
 import com.skosc.pokedex.navigation.Destination
-import com.skosc.pokedex.navigation.ParcelableVoid
 import com.skosc.pokedex.navigation.root.RootDestination
 
 class LoadBoxCards(
@@ -31,7 +30,7 @@ class LoadBoxCards(
         )
     }
 
-    private fun MenuEntry.getDestination(): Destination<ParcelableVoid> = when(this) {
+    private fun MenuEntry.getDestination(): Destination = when(this) {
         MenuEntry.Pokemon -> root.pokemonList
         MenuEntry.Moves -> root.moveList
         MenuEntry.Items -> root.itemList

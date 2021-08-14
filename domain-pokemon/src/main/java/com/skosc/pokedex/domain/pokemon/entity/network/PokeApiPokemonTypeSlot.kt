@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PokeApiPokemonTypeSlot(
+internal data class PokeApiPokemonTypeSlot(
     @SerialName("slot")
     val slot: Int,
     @SerialName("type")

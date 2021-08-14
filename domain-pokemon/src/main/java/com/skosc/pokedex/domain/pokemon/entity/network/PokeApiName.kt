@@ -4,13 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PokeApiName(
-    val language: Language,
+internal data class PokeApiName(
+    val language: PokeApiLanguage,
     val name: String
-) {
-
-    @Serializable
-    data class Language(
-        @SerialName("name") val name: String
-    )
-}
+)

@@ -15,6 +15,8 @@ object UIColor {
     val Background = Color(0xFFF7F7F7)
     val BackgroundAccent = Color(0xFFFFFFFF)
     val ShadowBlack = Color.Black.copy(alpha = 0.4f)
+    val ShadowGray = Color.Black.copy(alpha = 0.1f)
+
 }
 
 object PokeColor {

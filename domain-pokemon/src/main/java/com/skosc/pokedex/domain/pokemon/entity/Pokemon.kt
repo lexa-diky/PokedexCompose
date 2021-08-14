@@ -8,5 +8,16 @@ data class Pokemon(
     val imageUrl: String,
     val types: List<String>,
     val color: PokemonColor,
-    val moves: List<ActiveRecord<PokemonMove>>
-)
+    val moves: List<ActiveRecord<PokemonMove>>,
+    val baseStats: List<PokemonStat>,
+    val catchRate: Int,
+    val flavorText: List<PokemonFlavorText>,
+    val habitat: ActiveRecord<PokemonHabitat>,
+    val generation: String
+) {
+
+    companion object {
+
+        const val MAX_CATCH_RATE = 100
+    }
+}

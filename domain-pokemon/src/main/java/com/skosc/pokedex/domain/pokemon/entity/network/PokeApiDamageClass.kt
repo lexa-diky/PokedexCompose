@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PokeApiDamageClass(
+internal data class PokeApiDamageClass(
     @SerialName("name")
     val name: String
 )

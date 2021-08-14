@@ -1,8 +1,10 @@
 package com.skosc.pokedex.feature.core.list
 
+import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,7 +27,11 @@ private const val SEARCH_ITEM_KEY = "__SEARCH_ITEM_KEY"
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
-fun <T : Any> GenericItemListPage(header: String, spec: GenericListSpec<T>) {
+fun <T : Any> GenericItemListPage(
+    header: String,
+    onItemSelected: (Int) -> Unit,
+    spec: GenericListSpec<T>
+) {
     val viewModel = localViewModel { GenericListPageViewModel(spec) }
     val items = remember { viewModel.items() }
 
@@ -35,6 +41,13 @@ fun <T : Any> GenericItemListPage(header: String, spec: GenericListSpec<T>) {
     RootLayout(header = header) { state ->
 
         item { Spacer(modifier = Modifier.size(16.dp)) }
+
+        stickyHeader(SEARCH_ITEM_KEY) {
+            SearchBlock(isScrollInProgress = state.isScrollInProgress)
+        }
+
+        Log.i("LSTATE", pagingItems.loadState.toString())
+
 
         PairTileLayout(
             displayItems = pagingItems,
@@ -46,8 +59,10 @@ fun <T : Any> GenericItemListPage(header: String, spec: GenericListSpec<T>) {
                     tags = item.tags,
                     backgroundColor = item.color,
                     imageUrl = item.image,
-                    modifier = Modifier.width(200.dp)
+                    modifier = Modifier
+                        .width(200.dp)
                         .height(125.dp)
+                        .clickable { onItemSelected(item.order) }
                 )
             },
         )
@@ -86,7 +101,11 @@ private fun SearchBlock(isScrollInProgress: Boolean) {
 }
 
 @Composable
-inline fun <reified T : Any> GenericItemListPage(header: String, mapper: BaseListItemMapper<T>) {
+inline fun <reified T : Any> GenericItemListPage(
+    header: String,
+    noinline onItemSelected: (Int) -> Unit = {},
+    mapper: BaseListItemMapper<T>,
+) {
     val spec = rememberGenericListSpec(mapper)
-    GenericItemListPage(header, spec)
+    GenericItemListPage(header, onItemSelected, spec)
 }

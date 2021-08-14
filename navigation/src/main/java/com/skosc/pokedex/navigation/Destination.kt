@@ -1,8 +1,8 @@
 package com.skosc.pokedex.navigation
 
-interface Destination<T: Any> {
+interface Destination {
 
     val path: String
 
-    val arguments: T
+    val requiredArguments: List<String> get() = emptyList()
 }

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PokeApiPokemon(
+internal data class PokeApiPokemon(
     @SerialName("id")
     val id: Int,
     @SerialName("name")
@@ -14,5 +14,7 @@ data class PokeApiPokemon(
     @SerialName("types")
     val types: List<PokeApiPokemonTypeSlot>,
     @SerialName("moves")
-    val moves: List<PokeApiPokemonInnerMove>
+    val moves: List<PokeApiPokemonInnerMove>,
+    @SerialName("stats")
+    val stats: List<PokeApiStat>
 )

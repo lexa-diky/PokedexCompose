@@ -3,8 +3,6 @@ package com.skosc.pokedex.enity.ui
 import androidx.compose.ui.graphics.Color
 import com.skosc.pokedex.enity.domain.SearchResultIcon
 import com.skosc.pokedex.navigation.Destination
-import com.skosc.pokedex.navigation.ParcelableVoid
-import com.skosc.pokedex.navigation.root.RootDestination
 import com.skosc.pokedex.pokemonList
 import com.skosc.pokedex.root
 import com.skosc.pokedex.uikit.theme.PokeColor
@@ -14,7 +12,7 @@ sealed class BoxCard {
     data class Menu(
         val title: String,
         val color: Color,
-        val destination: Destination<ParcelableVoid>
+        val destination: Destination
     ) : BoxCard() {
 
         companion object

@@ -30,3 +30,15 @@ inline fun <reified VM : ViewModel> localViewModel(crossinline provider: () -> V
 
     return provider.get(VM::class.java)
 }
+
+@Composable
+inline fun <reified VM : ViewModel, reified Arg: Any> diViewModel(arg: Arg): VM {
+    val di = LocalDI.current.direct
+    val storeOwner = LocalViewModelStoreOwner.current!!
+
+    val provider = ViewModelProvider(storeOwner, object : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T = di.instance<Arg, VM>(tag = null, arg = arg) as T
+    })
+
+    return provider.get(VM::class.java)
+}

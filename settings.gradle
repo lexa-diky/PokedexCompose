@@ -12,6 +12,7 @@ include ':app'
 
 include ':core'
 include ':core-network'
+include ':core-analytics'
 
 include ':uikit'
 include ':navigation'

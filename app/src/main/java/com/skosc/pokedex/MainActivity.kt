@@ -8,7 +8,10 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import com.skosc.pokedex.core.analytics.FirebaseAnalyticsController
+import com.skosc.pokedex.core.analytics.LocalAnalytics
 import com.skosc.pokedex.feature.core.details.GenericDetailsPage
+import com.skosc.pokedex.feature.core.details.Preview_GenericDetailsPage
 import com.skosc.pokedex.feature.core.details.entity.BaseDetailsItem
 import com.skosc.pokedex.feature.core.details.entity.DetailsPageItem
 import com.skosc.pokedex.feature.core.details.entity.TabRowItem
@@ -26,36 +29,16 @@ class MainActivity : ComponentActivity(), DIAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val analytics = FirebaseAnalyticsController(this)
+
         setContent {
-            CompositionLocalProvider(LocalDI provides di) {
+            CompositionLocalProvider(LocalDI provides di, LocalAnalytics provides analytics) {
                 PokedexTheme {
                     Surface(color = MaterialTheme.colors.background) {
-                        TestDetailsPage()
+                        RootPage()
                     }
                 }
             }
         }
     }
-}
-
-@Composable
-private fun TestDetailsPage() {
-    GenericDetailsPage(BaseDetailsItem(listOf(
-        DetailsPageItem(
-            title = TabRowItem("About"),
-            content = { Text("About Content") }
-        ),
-        DetailsPageItem(
-            title = TabRowItem("Stats"),
-            content = { Text("Stats Content") }
-        ),
-        DetailsPageItem(
-            title = TabRowItem("Evolution"),
-            content = { Text("Evolution Content") }
-        ),
-        DetailsPageItem(
-            title = TabRowItem("Search"),
-            content = { Text("Search Content") }
-        ),
-    )))
 }

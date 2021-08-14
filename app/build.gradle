@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.10'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -53,10 +54,12 @@ dependencies {
     // Project
     implementation project(":core")
     implementation project(":core-network")
+    implementation project(":core-analytics")
     implementation project(":uikit")
     implementation project(":navigation")
     implementation project(":domain-pokemon")
     implementation project(":feature-pokemon-list")
+    implementation project(":feature-pokemon-details")
     implementation project(":feature-news-list")
     implementation project(":feature-item-list")
     implementation project(':feature-move-list')

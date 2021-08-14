@@ -13,7 +13,12 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 
-class PokemonRepository(private val service: PokeApiService) {
+class PokemonRepository internal constructor(private val service: PokeApiService) {
+
+    suspend fun getPokemon(order: Int): Pokemon {
+        return service.getPokemon(order)
+            .let(PokeApiPokemonMapper::map)
+    }
 
     fun getPokemonPagingSource(): PagingSource<Int, Pokemon> {
         return PokeApiDataSource({ offset, limit ->

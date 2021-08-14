@@ -4,6 +4,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PokeApiMoveShort(
+internal data class PokeApiMoveShort(
     @SerialName("name") val name: String
 )
