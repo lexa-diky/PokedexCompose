@@ -10,7 +10,13 @@ import com.skosc.pokedex.di.ViewModelModule
 import com.skosc.pokedex.repository.ColorPalletResolver
 import com.skosc.pokedex.core.resources.ResourceResolver
 import com.skosc.pokedex.domain.pokemon.PokemonDomainModule
+import com.skosc.pokedex.domain.settings.SettingsDomainModule
+import com.skosc.pokedex.domain.settings.SettingsRepository
 import com.skosc.pokedex.feature.pokemondetails.PokemonDetailsModule
+import com.skosc.pokedex.feature.settings.SettingsFeatureModule
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.kodein.di.*
 
 class PokedexApplication : Application(), DIAware {
@@ -21,9 +27,11 @@ class PokedexApplication : Application(), DIAware {
 
         // Feature
         importOnce(PokemonDetailsModule)
+        importOnce(SettingsFeatureModule)
 
         // Domin
         importOnce(PokemonDomainModule)
+        importOnce(SettingsDomainModule)
 
         // App
         importOnce(ViewModelModule)

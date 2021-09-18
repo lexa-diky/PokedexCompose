@@ -13,11 +13,13 @@ include ':app'
 include ':core'
 include ':core-network'
 include ':core-analytics'
+include ':core-localization'
 
 include ':uikit'
 include ':navigation'
 
 include ':domain-pokemon'
+include ':domain-settings'
 
 include ':feature-core-list'
 include ':feature-core-details'
@@ -27,3 +29,4 @@ include ':feature-pokemon-details'
 include ':feature-news-list'
 include ':feature-move-list'
 include ':feature-item-list'
+include ':feature-settings'

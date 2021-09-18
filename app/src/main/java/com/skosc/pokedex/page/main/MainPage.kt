@@ -36,6 +36,7 @@ import com.skosc.pokedex.navigation.LocalNavController
 import com.skosc.pokedex.navigation.navigate
 import com.skosc.pokedex.newsList
 import com.skosc.pokedex.root
+import com.skosc.pokedex.settings
 import com.skosc.pokedex.uikit.image.CropTransparentTransformation
 import com.skosc.pokedex.uikit.diViewModel
 import com.skosc.pokedex.uikit.theme.CardShape
@@ -46,6 +47,7 @@ import com.skosc.pokedex.widget.*
 fun NavGraphBuilder.MainPage() = composable(root.path) {
     val cardBoxViewModel = diViewModel<CardBoxViewModel>()
     val newsBriefingViewModel = diViewModel<NewsBriefingViewModel>()
+    val navController = LocalNavController.current
 
     val cards by cardBoxViewModel.cards.collectAsState()
     val news by newsBriefingViewModel.news.collectAsState()
@@ -53,7 +55,8 @@ fun NavGraphBuilder.MainPage() = composable(root.path) {
     InnerMainPage(
         cards = cards,
         news = news,
-        onQueryUpdated = { cardBoxViewModel.onQueryUpdateUpdated(it) }
+        onQueryUpdated = { cardBoxViewModel.onQueryUpdateUpdated(it) },
+        onSettingsClicked = { navController.navigate(root.settings) }
     )
 }
 
@@ -62,7 +65,8 @@ fun NavGraphBuilder.MainPage() = composable(root.path) {
 private fun InnerMainPage(
     cards: BoxCardList,
     news: List<NewsBriefingEntry>,
-    onQueryUpdated: (String) -> Unit
+    onQueryUpdated: (String) -> Unit,
+    onSettingsClicked: () -> Unit
 ) {
     RootLayout("Pokédex") {
         item {
@@ -78,6 +82,9 @@ private fun InnerMainPage(
         }
         item {
             Spacer(modifier = Modifier.padding(16.dp))
+        }
+        item {
+            Basement(onSettingsClicked)
         }
     }
 }
@@ -227,8 +234,10 @@ private fun NewsHeader() {
 @Composable
 fun DefaultPreview() {
     CompositionLocalProvider(LocalNavController provides rememberNavController()) {
-        InnerMainPage(BoxCardList.Menu(BoxCard.Menu.sample), NewsBriefingEntry.sample) {
-
-        }
+        InnerMainPage(
+            BoxCardList.Menu(BoxCard.Menu.sample),
+            NewsBriefingEntry.sample,
+            onQueryUpdated = {},
+            onSettingsClicked = {})
     }
 }

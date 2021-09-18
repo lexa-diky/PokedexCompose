@@ -1,16 +1,13 @@
 package com.skosc.pokedex.domain.pokemon.service
 
 import arrow.core.Either
+import com.skosc.pokedex.core.entity.ActiveRecord
+import com.skosc.pokedex.core.entity.map
 import com.skosc.pokedex.core.network.entity.activeNetwork
 import com.skosc.pokedex.core.network.heavyCache
 import com.skosc.pokedex.core.util.await
 import com.skosc.pokedex.core.util.unwrapToString
-import com.skosc.pokedex.domain.pokemon.entity.Pokemon
-import com.skosc.pokedex.domain.pokemon.entity.PokemonItem
-import com.skosc.pokedex.domain.pokemon.entity.PokemonMove
 import com.skosc.pokedex.domain.pokemon.entity.network.*
-import com.skosc.pokedex.domain.pokemon.mapper.PokeApiItemMapper
-import com.skosc.pokedex.domain.pokemon.mapper.PokeApiMoveMapper
 import io.ktor.client.*
 import io.ktor.client.request.*
 import kotlinx.coroutines.async
@@ -35,11 +32,16 @@ internal class PokeApiService(private val client: HttpClient) {
 
         val (pokemon, species) = await(pokemonDef, speciesDef)
 
+        val evolutionChain = getEvolutionChainActiveRecord(species.evolutionChainRef.url).map { chain ->
+                chain.flatten()
+                    .map { prefab -> getPokemon(prefab.species.id) }
+            }
+
         val moves = pokemon.moves.map {
             activeNetwork { getMove(Either.Right(it.move.name)) }
         }
 
-        PokeApiPokemonSpec(pokemon, species, moves)
+        PokeApiPokemonSpec(pokemon, species, moves, evolutionChain)
     }
 
     suspend fun getMove(id: Int): PokeApiPokemonMove {
@@ -57,4 +59,11 @@ internal class PokeApiService(private val client: HttpClient) {
             heavyCache()
         }
     }
+
+    private suspend fun getEvolutionChainActiveRecord(url: String): ActiveRecord<PokeApiEvolutionChain> =
+        activeNetwork {
+            client.get(url) {
+                heavyCache()
+            }
+        }
 }

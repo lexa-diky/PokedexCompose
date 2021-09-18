@@ -28,7 +28,8 @@ class PokemonDetailsSpec(
     override val pagesMapper: (Pokemon) -> List<DetailsPageItem> = { pokemon ->
         listOf(
             DetailsPageItem(TabRowItem("Stats")) { PokemonDetailsStatsPage(pokemon) },
-            DetailsPageItem(TabRowItem("Info")) { PokemonDetailsInfoPage(pokemon) }
+            DetailsPageItem(TabRowItem("Info")) { PokemonDetailsInfoPage(pokemon) },
+            DetailsPageItem(TabRowItem("Evolution")) { PokemonDetailsEvolutionPage(pokemon) }
         )
     }
 }

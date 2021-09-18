@@ -14,6 +14,8 @@ import com.skosc.pokedex.feature.pokemondetails.PokemonDetailsPage
 import com.skosc.pokedex.navigation.LocalNavController
 import com.skosc.pokedex.page.main.MainPage
 import com.skosc.pokedex.feature.pokemonlist.PokemonListPage
+import com.skosc.pokedex.feature.settings.SettingsDestination
+import com.skosc.pokedex.feature.settings.SettingsPage
 import com.skosc.pokedex.rememberLocalAnalyticsSpec
 import com.skosc.pokedex.root
 
@@ -34,6 +36,7 @@ fun RootPage() {
             MoveListPage()
             ItemListPage()
             PokemonDetailsPage()
+            SettingsPage()
         }
     }
 }

@@ -13,7 +13,8 @@ data class Pokemon(
     val catchRate: Int,
     val flavorText: List<PokemonFlavorText>,
     val habitat: ActiveRecord<PokemonHabitat>,
-    val generation: String
+    val generation: String,
+    val evolutionChain: ActiveRecord<EvolutionChain>
 ) {
 
     companion object {

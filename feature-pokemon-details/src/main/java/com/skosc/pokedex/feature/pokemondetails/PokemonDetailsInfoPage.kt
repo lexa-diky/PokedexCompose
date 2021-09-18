@@ -7,7 +7,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
@@ -19,6 +18,7 @@ import com.skosc.pokedex.uikit.theme.CardShape
 import com.skosc.pokedex.uikit.theme.UIColor
 import com.skosc.pokedex.uikit.widget.FillBar
 import com.skosc.pokedex.uikit.widget.StatBar
+import java.util.*
 
 @Composable
 fun PokemonDetailsInfoPage(pokemon: Pokemon) {
@@ -106,5 +106,5 @@ private val Pokemon.normalizedFlavorText
         .shuffled()
         .take(3)
         .map {
-            it.version.name.capitalize() to it.text.replace("\n", "")
+            it.version.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() } to it.text.replace("\n", "")
         }

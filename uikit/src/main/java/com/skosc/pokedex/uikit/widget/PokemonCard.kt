@@ -54,12 +54,8 @@ fun PokemonCard(
 
         this.createHorizontalChain(nameRef, idRef, chainStyle = ChainStyle.SpreadInside)
 
-        Text(
+        PokeCardHeader(
             text = name.titlecase(),
-            color = Color.White,
-            fontWeight = FontWeight.Bold,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
             modifier = Modifier
                 .animateContentSize()
                 .constrainAs(nameRef) {

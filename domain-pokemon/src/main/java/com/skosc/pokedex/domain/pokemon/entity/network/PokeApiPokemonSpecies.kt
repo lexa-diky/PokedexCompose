@@ -14,8 +14,9 @@ internal data class PokeApiPokemonSpecies(
     @SerialName("habitat")
     val habitat: PokeApiHabitat,
     @SerialName("flavor_text_entries")
-    val flavorText: List<PokeApiFlavorText>
-
+    val flavorText: List<PokeApiFlavorText>,
+    @SerialName("evolution_chain")
+    val evolutionChainRef: PokeApiRef
 ) {
 
     @Serializable

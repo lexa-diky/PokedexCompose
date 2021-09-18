@@ -5,5 +5,6 @@ import com.skosc.pokedex.core.entity.ActiveRecord
 internal data class PokeApiPokemonSpec(
     val pokemon: PokeApiPokemon,
     val species: PokeApiPokemonSpecies,
-    val moves: List<ActiveRecord<PokeApiPokemonMove>>
+    val moves: List<ActiveRecord<PokeApiPokemonMove>>,
+    val evolutionChain: ActiveRecord<List<PokeApiPokemonSpec>>,
 )
