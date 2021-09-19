@@ -18,25 +18,46 @@ object UIColor {
     val ShadowGray = Color.Black.copy(alpha = 0.1f)
     val ShadowTransparent = Color.Black.copy(alpha = 0.03f)
     val TextBlack = Color.Black
+
+    object Accent {
+        val Purple = Color(0xFF6200EE)
+        val Teal = Color(0xFF03DAC5)
+        val Yellow = Color(0xFFFFDE00)
+        val Red = Color(0xFFF73535)
+        val Green = Color(0xFF6AD30D)
+        val Magenta = Color(0xFF9E0DD3)
+        val SoftSwampGreen = Color(0xFF43DBB0)
+
+        val Default = Purple
+    }
 }
 
-object PokeColor {
+object PokemonColor {
+    val Black = Color(0xFFBBBBBB)
+    val Blue = Color(0xFF94DBEE)
+    val Brown = Color(0xFFCF9F6F)
+    val Gray = Color(0xFFD1D1E0)
+    val Green = Color(0xFF64D364)
+    val Pink = Color(0xFFF4BDC9)
+    val Purple = Color(0xFFC183C1)
+    val Red = Color(0xFFEC8484)
+    val White = Color(0xFFDADADA)
+    val Yellow = Color(0xFFFFFF9F)
 
-    val Purple = Color(0xFF6200EE)
-    val Teal = Color(0xFF03DAC5)
-    val Yellow = Color(0xFFFFDE00)
-    val Red = Color(0xFFF73535)
-    val Green = Color(0xFF6AD30D)
-    val Magenta = Color(0xFF9E0DD3)
-    val SoftSwampGreen = Color(0xFF43DBB0)
+    val all = listOf(
+        Black,
+        Blue,
+        Brown,
+        Gray,
+        Purple,
+        Green,
+        Purple,
+        Pink,
+        Purple,
+        Red,
+        White,
+        Yellow,
+    )
 
-    val Default = Teal
-
-    val all = listOf(Purple, Teal, Yellow, Red, Green, Magenta, SoftSwampGreen)
-
-    fun fromName(name: String): Color = when(name) {
-        "red" -> Red
-        "green" -> Green
-        else -> Teal
-    }
+    val random get() = all.random()
 }

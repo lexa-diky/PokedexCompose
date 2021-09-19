@@ -7,7 +7,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -15,19 +14,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberImagePainter
 import com.skosc.pokedex.uikit.R
 import com.skosc.pokedex.uikit.theme.PokeCardShape
-import com.skosc.pokedex.uikit.theme.ChipShape
-import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.theme.ShadowWhite
+import com.skosc.pokedex.uikit.theme.UIColor
 import com.skosc.pokedex.uikit.titlecase
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -37,15 +32,16 @@ fun PokemonCard(
     order: Int,
     tags: List<String>,
     imageUrl: String,
-    backgroundColor: Color,
+    leftBackgroundColor: Color,
+    rightBackgroundColor: Color,
     modifier: Modifier = Modifier
 ) {
-    val animatedBackgroundColor by animateColorAsState(backgroundColor)
+    val animatedLeftBackgroundColor by animateColorAsState(leftBackgroundColor)
+    val animatedRightBackgroundColor by animateColorAsState(rightBackgroundColor)
 
     ConstraintLayout(
         modifier = modifier
-            .background(animatedBackgroundColor, PokeCardShape)
-            .clip(PokeCardShape)
+            .halfBackground(animatedLeftBackgroundColor, animatedRightBackgroundColor, PokeCardShape)
             .padding(16.dp)
             .defaultMinSize(minHeight = 100.dp)
     ) {
@@ -127,7 +123,8 @@ private fun PokemonCardPreview() {
             name = "MegaSuperPikachu",
             order = 0,
             tags = listOf("Grass", "Fire"),
-            backgroundColor = PokeColor.Teal,
+            leftBackgroundColor = UIColor.Accent.Teal,
+            rightBackgroundColor = UIColor.Accent.Magenta,
             imageUrl = ""
         )
     }

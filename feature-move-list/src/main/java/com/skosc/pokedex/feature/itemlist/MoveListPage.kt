@@ -13,10 +13,10 @@ import com.skosc.pokedex.domain.pokemon.entity.PokemonMove
 import com.skosc.pokedex.domain.settings.LocalSettings
 import com.skosc.pokedex.feature.core.list.BaseListItem
 import com.skosc.pokedex.feature.core.list.GenericItemListPage
-import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.PokemonCard
 import com.skosc.pokedex.uikit.widget.RootLayout
 import com.skosc.pokedex.uikit.diViewModel
+import com.skosc.pokedex.uikit.theme.UIColor
 import com.skosc.pokedex.uikit.widget.PairTileLayout
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -28,7 +28,7 @@ fun NavGraphBuilder.MoveListPage() = composable(MoveListDestination.path) {
             it.name,
             listOf(it.type.getLocalized(settings.localization)),
             "",
-            PokeColor.Red
+            UIColor.Accent.Red
         )
     }
 }

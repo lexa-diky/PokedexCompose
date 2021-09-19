@@ -6,6 +6,7 @@ import com.skosc.pokedex.domain.pokemon.util.getLocalized
 
 data class PokemonType(
     val id: Int,
+    val defaultName: String,
     val names: List<EntityName>
 ): LocalizableResource {
 

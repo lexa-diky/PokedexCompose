@@ -8,6 +8,7 @@ internal object PokeApiTypeMapper {
 
     fun map(type: PokeApiType): PokemonType = PokemonType(
         id = type.id,
+        defaultName = type.name,
         names = type.names.map { EntityName(it.name, it.language.name) }
     )
 }

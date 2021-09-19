@@ -4,16 +4,15 @@ import com.skosc.pokedex.*
 import com.skosc.pokedex.enity.domain.MenuEntry
 import com.skosc.pokedex.enity.ui.BoxCard
 import com.skosc.pokedex.enity.ui.BoxCardList
-import com.skosc.pokedex.repository.ColorPalletResolver
 import com.skosc.pokedex.repository.MenuRepository
 import com.skosc.pokedex.core.resources.ResourceResolver
 import com.skosc.pokedex.navigation.Destination
 import com.skosc.pokedex.navigation.root.RootDestination
+import com.skosc.pokedex.uikit.theme.PokemonColor
 
 class LoadBoxCards(
     private val menuRepository: MenuRepository,
     private val resources: ResourceResolver,
-    private val colorPalletResolver: ColorPalletResolver
 ) {
 
     suspend operator fun invoke(): BoxCardList.Menu {
@@ -25,7 +24,7 @@ class LoadBoxCards(
     private fun toBoxCard(entry: MenuEntry): BoxCard.Menu {
         return BoxCard.Menu(
             title = getTitle(entry),
-            color = colorPalletResolver.getColor(entry),
+            color = PokemonColor.random,
             destination = entry.getDestination()
         )
     }

@@ -5,7 +5,7 @@ import com.skosc.pokedex.enity.domain.SearchResultIcon
 import com.skosc.pokedex.navigation.Destination
 import com.skosc.pokedex.pokemonList
 import com.skosc.pokedex.root
-import com.skosc.pokedex.uikit.theme.PokeColor
+import com.skosc.pokedex.uikit.theme.PokemonColor
 
 sealed class BoxCard {
 
@@ -32,9 +32,9 @@ sealed class BoxCardList {
 }
 
 val BoxCard.Menu.Companion.sample get() = listOf(
-    BoxCard.Menu("Pokemon", PokeColor.Teal, root.pokemonList),
-    BoxCard.Menu("Items", PokeColor.Purple, root.pokemonList),
-    BoxCard.Menu("Moves", PokeColor.Yellow, root.pokemonList),
-    BoxCard.Menu("Abilities", PokeColor.Purple, root.pokemonList),
-    BoxCard.Menu("Locations", PokeColor.Yellow, root.pokemonList)
+    BoxCard.Menu("Pokemon", PokemonColor.random, root.pokemonList),
+    BoxCard.Menu("Items", PokemonColor.random, root.pokemonList),
+    BoxCard.Menu("Moves", PokemonColor.random, root.pokemonList),
+    BoxCard.Menu("Abilities", PokemonColor.random, root.pokemonList),
+    BoxCard.Menu("Locations", PokemonColor.random, root.pokemonList)
 )

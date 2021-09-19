@@ -36,7 +36,6 @@ import com.skosc.pokedex.feature.core.details.entity.DetailsHeaderItem
 import com.skosc.pokedex.feature.core.details.entity.DetailsPageItem
 import com.skosc.pokedex.feature.core.details.entity.TabRowItem
 import com.skosc.pokedex.uikit.image.CropTransparentTransformation
-import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.theme.UIColor
 import com.skosc.pokedex.uikit.widget.OrderText
 import com.skosc.pokedex.uikit.widget.RotatingPokeBall
@@ -50,7 +49,7 @@ private val ITEM_CONTENT_SHEET = "__ITEM_CONTENT_SHEET"
 
 @Composable
 fun GenericDetailsPage(details: BaseDetailsItem) {
-    Box(modifier = Modifier.background(PokeColor.SoftSwampGreen).fillMaxSize()) {
+    Box(modifier = Modifier.background(UIColor.Accent.SoftSwampGreen).fillMaxSize()) {
         val lazyListState = rememberLazyListState()
 
         LazyColumn(

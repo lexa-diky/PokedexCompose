@@ -1,5 +1,6 @@
 package com.skosc.pokedex.feature.pokemonlist
 
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.skosc.pokedex.domain.pokemon.entity.Pokemon
@@ -12,7 +13,8 @@ import com.skosc.pokedex.feature.pokemondetails.PokemonDetailsDestination
 import com.skosc.pokedex.feature.pokemondetails.PokemonDetailsPage
 import com.skosc.pokedex.navigation.LocalNavController
 import com.skosc.pokedex.navigation.navigate
-import com.skosc.pokedex.uikit.theme.PokeColor
+import com.skosc.pokedex.uikit.coloristics.Coloristic
+import com.skosc.pokedex.uikit.theme.PokemonColor
 
 fun NavGraphBuilder.PokemonListPage() = composable(PokemonListDestination.path) {
     val navController = LocalNavController.current
@@ -27,14 +29,31 @@ fun NavGraphBuilder.PokemonListPage() = composable(PokemonListDestination.path) 
                 )
             )
         },
-        mapper = {
+        mapper = { species ->
+            val leftColor = getLeftColor(species)
             BaseListItem(
-                it.id,
-                it.defaultVariety.name,
-                it.defaultVariety.types.map { type -> type.names.getLocalized(settings.localization) },
-                it.defaultVariety.imageUrl,
-                PokeColor.fromName(it.color.name)
+                order = species.id,
+                name = species.defaultVariety.name,
+                tags = species.defaultVariety.types.map { type -> type.names.getLocalized(settings.localization) },
+                image = species.defaultVariety.imageUrl,
+                leftColor = leftColor,
+                rightColor = getRightColor(species, leftColor)
             )
         }
     )
+}
+
+private fun getLeftColor(species: PokemonSpecies): Color {
+    return  Coloristic.getPokeColorForType(species.defaultVariety.types.first().defaultName)
+        ?: Coloristic.getPokeColorForName(species.color.name)
+}
+
+private fun getRightColor(species: PokemonSpecies, leftColor: Color): Color {
+    val second = species.defaultVariety.types.getOrNull(1)
+    return if (second != null) {
+        Coloristic.getPokeColorForType(second.defaultName)
+            ?: Coloristic.getPokeColorForName(species.color.name)
+    } else {
+        leftColor
+    }
 }

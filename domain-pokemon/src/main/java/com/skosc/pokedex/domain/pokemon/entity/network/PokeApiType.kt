@@ -8,6 +8,8 @@ import kotlinx.serialization.Serializable
 internal data class PokeApiType(
     @SerialName("id")
     val id: Int,
+    @SerialName("name")
+    val name: String,
     @SerialName("names")
     val names: List<PokeApiName>
 )

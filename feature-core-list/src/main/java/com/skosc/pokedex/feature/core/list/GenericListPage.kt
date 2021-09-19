@@ -57,7 +57,8 @@ fun <T : Any> GenericItemListPage(
                     name = item.name,
                     order = item.order,
                     tags = item.tags,
-                    backgroundColor = item.color,
+                    leftBackgroundColor = item.leftColor,
+                    rightBackgroundColor = item.rightColor,
                     imageUrl = item.image,
                     modifier = Modifier
                         .width(200.dp)
