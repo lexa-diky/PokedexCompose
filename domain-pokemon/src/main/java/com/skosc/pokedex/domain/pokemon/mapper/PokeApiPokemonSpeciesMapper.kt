@@ -1,9 +1,7 @@
 package com.skosc.pokedex.domain.pokemon.mapper
 
-import com.skosc.pokedex.core.entity.activeMap
 import com.skosc.pokedex.domain.pokemon.entity.*
 import com.skosc.pokedex.domain.pokemon.entity.network.PokeApiPokemonSpec
-import com.skosc.pokedex.domain.pokemon.entity.network.PokeApiPokemonSpecies
 import com.skosc.pokedex.domain.pokemon.entity.network.PokeApiPokemonSpeciesSpec
 
 internal object PokeApiPokemonSpeciesMapper {
@@ -23,7 +21,15 @@ internal object PokeApiPokemonSpeciesMapper {
                     )
                 },
             generation = spec.species.generation.name,
-            varieties = spec.pokemon.map { PokeApiPokemonMapper.map(PokeApiPokemonSpec(it, spec.species)) }
+            varieties = spec.pokemon.map { pokemon ->
+                PokeApiPokemonMapper.map(
+                    PokeApiPokemonSpec(
+                        pokemon,
+                        spec.species,
+                        requireNotNull(spec.types[pokemon])
+                    )
+                )
+            }
         )
     }
 }

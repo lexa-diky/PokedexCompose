@@ -8,5 +8,5 @@ internal data class PokeApiPokemonTypeSlot(
     @SerialName("slot")
     val slot: Int,
     @SerialName("type")
-    val type: PokeApiType
+    val type: PokeApiLink
 )

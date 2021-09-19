@@ -1,9 +1,8 @@
 package com.skosc.pokedex.domain.pokemon.mapper
 
-import com.skosc.pokedex.core.entity.ActiveRecord
-import com.skosc.pokedex.core.entity.activeMap
-import com.skosc.pokedex.core.entity.map
-import com.skosc.pokedex.domain.pokemon.entity.*
+import com.skosc.pokedex.domain.pokemon.entity.Pokemon
+import com.skosc.pokedex.domain.pokemon.entity.PokemonStat
+import com.skosc.pokedex.domain.pokemon.entity.PokemonStatType
 import com.skosc.pokedex.domain.pokemon.entity.network.PokeApiPokemonSpec
 import com.skosc.pokedex.domain.pokemon.entity.network.PokeApiStat
 import com.skosc.pokedex.domain.pokemon.entity.network.PokeApiStatType
@@ -15,7 +14,7 @@ internal object PokeApiPokemonMapper {
             id = spec.pokemon.id,
             name = spec.pokemon.name,
             imageUrl = spec.pokemon.sprites.frontDefault,
-            types = spec.pokemon.types.map { it.type.name },
+            types = spec.types.map { PokeApiTypeMapper.map(it) },
             baseStats = mapStats(spec.pokemon.stats),
         )
     }

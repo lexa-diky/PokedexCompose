@@ -9,7 +9,7 @@ internal object PokeApiMoveMapper {
         return PokemonMove(
             id = pokeApiPokemonMove.id,
             name = pokeApiPokemonMove.name,
-            type = pokeApiPokemonMove.type.name
+            type = PokeApiTypeMapper.map(pokeApiPokemonMove.type)
         )
     }
 }

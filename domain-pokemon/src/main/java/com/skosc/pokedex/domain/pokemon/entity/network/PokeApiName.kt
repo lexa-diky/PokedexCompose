@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class PokeApiName(
+    @SerialName("language")
     val language: PokeApiLanguage,
+    @SerialName("name")
     val name: String
 )

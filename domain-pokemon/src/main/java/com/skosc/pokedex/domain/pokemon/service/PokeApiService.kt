@@ -13,11 +13,18 @@ internal class PokeApiService(private val client: HttpClient) {
 
     suspend fun getPokemonSpecies(id: Int): PokeApiPokemonSpeciesSpec = coroutineScope {
         val species = client.getPokeApi<PokeApiPokemonSpecies>("pokemon-species", id)
-        val pokemon = species.varieties.map { variety ->
-            async { client.get<PokeApiPokemon>(variety.pokemon) }
-        }.awaitAll()
+        val pokemon =
+            species.varieties.map { variety -> async { client.get<PokeApiPokemon>(variety.pokemon) } }
+                .awaitAll()
+        val types: Map<PokeApiPokemon, List<PokeApiType>> = pokemon.map { poke ->
+            async {
+                poke to poke.types.map {
+                    async { client.get<PokeApiType>(it.type) }
+                }.awaitAll()
+            }
+        }.awaitAll().toMap()
 
-        PokeApiPokemonSpeciesSpec(species, pokemon)
+        PokeApiPokemonSpeciesSpec(species, pokemon, types)
     }
 
     suspend fun getMove(id: Int): PokeApiPokemonMove {
@@ -28,7 +35,7 @@ internal class PokeApiService(private val client: HttpClient) {
         return client.getPokeApi("item", id)
     }
 
-    private suspend inline fun <reified T> HttpClient.getPokeApi(resource: String, id: Int) : T {
+    private suspend inline fun <reified T> HttpClient.getPokeApi(resource: String, id: Int): T {
         return get("https://pokeapi.co/api/v2/$resource/$id") {
             heavyCache()
         }
