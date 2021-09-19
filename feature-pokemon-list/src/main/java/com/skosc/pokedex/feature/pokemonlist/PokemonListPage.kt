@@ -3,6 +3,7 @@ package com.skosc.pokedex.feature.pokemonlist
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.skosc.pokedex.domain.pokemon.entity.Pokemon
+import com.skosc.pokedex.domain.pokemon.entity.PokemonSpecies
 import com.skosc.pokedex.feature.core.list.BaseListItem
 import com.skosc.pokedex.feature.core.list.GenericItemListPage
 import com.skosc.pokedex.feature.pokemondetails.PokemonDetailsDestination
@@ -14,7 +15,7 @@ import com.skosc.pokedex.uikit.theme.PokeColor
 fun NavGraphBuilder.PokemonListPage() = composable(PokemonListDestination.path) {
     val navController = LocalNavController.current
 
-    GenericItemListPage<Pokemon>(
+    GenericItemListPage<PokemonSpecies>(
         header = "All Pokémon",
         onItemSelected = { order ->
             navController.navigate(PokemonDetailsDestination, mapOf(
@@ -24,9 +25,9 @@ fun NavGraphBuilder.PokemonListPage() = composable(PokemonListDestination.path) 
         mapper = {
             BaseListItem(
                 it.id,
-                it.name,
-                it.types,
-                it.imageUrl,
+                it.defaultVariety.name,
+                it.defaultVariety.types,
+                it.defaultVariety.imageUrl,
                 PokeColor.fromName(it.color.name)
             )
         }

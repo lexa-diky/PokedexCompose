@@ -16,5 +16,7 @@ internal data class PokeApiPokemon(
     @SerialName("moves")
     val moves: List<PokeApiPokemonInnerMove>,
     @SerialName("stats")
-    val stats: List<PokeApiStat>
+    val stats: List<PokeApiStat>,
+    @SerialName("species")
+    val species: PokeApiLink
 )

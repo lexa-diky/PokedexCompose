@@ -4,6 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class PokeApiPokemonInnerMove(
-    @SerialName("move") val link: PokeApiLink
+data class PokeApiLink(
+    @SerialName("name") val name: String? = null,
+    @SerialName("url") val url: String
 )

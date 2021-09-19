@@ -1,6 +1,6 @@
 package com.skosc.pokedex.feature.pokemondetails
 
-import com.skosc.pokedex.domain.pokemon.entity.Pokemon
+import com.skosc.pokedex.domain.pokemon.entity.PokemonSpecies
 import com.skosc.pokedex.domain.pokemon.repository.PokemonRepository
 import com.skosc.pokedex.feature.core.details.GenericDetailsSpec
 import com.skosc.pokedex.feature.core.details.entity.DetailsHeaderItem
@@ -9,23 +9,23 @@ import com.skosc.pokedex.feature.core.details.entity.TabRowItem
 
 class PokemonDetailsSpec(
     private val repository: PokemonRepository,
-    private val order: Int
-) : GenericDetailsSpec<Pokemon> {
+    private val id: Int
+) : GenericDetailsSpec<PokemonSpecies> {
 
-    override val source: suspend () -> Pokemon = {
-        repository.getPokemon(order)
+    override val source: suspend () -> PokemonSpecies = {
+        repository.getPokemonSpecies(id)
     }
 
-    override val headerMapper: (Pokemon) -> DetailsHeaderItem = { pokemon ->
+    override val headerMapper: (PokemonSpecies) -> DetailsHeaderItem = { pokemon ->
         DetailsHeaderItem(
-            title = pokemon.name,
-            order = order,
-            tags = pokemon.types,
-            image = pokemon.imageUrl
+            title = pokemon.defaultVariety.name,
+            order = id,
+            tags = pokemon.defaultVariety.types,
+            image = pokemon.defaultVariety.imageUrl
         )
     }
 
-    override val pagesMapper: (Pokemon) -> List<DetailsPageItem> = { pokemon ->
+    override val pagesMapper: (PokemonSpecies) -> List<DetailsPageItem> = { pokemon ->
         listOf(
             DetailsPageItem(TabRowItem("Stats")) { PokemonDetailsStatsPage(pokemon) },
             DetailsPageItem(TabRowItem("Info")) { PokemonDetailsInfoPage(pokemon) },

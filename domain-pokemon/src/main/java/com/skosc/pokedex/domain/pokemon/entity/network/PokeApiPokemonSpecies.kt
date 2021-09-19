@@ -5,18 +5,22 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class PokeApiPokemonSpecies(
+    @SerialName("id")
+    val id: Int,
     @SerialName("color")
     val color: Color? = Color("red"),
     @SerialName("generation")
     val generation: PokeApiGeneration,
     @SerialName("capture_rate")
-    val captureRate: Int ,
+    val captureRate: Int,
     @SerialName("habitat")
     val habitat: PokeApiHabitat,
     @SerialName("flavor_text_entries")
     val flavorText: List<PokeApiFlavorText>,
     @SerialName("evolution_chain")
-    val evolutionChainRef: PokeApiRef
+    val evolutionChainRef: PokeApiLink,
+    @SerialName("varieties")
+    val varieties: List<PokeApiPokemonVariety>
 ) {
 
     @Serializable

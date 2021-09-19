@@ -13,14 +13,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.skosc.pokedex.domain.pokemon.entity.Pokemon
+import com.skosc.pokedex.domain.pokemon.entity.PokemonSpecies
 import com.skosc.pokedex.domain.pokemon.entity.PokemonStat
 import com.skosc.pokedex.uikit.widget.FillBar
 
 @Composable
-fun PokemonDetailsStatsPage(pokemon: Pokemon) {
+fun PokemonDetailsStatsPage(pokemon: PokemonSpecies) {
 
     Column {
-        pokemon.baseStats.forEach { stat ->
+        pokemon.defaultVariety.baseStats.forEach { stat ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier

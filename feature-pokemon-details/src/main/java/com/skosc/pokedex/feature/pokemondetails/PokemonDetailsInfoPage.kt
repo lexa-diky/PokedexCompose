@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.dp
 import com.skosc.pokedex.domain.pokemon.entity.Pokemon
+import com.skosc.pokedex.domain.pokemon.entity.PokemonSpecies
 import com.skosc.pokedex.domain.pokemon.entity.PokemonStat
 import com.skosc.pokedex.uikit.theme.CardShape
 import com.skosc.pokedex.uikit.theme.UIColor
@@ -21,9 +22,8 @@ import com.skosc.pokedex.uikit.widget.StatBar
 import java.util.*
 
 @Composable
-fun PokemonDetailsInfoPage(pokemon: Pokemon) {
+fun PokemonDetailsInfoPage(pokemon: PokemonSpecies) {
     Column {
-
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -42,8 +42,6 @@ fun PokemonDetailsInfoPage(pokemon: Pokemon) {
                     .weight(0.7f)
             )
         }
-
-
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -101,10 +99,13 @@ fun PokemonDetailsInfoPage(pokemon: Pokemon) {
     }
 }
 
-private val Pokemon.normalizedFlavorText
+private val PokemonSpecies.normalizedFlavorText
     get() = flavorText
         .shuffled()
         .take(3)
         .map {
-            it.version.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() } to it.text.replace("\n", "")
+            it.version.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() } to it.text.replace(
+                "\n",
+                ""
+            )
         }

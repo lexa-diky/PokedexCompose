@@ -16,25 +16,7 @@ internal object PokeApiPokemonMapper {
             name = spec.pokemon.name,
             imageUrl = spec.pokemon.sprites.frontDefault,
             types = spec.pokemon.types.map { it.type.name },
-            color = PokemonColor(spec.species.color?.name ?: "red"),
-            moves = spec.moves.activeMap { PokeApiMoveMapper.map(it) },
             baseStats = mapStats(spec.pokemon.stats),
-            catchRate = spec.species.captureRate,
-            flavorText = spec.species.flavorText
-                .filter { it.language.name == "en" }
-                .map {
-                    PokemonFlavorText(
-                        it.text,
-                        Language.ENGLISH,
-                        PokemonVersion(it.version.name)
-                    )
-                },
-            habitat = ActiveRecord { PokemonHabitat(spec.species.habitat.name) },
-            generation = spec.species.generation.name,
-            evolutionChain = spec.evolutionChain.map { list ->
-                val pokemon = list.map { EvolutionChain.Node(map(it)) }
-                EvolutionChain(pokemon)
-            }
         )
     }
 

@@ -4,4 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PokeApiRef(@SerialName("url") val url: String)
+data class PokeApiPokemonVariety(
+    @SerialName("is_default")
+    val isDefault: Boolean,
+    @SerialName("pokemon")
+    val pokemon: PokeApiLink
+)
