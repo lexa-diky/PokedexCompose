@@ -1,6 +1,9 @@
 package com.skosc.pokedex.page
 
 import android.os.Bundle
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.NavController
@@ -20,6 +23,7 @@ import com.skosc.pokedex.rememberLocalAnalyticsSpec
 import com.skosc.pokedex.root
 
 @Composable
+@OptIn(ExperimentalAnimationApi::class)
 fun RootPage() {
     val navController = rememberNavController()
     val analytics = rememberLocalAnalyticsSpec()

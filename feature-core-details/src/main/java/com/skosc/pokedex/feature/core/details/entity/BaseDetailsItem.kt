@@ -6,11 +6,18 @@ interface BaseDetailsItem {
 
     val pages: List<DetailsPageItem>
 
+    val background: DetailsBackground
+
     companion object {
 
-        operator fun invoke(header: DetailsHeaderItem, pages: List<DetailsPageItem>): BaseDetailsItem = object : BaseDetailsItem {
+        operator fun invoke(
+            header: DetailsHeaderItem,
+            pages: List<DetailsPageItem>,
+            background: DetailsBackground
+        ): BaseDetailsItem = object : BaseDetailsItem {
             override val header: DetailsHeaderItem = header
             override val pages: List<DetailsPageItem> = pages
+            override val background: DetailsBackground = background
         }
     }
 }

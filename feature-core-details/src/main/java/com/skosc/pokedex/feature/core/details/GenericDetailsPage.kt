@@ -1,11 +1,8 @@
 package com.skosc.pokedex.feature.core.details
 
 import android.util.Log
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.*
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.font.FontWeight
@@ -31,16 +29,11 @@ import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
-import com.skosc.pokedex.feature.core.details.entity.BaseDetailsItem
-import com.skosc.pokedex.feature.core.details.entity.DetailsHeaderItem
-import com.skosc.pokedex.feature.core.details.entity.DetailsPageItem
-import com.skosc.pokedex.feature.core.details.entity.TabRowItem
+import com.skosc.pokedex.feature.core.details.entity.*
 import com.skosc.pokedex.uikit.image.CropTransparentTransformation
+import com.skosc.pokedex.uikit.theme.PokemonColor
 import com.skosc.pokedex.uikit.theme.UIColor
-import com.skosc.pokedex.uikit.widget.OrderText
-import com.skosc.pokedex.uikit.widget.RotatingPokeBall
-import com.skosc.pokedex.uikit.widget.SubPokeHeader
-import com.skosc.pokedex.uikit.widget.TypeChip
+import com.skosc.pokedex.uikit.widget.*
 import kotlin.math.abs
 
 private val ITEM_HEADER = "__ITEM_HEADER"
@@ -49,7 +42,10 @@ private val ITEM_CONTENT_SHEET = "__ITEM_CONTENT_SHEET"
 
 @Composable
 fun GenericDetailsPage(details: BaseDetailsItem) {
-    Box(modifier = Modifier.background(UIColor.Accent.SoftSwampGreen).fillMaxSize()) {
+    Box(modifier = Modifier
+        .background(details.background.base)
+        .halfBackground(details.background.left, details.background.right, RectangleShape)
+        .fillMaxSize()) {
         val lazyListState = rememberLazyListState()
 
         LazyColumn(
@@ -93,6 +89,7 @@ fun GenericDetailsPage(details: BaseDetailsItem) {
                     modifier = Modifier
                         .offset(y = -52.dp)
                         .animateContentSize()
+                        .padding(horizontal = 8.dp)
                 )
             }
         }
@@ -146,7 +143,7 @@ private fun DetailsHeader(
 }
 
 @Composable
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalPagerApi::class, ExperimentalAnimationApi::class)
 private fun BottomSheetImpl(pages: List<DetailsPageItem>, modifier: Modifier = Modifier) {
     if (pages.isEmpty()) {
         return
@@ -252,6 +249,7 @@ private fun DetailsBottomSheet(modifier: Modifier = Modifier, content: @Composab
 @Preview(name = "Generics Details Page", showBackground = true, showSystemUi = true)
 fun Preview_GenericDetailsPage() {
     GenericDetailsPage(BaseDetailsItem(
+        background = DetailsBackground(PokemonColor.Red, PokemonColor.Blue, PokemonColor.Green),
         header = DetailsHeaderItem(
             title = "Bulbasaur",
             order = 1,
@@ -261,7 +259,7 @@ fun Preview_GenericDetailsPage() {
         pages = listOf(
             DetailsPageItem(
                 title = TabRowItem("About"),
-                content = { Text("About Content") }
+                content = { Text("About Content") },
             ),
             DetailsPageItem(
                 title = TabRowItem("Stats"),
@@ -275,5 +273,7 @@ fun Preview_GenericDetailsPage() {
                 title = TabRowItem("Search"),
                 content = { Text("Search Content") }
             ),
-        )))
+
+        ))
+    )
 }

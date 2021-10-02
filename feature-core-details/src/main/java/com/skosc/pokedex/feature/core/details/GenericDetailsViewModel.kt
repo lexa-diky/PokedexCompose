@@ -18,7 +18,8 @@ class GenericDetailsViewModel<T>(private val spec: GenericDetailsSpec<T>) : View
 
             _details.value = BaseDetailsItem(
                 header = spec.headerMapper(model),
-                pages = spec.pagesMapper(model)
+                pages = spec.pagesMapper(model),
+                background = spec.backgroundMapper(model)
             )
         }
     }
