@@ -5,22 +5,24 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.interaction.DragInteraction
 import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.skosc.pokedex.uikit.localViewModel
 import com.skosc.pokedex.uikit.theme.CardShape
 import com.skosc.pokedex.uikit.theme.UIColor
+import com.skosc.pokedex.uikit.widget.*
 import com.skosc.pokedex.uikit.widget.PairTileLayout
-import com.skosc.pokedex.uikit.widget.PokemonCard
-import com.skosc.pokedex.uikit.widget.RootLayout
-import com.skosc.pokedex.uikit.widget.SearchField
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flowOf
 
 private const val SEARCH_ITEM_KEY = "__SEARCH_ITEM_KEY"
@@ -49,10 +51,11 @@ fun <T : Any> GenericItemListPage(
         Log.i("LSTATE", pagingItems.loadState.toString())
 
 
-        PairTileLayout(
+        FixedPairTileLayout(
             displayItems = pagingItems,
             placeholderItems = placeholderItems,
-            displayContent = { idx, item ->
+            edgePadding = 16.dp,
+            displayContent = { item ->
                 PokemonCard(
                     name = item.name,
                     order = item.order,
@@ -64,6 +67,7 @@ fun <T : Any> GenericItemListPage(
                         .width(200.dp)
                         .height(125.dp)
                         .clickable { onItemSelected(item.order) }
+                        .padding(8.dp)
                 )
             },
         )

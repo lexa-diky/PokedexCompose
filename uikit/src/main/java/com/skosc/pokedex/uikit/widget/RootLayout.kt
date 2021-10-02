@@ -16,7 +16,6 @@ private const val HEADER_KEY = "__ROOT_LAYOUT_HEADER_KEY"
 fun RootLayout(header: String, items: LazyListScope.(LazyListState) -> Unit) {
 
     Box {
-
         RotatingPokeBall(
             modifier = Modifier
                 .size(200.dp, 200.dp)

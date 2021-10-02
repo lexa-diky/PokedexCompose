@@ -2,11 +2,11 @@ import org.gradle.api.JavaVersion
 
 ext.androidLibraryModule = { isComposeEnabled ->
     android {
-        compileSdk 30
+        compileSdk 31
 
         defaultConfig {
             minSdk 21
-            targetSdk 30
+            targetSdk 31
             versionCode 1
             versionName "1.0"
 
@@ -26,7 +26,7 @@ ext.androidLibraryModule = { isComposeEnabled ->
             }
             composeOptions {
                 kotlinCompilerExtensionVersion compose_version
-                kotlinCompilerVersion '1.5.10'
+                kotlinCompilerVersion '1.5.30'
             }
         }
         compileOptions {

@@ -40,7 +40,7 @@ object Coloristic {
     fun getPokeColorForType(name: String): Color = when (name.lowercase(Locale.getDefault())) {
         "normal" -> PokemonColor.White
         "fighting" -> PokemonColor.Pink
-        "flying" -> PokemonColor.Black
+        "flying" -> PokemonColor.Blue
         "poison" -> PokemonColor.Purple
         "ground" -> PokemonColor.Brown
         "rock" -> PokemonColor.Brown
@@ -48,7 +48,7 @@ object Coloristic {
         "ghost" -> PokemonColor.Black
         "steel" -> PokemonColor.Black
         "fire" -> PokemonColor.Red
-        "water" -> PokemonColor.Black
+        "water" -> PokemonColor.Blue
         "grass" -> PokemonColor.Green
         "electric" -> PokemonColor.Yellow
         "psychic" -> PokemonColor.Purple

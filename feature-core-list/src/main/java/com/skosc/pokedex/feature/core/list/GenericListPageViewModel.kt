@@ -10,16 +10,11 @@ import kotlinx.coroutines.launch
 class GenericListPageViewModel<T : Any>(private val spec: GenericListSpec<T>) : ViewModel() {
 
     fun items(): Flow<PagingData<BaseListItem>> {
-        return createPager().flow
+        return spec.reader()
             .cachedIn(viewModelScope)
             .flowOn(Dispatchers.IO)
             .map { data ->
                 data.map { item -> spec.itemMapper(item) }
             }
     }
-
-    private fun createPager(): Pager<Int, T> = Pager(
-        pagingSourceFactory = { spec.source },
-        config = PagingConfig(pageSize = 10, enablePlaceholders = true)
-    )
 }

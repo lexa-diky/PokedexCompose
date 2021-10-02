@@ -1,19 +1,17 @@
 package com.skosc.pokedex.domain.pokemon.repository
 
-import androidx.paging.PagingSource
-import com.skosc.pokedex.domain.pokemon.entity.Pokemon
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.skosc.pokedex.domain.pokemon.entity.PokemonItem
 import com.skosc.pokedex.domain.pokemon.entity.PokemonMove
 import com.skosc.pokedex.domain.pokemon.entity.PokemonSpecies
+import com.skosc.pokedex.domain.pokemon.entity.network.PokeApiResource
 import com.skosc.pokedex.domain.pokemon.mapper.PokeApiItemMapper
 import com.skosc.pokedex.domain.pokemon.mapper.PokeApiMoveMapper
-import com.skosc.pokedex.domain.pokemon.mapper.PokeApiPokemonMapper
 import com.skosc.pokedex.domain.pokemon.mapper.PokeApiPokemonSpeciesMapper
-import com.skosc.pokedex.domain.pokemon.paging.PokeApiDataSource
+import com.skosc.pokedex.domain.pokemon.paging.LimitOffsetPokeApiDataSource
 import com.skosc.pokedex.domain.pokemon.service.PokeApiService
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
+import com.skosc.pokedex.core.network.PaginatedFlowReader
 
 class PokemonRepository internal constructor(private val service: PokeApiService) {
 
@@ -22,28 +20,51 @@ class PokemonRepository internal constructor(private val service: PokeApiService
             .let(PokeApiPokemonSpeciesMapper::map)
     }
 
-    fun getPokemonSpeciesPagingSource(): PagingSource<Int, PokemonSpecies> {
-        return PokeApiDataSource({ offset, limit ->
-            asyncLoad(offset, limit) { service.getPokemonSpecies(it) }
-                .sortedBy { it.species.id }
-        }, PokeApiPokemonSpeciesMapper::map)
+    fun getPokemonSpeciesPaginatedReader(): PaginatedFlowReader<PokemonSpecies> = PaginatedFlowReader {
+        Pager(
+            config = PagingConfig(
+                pageSize = LimitOffsetPokeApiDataSource.NETWORK_PAGE_SIZE,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                LimitOffsetPokeApiDataSource(
+                    loadPokeApiPage = { offset, limit -> service.getPaginated(PokeApiResource.PokemonSpecies, offset, limit) },
+                    loadPokeApiData = { id -> service.getPokemonSpecies(id) },
+                    mapper = PokeApiPokemonSpeciesMapper::map
+                )
+            }
+        ).flow
     }
 
-    fun getMovePagingSource(): PagingSource<Int, PokemonMove> {
-        return PokeApiDataSource({ offset, limit ->
-            asyncLoad(offset, limit) { service.getMove(it) }
-                .sortedBy { it.id }
-        }, PokeApiMoveMapper::map)
+    fun getMovePaginatedReader(): PaginatedFlowReader<PokemonMove> = PaginatedFlowReader {
+        Pager(
+            config = PagingConfig(
+                pageSize = LimitOffsetPokeApiDataSource.NETWORK_PAGE_SIZE,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                LimitOffsetPokeApiDataSource(
+                    loadPokeApiPage = { offset, limit -> service.getPaginated(PokeApiResource.Move, offset, limit) },
+                    loadPokeApiData = { id -> service.getMove(id) },
+                    mapper = PokeApiMoveMapper::map
+                )
+            }
+        ).flow
     }
 
-    fun getItemPagingSource(): PagingSource<Int, PokemonItem> {
-        return PokeApiDataSource({ offset, limit ->
-            asyncLoad(offset, limit) { service.getItem(it) }
-                .sortedBy { it.id }
-        }, PokeApiItemMapper::map)
-    }
-
-    private suspend fun <T> asyncLoad(offset: Int, limit: Int, request: suspend (Int) -> T) = coroutineScope {
-        (offset..(limit + offset)).map { idx -> async { request(idx) } }.awaitAll()
+    fun getItemPaginatedReader(): PaginatedFlowReader<PokemonItem> = PaginatedFlowReader {
+        Pager(
+            config = PagingConfig(
+                pageSize = LimitOffsetPokeApiDataSource.NETWORK_PAGE_SIZE,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                LimitOffsetPokeApiDataSource(
+                    loadPokeApiPage = { offset, limit -> service.getPaginated(PokeApiResource.Item, offset, limit) },
+                    loadPokeApiData = { id -> service.getItem(id) },
+                    mapper = PokeApiItemMapper::map
+                )
+            }
+        ).flow
     }
 }
