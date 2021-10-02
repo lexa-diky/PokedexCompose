@@ -10,13 +10,15 @@ import org.kodein.di.instance
 
 @Composable
 inline fun <reified T: Any> rememberGenericListSpec(
-    mapper: BaseListItemMapper<T>
+    mapper: BaseListItemMapper<T>,
+    filters: List<ListFilter<T>> = emptyList()
 ): GenericListSpec<T> {
     val reader = LocalDI.current.di.direct.instance<PaginatedFlowReader<T>>()
     val spec = remember {
         GenericListSpec(
             reader = reader,
-            itemMapper = mapper
+            itemMapper = mapper,
+            filters = filters
         )
     }
 

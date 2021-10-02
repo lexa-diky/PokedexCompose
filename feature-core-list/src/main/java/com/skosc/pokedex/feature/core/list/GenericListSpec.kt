@@ -5,5 +5,6 @@ import com.skosc.pokedex.core.network.PaginatedFlowReader
 
 data class GenericListSpec<T: Any>(
     val reader: PaginatedFlowReader<T>,
-    val itemMapper: BaseListItemMapper<T>
+    val itemMapper: BaseListItemMapper<T>,
+    val filters: List<ListFilter<T>> = emptyList()
 )

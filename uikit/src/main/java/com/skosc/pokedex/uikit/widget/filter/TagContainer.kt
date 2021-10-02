@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.skosc.pokedex.uikit.theme.PokeShapes
 
 @Composable
-fun TagContainer(
+fun FilterTagContainer(
     modifier: Modifier = Modifier,
     state: MutableState<TagContainerState> = rememberTagContainerState(),
     content: @Composable TagContainerScope.() -> Unit

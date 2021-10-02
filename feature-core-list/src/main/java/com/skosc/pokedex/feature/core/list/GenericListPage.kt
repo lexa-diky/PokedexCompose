@@ -3,26 +3,19 @@ package com.skosc.pokedex.feature.core.list
 import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.interaction.DragInteraction
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.skosc.pokedex.uikit.localViewModel
-import com.skosc.pokedex.uikit.theme.CardShape
-import com.skosc.pokedex.uikit.theme.UIColor
 import com.skosc.pokedex.uikit.widget.*
-import com.skosc.pokedex.uikit.widget.PairTileLayout
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.filterIsInstance
+import com.skosc.pokedex.uikit.widget.filter.FieldFilterTag
+import com.skosc.pokedex.uikit.widget.filter.FilterLayout
+import com.skosc.pokedex.uikit.widget.filter.FilterTagContainer
 import kotlinx.coroutines.flow.flowOf
 
 private const val SEARCH_ITEM_KEY = "__SEARCH_ITEM_KEY"
@@ -45,7 +38,7 @@ fun <T : Any> GenericItemListPage(
         item { Spacer(modifier = Modifier.size(16.dp)) }
 
         stickyHeader(SEARCH_ITEM_KEY) {
-            SearchBlock(isScrollInProgress = state.isScrollInProgress)
+            SearchBlock(filters = spec.filters, isScrollInProgress = state.isScrollInProgress)
         }
 
         Log.i("LSTATE", pagingItems.loadState.toString())
@@ -85,22 +78,20 @@ private fun makePlaceholders() = flowOf(PagingData.from((0..15).map {
 }))
 
 @Composable
-private fun SearchBlock(isScrollInProgress: Boolean) {
+private fun <T> SearchBlock(filters: List<ListFilter<T>>, isScrollInProgress: Boolean) {
     val topPadding by animateDpAsState(targetValue = if (isScrollInProgress) 16.dp else 0.dp)
 
-    Box(
+    FilterLayout(
         modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp, top = topPadding)
     ) {
-        Column(
-            modifier = Modifier
-                .background(UIColor.BackgroundAccent, CardShape)
-        ) {
-            SearchField(
-                onQueryUpdated = {},
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth()
-            )
+        filters.forEach { filter ->
+            FilterTagContainer {
+                when (filter) {
+                    is ListFilter.Field -> {
+                        FieldFilterTag(placeholder = filter.title)
+                    }
+                }
+            }
         }
     }
 }
@@ -109,8 +100,9 @@ private fun SearchBlock(isScrollInProgress: Boolean) {
 inline fun <reified T : Any> GenericItemListPage(
     header: String,
     noinline onItemSelected: (Int) -> Unit = {},
+    filters: List<ListFilter<T>> = emptyList(),
     mapper: BaseListItemMapper<T>,
 ) {
-    val spec = rememberGenericListSpec(mapper)
+    val spec = rememberGenericListSpec(mapper, filters)
     GenericItemListPage(header, onItemSelected, spec)
 }

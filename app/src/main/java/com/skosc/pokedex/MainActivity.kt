@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity(), DIAware {
                 LocalAnalytics provides analytics,
                 LocalSettings provides settings
             ) {
-                launchIgnition()
+                // launchIgnition()
 
                 PokedexTheme {
                     Surface(color = MaterialTheme.colors.background) {

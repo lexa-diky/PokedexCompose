@@ -22,4 +22,7 @@ dependencies {
 
     // Kotlin Date Tine
     api "org.jetbrains.kotlinx:kotlinx-datetime:0.2.1"
+
+    // Timber
+    api 'com.jakewharton.timber:timber:5.0.1'
 }

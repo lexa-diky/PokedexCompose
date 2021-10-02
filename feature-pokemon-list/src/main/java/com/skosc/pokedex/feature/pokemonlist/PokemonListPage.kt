@@ -9,6 +9,7 @@ import com.skosc.pokedex.domain.pokemon.util.getLocalized
 import com.skosc.pokedex.domain.settings.LocalSettings
 import com.skosc.pokedex.feature.core.list.BaseListItem
 import com.skosc.pokedex.feature.core.list.GenericItemListPage
+import com.skosc.pokedex.feature.core.list.ListFilter
 import com.skosc.pokedex.feature.pokemondetails.PokemonDetailsDestination
 import com.skosc.pokedex.feature.pokemondetails.PokemonDetailsPage
 import com.skosc.pokedex.navigation.LocalNavController
@@ -39,20 +40,21 @@ fun NavGraphBuilder.PokemonListPage() = composable(PokemonListDestination.path) 
                 leftColor = leftColor,
                 rightColor = getRightColor(species, leftColor)
             )
-        }
+        },
+        filters = listOf(
+            ListFilter.Field<PokemonSpecies>("Name") { true }
+        )
     )
 }
 
 private fun getLeftColor(species: PokemonSpecies): Color {
-    return  Coloristic.getPokeColorForType(species.defaultVariety.types.first().defaultName)
-        ?: Coloristic.getPokeColorForName(species.color.name)
+    return Coloristic.getPokeColorForType(species.defaultVariety.types.first().defaultName)
 }
 
 private fun getRightColor(species: PokemonSpecies, leftColor: Color): Color {
     val second = species.defaultVariety.types.getOrNull(1)
     return if (second != null) {
         Coloristic.getPokeColorForType(second.defaultName)
-            ?: Coloristic.getPokeColorForName(species.color.name)
     } else {
         leftColor
     }

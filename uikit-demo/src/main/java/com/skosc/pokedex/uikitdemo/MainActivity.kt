@@ -20,17 +20,17 @@ class UikitDemoActivity : ComponentActivity() {
                 modifier = Modifier.padding(16.dp)
             ) {
                 repeat(4) {
-                    TagContainer {
+                    FilterTagContainer {
                         FieldFilterTag(default = "hello world", placeholder = "Name")
                     }
                 }
                 repeat(3) {
-                    TagContainer {
+                    FilterTagContainer {
                         ToggleFilterTag(text = "Toggle Me")
                     }
                 }
 
-                TagContainer {
+                FilterTagContainer {
                     SelectionFilterTag(
                         options = listOf(
                             SelectionTagOption(1, "Grass", painterResource(R.drawable.ic_pokeball)),
