@@ -33,16 +33,16 @@ object UIColor {
 }
 
 object PokemonColor {
-    val Black = Color(0xFFBBBBBB)
-    val Blue = Color(0xFF94DBEE)
+    val Black = Color(0xFF444444)
+    val Blue = Color(0xFF6AD2EE)
     val Brown = Color(0xFFCF9F6F)
-    val Gray = Color(0xFFD1D1E0)
+    val Gray = Color(0xFF4A6B66)
     val Green = Color(0xFF64D364)
-    val Pink = Color(0xFFF4BDC9)
+    val Pink = Color(0xFFE690A3)
     val Purple = Color(0xFFC183C1)
     val Red = Color(0xFFEC8484)
-    val White = Color(0xFFDADADA)
-    val Yellow = Color(0xFFFFFF9F)
+    val White = Color(0xFF1C9E84)
+    val Yellow = Color(0xFFFFDE00)
 
     val all = listOf(
         Black,
