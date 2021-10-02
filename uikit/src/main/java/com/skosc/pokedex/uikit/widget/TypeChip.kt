@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.skosc.pokedex.uikit.theme.ChipShape
+import com.skosc.pokedex.uikit.theme.PokeShapes
 
 @Composable
 fun TypeChip(type: String) {
@@ -19,7 +19,7 @@ fun TypeChip(type: String) {
         modifier = Modifier
             .background(
                 Color.White.copy(alpha = 0.2f),
-                ChipShape
+                PokeShapes.ChipShape
             )
             .padding(8.dp)
     )

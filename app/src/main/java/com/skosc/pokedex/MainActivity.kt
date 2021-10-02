@@ -1,15 +1,15 @@
 package com.skosc.pokedex
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import com.skosc.pokedex.core.analytics.FirebaseAnalyticsController
 import com.skosc.pokedex.core.analytics.LocalAnalytics
+import com.skosc.pokedex.domain.ignition.IgnitionController
 import com.skosc.pokedex.domain.settings.LocalSettings
 import com.skosc.pokedex.domain.settings.SettingsRepository
 import com.skosc.pokedex.domain.settings.entity.defaultSettings
@@ -39,12 +39,24 @@ class MainActivity : ComponentActivity(), DIAware {
                 LocalAnalytics provides analytics,
                 LocalSettings provides settings
             ) {
+                launchIgnition()
+
                 PokedexTheme {
                     Surface(color = MaterialTheme.colors.background) {
                         RootPage()
                     }
                 }
             }
+        }
+    }
+
+    @Composable
+    @SuppressLint("ComposableNaming")
+    private fun launchIgnition() {
+        val ignitionController by LocalDI.current.di.instance<IgnitionController>()
+
+        LaunchedEffect(Unit) {
+            ignitionController.ignite()
         }
     }
 }

@@ -9,6 +9,7 @@ dependencyResolutionManagement {
 rootProject.name = "pokedex"
 
 include ':app'
+include ':uikit-demo'
 
 include ':core'
 include ':core-network'
@@ -20,6 +21,7 @@ include ':navigation'
 
 include ':domain-pokemon'
 include ':domain-settings'
+include ':domain-ignition'
 
 include ':feature-core-list'
 include ':feature-core-details'

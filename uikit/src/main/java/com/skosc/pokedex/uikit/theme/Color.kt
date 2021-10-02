@@ -18,6 +18,7 @@ object UIColor {
     val ShadowGray = Color.Black.copy(alpha = 0.1f)
     val ShadowTransparent = Color.Black.copy(alpha = 0.03f)
     val TextBlack = Color.Black
+    val TextGray = Color.Gray
 
     object Accent {
         val Purple = Color(0xFF6200EE)
