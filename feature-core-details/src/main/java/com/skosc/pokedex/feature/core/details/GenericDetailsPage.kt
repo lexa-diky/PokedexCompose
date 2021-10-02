@@ -1,11 +1,13 @@
 package com.skosc.pokedex.feature.core.details
 
-import android.util.Log
 import androidx.compose.animation.*
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -20,6 +22,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,7 +37,9 @@ import com.skosc.pokedex.uikit.image.CropTransparentTransformation
 import com.skosc.pokedex.uikit.theme.PokemonColor
 import com.skosc.pokedex.uikit.theme.UIColor
 import com.skosc.pokedex.uikit.widget.*
+import java.lang.Integer.max
 import kotlin.math.abs
+import kotlin.random.Random
 
 private val ITEM_HEADER = "__ITEM_HEADER"
 private val ITEM_POKE_BALL = "__ITEM_POKEBALL"
@@ -99,6 +104,31 @@ fun GenericDetailsPage(details: BaseDetailsItem) {
 @Composable
 @OptIn(ExperimentalAnimationApi::class)
 private fun PokemonImage(imageUrl: String, modifier: Modifier = Modifier) {
+    var xDiff by remember { mutableStateOf(0.dp) }
+    var yDiff by remember { mutableStateOf(0.dp) }
+
+    fun launchJumpAnimation() {
+        xDiff += (-Random.nextInt(-8, 8))
+            .coerceAtLeast(-8)
+            .coerceAtMost(8)
+            .dp
+        yDiff += (-Random.nextInt(-8, 8))
+            .coerceAtLeast(-8)
+            .coerceAtMost(8)
+            .dp
+    }
+
+    val xAnimated by animateDpAsState(
+        targetValue = xDiff,
+        animationSpec = spring(),
+        finishedListener = { xDiff = 0.dp
+        })
+    val yAnimated by animateDpAsState(
+        targetValue = yDiff,
+        animationSpec = spring(),
+        finishedListener = { yDiff = 0.dp }
+    )
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
@@ -114,7 +144,15 @@ private fun PokemonImage(imageUrl: String, modifier: Modifier = Modifier) {
                 fadeIn()
             },
             contentDescription = null,
-            modifier = Modifier.fillMaxSize(0.7f)
+            modifier = Modifier
+                .fillMaxSize(0.7f)
+                .offset(x = xAnimated, y = yAnimated)
+                .clickable(
+                    role = Role.Image,
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = { launchJumpAnimation() }
+                )
         )
     }
 }
