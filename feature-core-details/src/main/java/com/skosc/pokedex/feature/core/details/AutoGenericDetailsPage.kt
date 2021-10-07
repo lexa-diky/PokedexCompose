@@ -6,8 +6,8 @@ import androidx.compose.runtime.getValue
 import com.skosc.pokedex.uikit.localViewModel
 
 @Composable
-fun <T> GenericDetailsPage(spec: GenericDetailsSpec<T>) {
-    val viewModel = localViewModel { GenericDetailsViewModel(spec) }
+fun <T> GenericDetailsPageScope.GenericDetailsPage(spec: GenericDetailsSpec<T>) {
+    val viewModel = localViewModel(spec.toString()) { GenericDetailsViewModel(spec) }
 
     val details by viewModel.details.collectAsState()
     if (details != null) {

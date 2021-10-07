@@ -51,7 +51,7 @@ fun <T : Any> GenericItemListPage(
             displayContent = { item ->
                 PokemonCard(
                     name = item.name,
-                    order = item.order,
+                    order = item.id,
                     tags = item.tags,
                     leftBackgroundColor = item.leftColor,
                     rightBackgroundColor = item.rightColor,
@@ -59,7 +59,7 @@ fun <T : Any> GenericItemListPage(
                     modifier = Modifier
                         .width(200.dp)
                         .height(125.dp)
-                        .clickable { onItemSelected(item.order) }
+                        .clickable { onItemSelected(item.id) }
                         .padding(8.dp)
                 )
             },
@@ -69,7 +69,7 @@ fun <T : Any> GenericItemListPage(
 
 private fun makePlaceholders() = flowOf(PagingData.from((0..15).map {
     BaseListItem(
-        order = 0,
+        id = 0,
         name = "",
         tags = emptyList(),
         color = Color.Gray,
@@ -85,7 +85,9 @@ private fun <T> SearchBlock(filters: List<ListFilter<T>>, isScrollInProgress: Bo
         modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp, top = topPadding)
     ) {
         filters.forEach { filter ->
-            FilterTagContainer {
+            FilterTagContainer(
+                modifier = Modifier.padding(horizontal = 8.dp)
+            ) {
                 when (filter) {
                     is ListFilter.Field -> {
                         FieldFilterTag(placeholder = filter.title)

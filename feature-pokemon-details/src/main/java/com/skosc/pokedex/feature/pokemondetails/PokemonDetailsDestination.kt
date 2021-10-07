@@ -6,5 +6,5 @@ object PokemonDetailsDestination : Destination {
 
     override val path: String = "pokemon/details/"
 
-    val ARG_ORDER = "order"
+    const val ARG_ID = "order"
 }

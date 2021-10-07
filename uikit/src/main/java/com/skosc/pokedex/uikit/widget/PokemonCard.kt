@@ -20,6 +20,7 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberImagePainter
 import com.skosc.pokedex.uikit.R
+import com.skosc.pokedex.uikit.modifier.halfBackground
 import com.skosc.pokedex.uikit.theme.PokeCardShape
 import com.skosc.pokedex.uikit.theme.ShadowWhite
 import com.skosc.pokedex.uikit.theme.UIColor

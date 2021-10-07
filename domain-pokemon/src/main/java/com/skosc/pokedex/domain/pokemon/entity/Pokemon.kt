@@ -13,3 +13,6 @@ data class Pokemon(
         const val MAX_CATCH_RATE = 100
     }
 }
+
+val Pokemon.primaryType: PokemonType get() = types.first()
+val Pokemon.secondaryType: PokemonType? get() = types.getOrNull(1)

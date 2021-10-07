@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import com.skosc.pokedex.domain.pokemon.entity.Pokemon
 import com.skosc.pokedex.domain.pokemon.entity.PokemonSpecies
 import com.skosc.pokedex.domain.pokemon.entity.PokemonStat
+import com.skosc.pokedex.domain.pokemon.entity.primaryType
+import com.skosc.pokedex.uikit.coloristics.Coloristic
 import com.skosc.pokedex.uikit.theme.CardShape
 import com.skosc.pokedex.uikit.theme.UIColor
 import com.skosc.pokedex.uikit.widget.FillBar
@@ -22,7 +24,7 @@ import com.skosc.pokedex.uikit.widget.StatBar
 import java.util.*
 
 @Composable
-fun PokemonDetailsInfoPage(pokemon: PokemonSpecies) {
+fun PokemonDetailsInfoPage(species: PokemonSpecies, pokemon: Pokemon) {
     Column {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -37,7 +39,7 @@ fun PokemonDetailsInfoPage(pokemon: PokemonSpecies) {
             )
 
             Text(
-                text = pokemon.generation.uppercase(),
+                text = species.generation.uppercase(),
                 modifier = Modifier
                     .weight(0.7f)
             )
@@ -57,9 +59,9 @@ fun PokemonDetailsInfoPage(pokemon: PokemonSpecies) {
                 modifier = Modifier.weight(0.3f)
             )
             FillBar(
-                fill = pokemon.catchRate.toFloat() / Pokemon.MAX_CATCH_RATE,
-                backgroundColor = Color.Gray,
-                fillColor = Color.Green,
+                fill = species.catchRate.toFloat() / Pokemon.MAX_CATCH_RATE,
+                backgroundColor = UIColor.ShadowGray,
+                fillColor = Coloristic.getPokeColorForType(pokemon.primaryType.defaultName),
                 modifier = Modifier
                     .height(8.dp)
                     .weight(0.7f)
@@ -81,7 +83,7 @@ fun PokemonDetailsInfoPage(pokemon: PokemonSpecies) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Column {
-            pokemon.normalizedFlavorText.forEach { (version, text) ->
+            species.normalizedFlavorText.forEach { (version, text) ->
                 Text(
                     fontWeight = FontWeight.SemiBold,
                     text = version

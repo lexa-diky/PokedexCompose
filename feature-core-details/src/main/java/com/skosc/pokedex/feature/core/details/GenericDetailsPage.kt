@@ -7,6 +7,7 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,6 +23,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.font.FontWeight
@@ -34,9 +36,11 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.skosc.pokedex.feature.core.details.entity.*
 import com.skosc.pokedex.uikit.image.CropTransparentTransformation
+import com.skosc.pokedex.uikit.modifier.halfBackground
 import com.skosc.pokedex.uikit.theme.PokemonColor
 import com.skosc.pokedex.uikit.theme.UIColor
 import com.skosc.pokedex.uikit.widget.*
+import kotlinx.coroutines.launch
 import java.lang.Integer.max
 import kotlin.math.abs
 import kotlin.random.Random
@@ -46,11 +50,13 @@ private val ITEM_POKE_BALL = "__ITEM_POKEBALL"
 private val ITEM_CONTENT_SHEET = "__ITEM_CONTENT_SHEET"
 
 @Composable
-fun GenericDetailsPage(details: BaseDetailsItem) {
-    Box(modifier = Modifier
-        .background(details.background.base)
-        .halfBackground(details.background.left, details.background.right, RectangleShape)
-        .fillMaxSize()) {
+fun GenericDetailsPageScope.GenericDetailsPage(details: BaseDetailsItem) {
+    Box(
+        modifier = Modifier
+            .background(details.background.base)
+            .halfBackground(details.background.left, details.background.right, RectangleShape)
+            .fillMaxSize()
+    ) {
         val lazyListState = rememberLazyListState()
 
         LazyColumn(
@@ -66,25 +72,14 @@ fun GenericDetailsPage(details: BaseDetailsItem) {
                 )
             }
 
-            val pokeballOffset =
-                lazyListState.layoutInfo.visibleItemsInfo.firstOrNull { it.key == ITEM_POKE_BALL }?.offset
-                    ?: -10000000
-            val sheetOffset =
-                lazyListState.layoutInfo.visibleItemsInfo.firstOrNull { it.key == ITEM_CONTENT_SHEET }?.offset
-                    ?: -10000000
-            val headerVisibilityInfo =
-                lazyListState.layoutInfo.visibleItemsInfo.firstOrNull { it.key == ITEM_HEADER }
 
             item(ITEM_POKE_BALL) {
-                val relation = abs(pokeballOffset).toFloat() / abs(sheetOffset).toFloat()
-                val alpha by animateFloatAsState(if (relation > 0.3f && headerVisibilityInfo == null) 0f else 1f)
 
                 PokemonImage(
                     imageUrl = details.header.image,
                     modifier = Modifier
                         .size(200.dp)
                         .zIndex(1f)
-                        .alpha(alpha)
                 )
             }
 
@@ -103,7 +98,9 @@ fun GenericDetailsPage(details: BaseDetailsItem) {
 
 @Composable
 @OptIn(ExperimentalAnimationApi::class)
-private fun PokemonImage(imageUrl: String, modifier: Modifier = Modifier) {
+private fun GenericDetailsPageScope.PokemonImage(imageUrl: String, modifier: Modifier = Modifier) {
+    val scope = rememberCoroutineScope()
+
     var xDiff by remember { mutableStateOf(0.dp) }
     var yDiff by remember { mutableStateOf(0.dp) }
 
@@ -121,7 +118,8 @@ private fun PokemonImage(imageUrl: String, modifier: Modifier = Modifier) {
     val xAnimated by animateDpAsState(
         targetValue = xDiff,
         animationSpec = spring(),
-        finishedListener = { xDiff = 0.dp
+        finishedListener = {
+            xDiff = 0.dp
         })
     val yAnimated by animateDpAsState(
         targetValue = yDiff,
@@ -138,22 +136,54 @@ private fun PokemonImage(imageUrl: String, modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxSize()
         )
 
-        Image(
-            painter = rememberImagePainter(data = imageUrl) {
-                transformations(CropTransparentTransformation())
-                fadeIn()
-            },
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxSize(0.7f)
-                .offset(x = xAnimated, y = yAnimated)
-                .clickable(
-                    role = Role.Image,
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                    onClick = { launchJumpAnimation() }
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (hasPreviousPage) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_arrow_left),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) { scope.launch { scrollToPreviousPage() } }
                 )
-        )
+            } else {
+                Spacer(modifier = Modifier.size(48.dp))
+            }
+            Image(
+                painter = rememberImagePainter(data = imageUrl) {
+                    transformations(CropTransparentTransformation())
+                    crossfade(true)
+                },
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxSize(0.7f)
+                    .offset(x = xAnimated, y = yAnimated)
+                    .clickable(
+                        role = Role.Image,
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                        onClick = { launchJumpAnimation() }
+                    )
+            )
+            if (hasNextPage) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_arrow_right),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) { scope.launch { scrollToNextPage() } }
+                )
+            } else {
+                Spacer(modifier = Modifier.size(48.dp))
+            }
+        }
     }
 }
 
@@ -285,8 +315,9 @@ private fun DetailsBottomSheet(modifier: Modifier = Modifier, content: @Composab
 
 @Composable
 @Preview(name = "Generics Details Page", showBackground = true, showSystemUi = true)
+@OptIn(ExperimentalPagerApi::class)
 fun Preview_GenericDetailsPage() {
-    GenericDetailsPage(BaseDetailsItem(
+    GenericDetailsPageScope(rememberPagerState(pageCount = 1)).GenericDetailsPage(BaseDetailsItem(
         background = DetailsBackground(PokemonColor.Red, PokemonColor.Blue, PokemonColor.Green),
         header = DetailsHeaderItem(
             title = "Bulbasaur",
@@ -312,6 +343,6 @@ fun Preview_GenericDetailsPage() {
                 content = { Text("Search Content") }
             ),
 
-        ))
+            ))
     )
 }

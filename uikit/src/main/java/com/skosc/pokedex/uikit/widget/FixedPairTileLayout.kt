@@ -29,18 +29,19 @@ private fun <T : Any> LazyListScope.DisplayState(
     edgePadding: Dp,
     content: @Composable (T) -> Unit
 ) {
-    itemsIndexed(items) { rowIndex, item ->
+    val rows = (items.itemCount + 2 - 1) / 2
+    items(rows) { rowIndex ->
         Row(
             modifier = Modifier.padding(horizontal = edgePadding)
         ) {
             for (columnIndex in 0 until 2) {
                 val itemIndex = rowIndex * 2 + columnIndex
-                if (itemIndex < items.itemCount) {
+                if (itemIndex < items.itemCount && items[itemIndex] != null) {
                     Box(
                         modifier = Modifier.weight(1f, fill = true),
                         propagateMinConstraints = true
                     ) {
-                        content(item!!)
+                        content(items[itemIndex]!!)
                     }
                 } else {
                     Spacer(Modifier.weight(1f, fill = true))

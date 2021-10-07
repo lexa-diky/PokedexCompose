@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.Color
 
 interface BaseListItem {
 
-    val order: Int
+    val id: Int
 
     val name: String
 
@@ -17,9 +17,9 @@ interface BaseListItem {
 
     companion object {
 
-        operator fun invoke(order: Int, name: String, tags: List<String>, image: String, color: Color): BaseListItem {
+        operator fun invoke(id: Int, name: String, tags: List<String>, image: String, color: Color): BaseListItem {
             return object : BaseListItem {
-                override val order: Int = order
+                override val id: Int = id
                 override val name: String = name
                 override val tags: List<String> = tags
                 override val image: String = image
@@ -28,9 +28,9 @@ interface BaseListItem {
             }
         }
 
-        operator fun invoke(order: Int, name: String, tags: List<String>, image: String, leftColor: Color, rightColor: Color): BaseListItem {
+        operator fun invoke(id: Int, name: String, tags: List<String>, image: String, leftColor: Color, rightColor: Color): BaseListItem {
             return object : BaseListItem {
-                override val order: Int = order
+                override val id: Int = id
                 override val name: String = name
                 override val tags: List<String> = tags
                 override val image: String = image

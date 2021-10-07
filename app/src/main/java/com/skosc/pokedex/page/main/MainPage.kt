@@ -32,6 +32,7 @@ import com.skosc.pokedex.enity.ui.BoxCard
 import com.skosc.pokedex.enity.ui.BoxCardList
 import com.skosc.pokedex.enity.ui.NewsBriefingEntry
 import com.skosc.pokedex.enity.ui.sample
+import com.skosc.pokedex.feature.pokemondetails.PokemonDetailsDestination
 import com.skosc.pokedex.navigation.LocalNavController
 import com.skosc.pokedex.navigation.navigate
 import com.skosc.pokedex.newsList
@@ -195,10 +196,18 @@ private fun SmallMenuCards(cards: List<BoxCard.Menu>) {
 
 @Composable
 private fun NewsHeader() {
+    val navContoller = LocalNavController.current
     ConstraintLayout(
         Modifier
             .padding(vertical = 8.dp, horizontal = 32.dp)
             .fillMaxWidth()
+            .clickable {
+                navContoller.navigate(
+                    PokemonDetailsDestination, mapOf(
+                        PokemonDetailsDestination.ARG_ID to 25
+                    )
+                )
+            }
     ) {
         val navController = LocalNavController.current
         val (titleRef, linkRef) = createRefs()

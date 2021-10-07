@@ -12,22 +12,22 @@ import com.skosc.pokedex.uikit.widget.EvolutionChain
 import com.skosc.pokedex.uikit.widget.EvolutionChainItem
 
 @Composable
-fun PokemonDetailsEvolutionPage(pokemon: PokemonSpecies) {
+fun PokemonDetailsEvolutionPage(pokemon: Pokemon) {
 
     Column {
         EvolutionChain(
             items = listOf(
-                EvolutionChainItem(pokemon.defaultVariety.name, rememberImagePainter(data = pokemon.defaultVariety.imageUrl) {
+                EvolutionChainItem(pokemon.name, rememberImagePainter(data = pokemon.imageUrl) {
                     transformations(
                         CropTransparentTransformation()
                     )
                 }),
-                EvolutionChainItem(pokemon.defaultVariety.name, rememberImagePainter(data = pokemon.defaultVariety.imageUrl) {
+                EvolutionChainItem(pokemon.name, rememberImagePainter(data = pokemon.imageUrl) {
                     transformations(
                         CropTransparentTransformation()
                     )
                 }),
-                EvolutionChainItem(pokemon.defaultVariety.name, rememberImagePainter(data = pokemon.defaultVariety.imageUrl) {
+                EvolutionChainItem(pokemon.name, rememberImagePainter(data = pokemon.imageUrl) {
                     transformations(
                         CropTransparentTransformation()
                     )

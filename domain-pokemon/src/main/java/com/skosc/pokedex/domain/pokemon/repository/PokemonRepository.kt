@@ -15,8 +15,8 @@ import com.skosc.pokedex.core.network.PaginatedFlowReader
 
 class PokemonRepository internal constructor(private val service: PokeApiService) {
 
-    suspend fun getPokemonSpecies(order: Int): PokemonSpecies {
-        return service.getPokemonSpecies(order)
+    suspend fun getPokemonSpecies(id: Int): PokemonSpecies {
+        return service.getPokemonSpecies(id)
             .let(PokeApiPokemonSpeciesMapper::map)
     }
 

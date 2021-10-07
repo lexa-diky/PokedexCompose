@@ -15,13 +15,16 @@ import androidx.compose.ui.unit.dp
 import com.skosc.pokedex.domain.pokemon.entity.Pokemon
 import com.skosc.pokedex.domain.pokemon.entity.PokemonSpecies
 import com.skosc.pokedex.domain.pokemon.entity.PokemonStat
+import com.skosc.pokedex.domain.pokemon.entity.primaryType
+import com.skosc.pokedex.uikit.coloristics.Coloristic
+import com.skosc.pokedex.uikit.theme.UIColor
 import com.skosc.pokedex.uikit.widget.FillBar
 
 @Composable
-fun PokemonDetailsStatsPage(pokemon: PokemonSpecies) {
+fun PokemonDetailsStatsPage(pokemon: Pokemon) {
 
     Column {
-        pokemon.defaultVariety.baseStats.forEach { stat ->
+        pokemon.baseStats.forEach { stat ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
@@ -35,8 +38,8 @@ fun PokemonDetailsStatsPage(pokemon: PokemonSpecies) {
                 )
                 FillBar(
                     fill = stat.value.toFloat() / PokemonStat.MAX_VALUE,
-                    backgroundColor = Color.Gray,
-                    fillColor = Color.Green,
+                    backgroundColor = UIColor.ShadowGray,
+                    fillColor = Coloristic.getPokeColorForType(pokemon.primaryType.defaultName),
                     modifier = Modifier.weight(0.7f)
                         .height(8.dp)
                 )
