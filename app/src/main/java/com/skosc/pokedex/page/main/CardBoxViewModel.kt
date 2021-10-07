@@ -12,16 +12,16 @@ import kotlinx.coroutines.launch
 
 class CardBoxViewModel(private val coordinateMenuAndSearch: CoordinateMenuAndSearch) : ViewModel() {
 
-    private val _cards: MutableStateFlow<BoxCardList> = MutableStateFlow(BoxCardList.Menu())
-    val cards: StateFlow<BoxCardList> get() = _cards
+    val cards: MutableStateFlow<BoxCardList> = MutableStateFlow(BoxCardList.Menu())
 
     init {
-        onQueryUpdateUpdated(null)
+        reload()
     }
 
-    fun onQueryUpdateUpdated(query: String?) {
+    fun reload() {
         viewModelScope.launch {
-            _cards.emit(coordinateMenuAndSearch(query))
+            val value = coordinateMenuAndSearch(null)
+            cards.emit(value)
         }
     }
 }

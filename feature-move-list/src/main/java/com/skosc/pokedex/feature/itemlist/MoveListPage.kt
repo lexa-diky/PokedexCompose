@@ -1,17 +1,13 @@
 package com.skosc.pokedex.feature.itemlist
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.*
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.skosc.pokedex.domain.pokemon.entity.PokemonMove
 import com.skosc.pokedex.domain.settings.LocalSettings
 import com.skosc.pokedex.feature.core.list.BaseListItem
 import com.skosc.pokedex.feature.core.list.GenericItemListPage
-import com.skosc.pokedex.uikit.widget.RootLayout
-import com.skosc.pokedex.uikit.diViewModel
-import com.skosc.pokedex.uikit.theme.UIColor
-import com.skosc.pokedex.uikit.widget.PairTileLayout
+import com.skosc.pokedex.uikit.theme.PokeColor
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.MoveListPage() = composable(MoveListDestination.path) {
@@ -22,7 +18,7 @@ fun NavGraphBuilder.MoveListPage() = composable(MoveListDestination.path) {
             it.name,
             listOf(it.type.getLocalized(settings.localization)),
             "",
-            UIColor.Accent.Red
+            PokeColor.Accent.Red
         )
     }
 }

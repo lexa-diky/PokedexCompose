@@ -2,26 +2,15 @@ package com.skosc.pokedex.page.main
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -41,7 +30,7 @@ import com.skosc.pokedex.settings
 import com.skosc.pokedex.uikit.image.CropTransparentTransformation
 import com.skosc.pokedex.uikit.diViewModel
 import com.skosc.pokedex.uikit.theme.CardShape
-import com.skosc.pokedex.uikit.theme.UIColor
+import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.*
 import com.skosc.pokedex.widget.*
 
@@ -56,7 +45,7 @@ fun NavGraphBuilder.MainPage() = composable(root.path) {
     InnerMainPage(
         cards = cards,
         news = news,
-        onQueryUpdated = { cardBoxViewModel.onQueryUpdateUpdated(it) },
+        onQueryUpdated = { cardBoxViewModel.reload() },
         onSettingsClicked = { navController.navigate(root.settings) }
     )
 }
@@ -99,7 +88,7 @@ private fun CardBox(cards: BoxCardList, onQueryUpdated: (String) -> Unit) {
     ) {
         Column(
             modifier = Modifier
-                .background(UIColor.BackgroundAccent, CardShape)
+                .background(PokeColor.Background.LightAccent, CardShape)
         ) {
             SearchField(
                 onQueryUpdated = onQueryUpdated,
@@ -175,7 +164,7 @@ private fun SmallMenuCards(cards: List<BoxCard.Menu>) {
 
             Row(Modifier.padding(horizontal = 16.dp)) {
                 SmallCard(
-                    text = left.title,
+                    text = left.title.render(),
                     color = left.color,
                     onClick = { navController.navigate(left.destination) },
                     modifier = Modifier.weight(1f)
@@ -183,7 +172,7 @@ private fun SmallMenuCards(cards: List<BoxCard.Menu>) {
                 right?.let {
                     Spacer(modifier = Modifier.weight(0.1f))
                     SmallCard(
-                        text = it.title,
+                        text = it.title.render(),
                         color = it.color,
                         onClick = { navController.navigate(it.destination) },
                         modifier = Modifier.weight(1f)

@@ -2,12 +2,10 @@ package com.skosc.pokedex.feature.core.details
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,7 +17,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalDensity
@@ -37,12 +34,9 @@ import com.google.accompanist.pager.rememberPagerState
 import com.skosc.pokedex.feature.core.details.entity.*
 import com.skosc.pokedex.uikit.image.CropTransparentTransformation
 import com.skosc.pokedex.uikit.modifier.halfBackground
-import com.skosc.pokedex.uikit.theme.PokemonColor
-import com.skosc.pokedex.uikit.theme.UIColor
+import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.*
 import kotlinx.coroutines.launch
-import java.lang.Integer.max
-import kotlin.math.abs
 import kotlin.random.Random
 
 private val ITEM_HEADER = "__ITEM_HEADER"
@@ -206,7 +200,7 @@ private fun DetailsHeader(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        OrderText(order, color = UIColor.BackgroundAccent)
+        OrderText(order, color = PokeColor.Background.LightAccent)
     }
 }
 
@@ -266,7 +260,7 @@ private fun TabRow(
     ) {
         items(rowItems) { item ->
             val isItemSelected = item == selectedItem
-            val bottomLineColor by animateColorAsState(if (isItemSelected) UIColor.ShadowBlack else Color.Transparent)
+            val bottomLineColor by animateColorAsState(if (isItemSelected) PokeColor.ShadowBlack else Color.Transparent)
 
             var textLayout: TextLayoutResult? by remember { mutableStateOf(null) }
 
@@ -305,7 +299,7 @@ private fun TabRow(
 private fun DetailsBottomSheet(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     Box(
         modifier = modifier.background(
-            UIColor.BackgroundAccent,
+            PokeColor.Background.LightAccent,
             RoundedCornerShape(32.dp)
         )
     ) {
@@ -316,9 +310,9 @@ private fun DetailsBottomSheet(modifier: Modifier = Modifier, content: @Composab
 @Composable
 @Preview(name = "Generics Details Page", showBackground = true, showSystemUi = true)
 @OptIn(ExperimentalPagerApi::class)
-fun Preview_GenericDetailsPage() {
+private fun Preview_GenericDetailsPage() {
     GenericDetailsPageScope(rememberPagerState(pageCount = 1)).GenericDetailsPage(BaseDetailsItem(
-        background = DetailsBackground(PokemonColor.Red, PokemonColor.Blue, PokemonColor.Green),
+        background = DetailsBackground(PokeColor.Pokemon.Red, PokeColor.Pokemon.Blue, PokeColor.Pokemon.Green),
         header = DetailsHeaderItem(
             title = "Bulbasaur",
             order = 1,

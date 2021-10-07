@@ -4,20 +4,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.BottomSheetState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.skosc.pokedex.core.localization.Localization
 import com.skosc.pokedex.uikit.diViewModel
 import com.skosc.pokedex.uikit.theme.ListItemShape
-import com.skosc.pokedex.uikit.theme.UIColor
+import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.PokeCardHeader
 import com.skosc.pokedex.uikit.widget.PokeCardSubHeader
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -49,7 +46,7 @@ private fun LanguageSettingsItem(localName: String, globalName: String, onClick:
             .wrapContentHeight()
             .padding(horizontal = 8.dp, vertical = 4.dp)
     ) {
-        PokeCardHeader(text = localName, color = UIColor.TextBlack)
-        PokeCardSubHeader(text = globalName, color = UIColor.TextBlack)
+        PokeCardHeader(text = localName, color = PokeColor.TextBlack)
+        PokeCardSubHeader(text = globalName, color = PokeColor.TextBlack)
     }
 }

@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
-import com.skosc.pokedex.uikit.theme.UIColor
 import com.skosc.pokedex.uikit.widget.ListItemText
 
 data class SelectionTagOption<T>(

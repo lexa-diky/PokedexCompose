@@ -16,7 +16,7 @@ fun <Display : Any> LazyListScope.FixedPairTileLayout(
     displayContent: @Composable (Display) -> Unit,
     placeholderItems: LazyPagingItems<Display>,
     edgePadding: Dp = 0.dp,
-    ) {
+) {
     if (displayItems.itemCount != 0) {
         DisplayState(displayItems, edgePadding, displayContent)
     } else {

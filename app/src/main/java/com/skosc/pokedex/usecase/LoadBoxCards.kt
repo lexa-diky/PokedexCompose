@@ -1,6 +1,7 @@
 package com.skosc.pokedex.usecase
 
 import com.skosc.pokedex.*
+import com.skosc.pokedex.core.localization.text.Text
 import com.skosc.pokedex.enity.domain.MenuEntry
 import com.skosc.pokedex.enity.ui.BoxCard
 import com.skosc.pokedex.enity.ui.BoxCardList
@@ -8,7 +9,7 @@ import com.skosc.pokedex.repository.MenuRepository
 import com.skosc.pokedex.core.resources.ResourceResolver
 import com.skosc.pokedex.navigation.Destination
 import com.skosc.pokedex.navigation.root.RootDestination
-import com.skosc.pokedex.uikit.theme.PokemonColor
+import com.skosc.pokedex.uikit.coloristics.Coloristic
 
 class LoadBoxCards(
     private val menuRepository: MenuRepository,
@@ -24,7 +25,7 @@ class LoadBoxCards(
     private fun toBoxCard(entry: MenuEntry): BoxCard.Menu {
         return BoxCard.Menu(
             title = getTitle(entry),
-            color = PokemonColor.random,
+            color = Coloristic.getColorNoRepeat(NO_REPEAT_SPACE),
             destination = entry.getDestination()
         )
     }
@@ -36,11 +37,16 @@ class LoadBoxCards(
         else -> RootDestination
     }
 
-    private fun getTitle(entry: MenuEntry): String = when (entry) {
-        MenuEntry.Pokemon -> resources.getString(R.string.menu_box_pokemon)
-        MenuEntry.Items -> resources.getString(R.string.menu_box_items)
-        MenuEntry.Moves -> resources.getString(R.string.menu_box_moves)
-        MenuEntry.Abilities -> resources.getString(R.string.menu_box_abilities)
-        MenuEntry.Locations -> resources.getString(R.string.menu_box_locations)
+    private fun getTitle(entry: MenuEntry): Text = when (entry) {
+        MenuEntry.Pokemon -> Text.Resource(R.string.menu_box_pokemon)
+        MenuEntry.Items -> Text.Resource(R.string.menu_box_items)
+        MenuEntry.Moves -> Text.Resource(R.string.menu_box_moves)
+        MenuEntry.Abilities -> Text.Resource(R.string.menu_box_abilities)
+        MenuEntry.Locations -> Text.Resource(R.string.menu_box_locations)
+    }
+
+    companion object {
+
+        private const val NO_REPEAT_SPACE = "LoadBoxCards"
     }
 }

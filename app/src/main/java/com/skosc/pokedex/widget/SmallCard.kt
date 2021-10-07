@@ -47,7 +47,7 @@ fun SmallCard(
         Image(
             painter = painterResource(id = R.drawable.ic_pokeball_filed),
             contentDescription = "pokeball icon",
-            colorFilter = ColorFilter.tint(ShadowWhite),
+            colorFilter = ColorFilter.tint(PokeColor.ShadowWhite),
             modifier = Modifier
                 .size(64.dp)
                 .offset(10.dp)
@@ -64,9 +64,9 @@ fun SmallCard(
 fun DefaultPreview() {
     PokedexTheme {
         Row(modifier = Modifier.padding(32.dp)) {
-            SmallCard("Pokemons", Purple500, {}, Modifier.weight(1f))
+            SmallCard("Pokemons", PokeColor.Accent.Magenta, {}, Modifier.weight(1f))
             Box(modifier = Modifier.weight(0.1f))
-            SmallCard("Moves", Teal200, {}, Modifier.weight(1f))
+            SmallCard("Moves", PokeColor.Accent.Green, {}, Modifier.weight(1f))
         }
     }
 }

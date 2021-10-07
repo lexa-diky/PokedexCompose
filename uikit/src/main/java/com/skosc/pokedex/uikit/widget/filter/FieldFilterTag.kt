@@ -6,7 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
-import com.skosc.pokedex.uikit.theme.UIColor
+import com.skosc.pokedex.uikit.theme.PokeColor
 
 @Composable
 fun TagContainerScope.FieldFilterTag(modifier: Modifier = Modifier, default: String = "", placeholder: String = "") {
@@ -16,7 +16,7 @@ fun TagContainerScope.FieldFilterTag(modifier: Modifier = Modifier, default: Str
         onValueChange = { text = it },
         decorationBox = { innerTextField ->
             if (text.text.isEmpty() && placeholder.isNotBlank()) {
-                Text(placeholder, color = UIColor.TextGray)
+                Text(placeholder, color = PokeColor.TextGray)
             }
             innerTextField()
         },

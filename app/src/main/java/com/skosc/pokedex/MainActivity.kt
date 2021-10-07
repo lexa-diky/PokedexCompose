@@ -1,7 +1,6 @@
 package com.skosc.pokedex
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,8 +19,6 @@ import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.compose.LocalDI
 import org.kodein.di.instance
-import android.graphics.drawable.ColorDrawable
-import com.skosc.pokedex.uikit.theme.UIColor
 
 
 class MainActivity : ComponentActivity(), DIAware {

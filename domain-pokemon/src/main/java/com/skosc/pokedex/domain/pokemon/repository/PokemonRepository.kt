@@ -40,6 +40,7 @@ class PokemonRepository internal constructor(private val service: PokeApiService
         Pager(
             config = PagingConfig(
                 pageSize = LimitOffsetPokeApiDataSource.NETWORK_PAGE_SIZE,
+                prefetchDistance =  LimitOffsetPokeApiDataSource.NETWORK_PAGE_SIZE * 5,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = {

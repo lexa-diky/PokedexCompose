@@ -15,7 +15,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.skosc.pokedex.domain.settings.LocalSettings
 import com.skosc.pokedex.uikit.R
-import com.skosc.pokedex.uikit.theme.UIColor
+import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.SettingsCard
 import kotlinx.coroutines.launch
 
@@ -83,7 +83,7 @@ private fun LazyListScope.ResetAndSupportDevCard() = item("__RESET_SUPPORT_DEV")
                     modifier = Modifier.size(32.dp) // TODO make dynamic
                 )
             },
-            backgroundColor = UIColor.Accent.Red,
+            backgroundColor = PokeColor.Accent.Red,
             modifier = Modifier
                 .wrapContentHeight()
         )
@@ -98,7 +98,7 @@ private fun LazyListScope.ResetAndSupportDevCard() = item("__RESET_SUPPORT_DEV")
                     modifier = Modifier.size(32.dp) // TODO make dynamic
                 )
             },
-            backgroundColor = UIColor.Accent.Green,
+            backgroundColor = PokeColor.Accent.Green,
             modifier = Modifier
                 .weight(1f)
                 .wrapContentHeight()
@@ -123,7 +123,7 @@ private fun LazyListScope.LanguageSettingsCard(
                 modifier = Modifier.size(32.dp) // TODO make dynamic
             )
         },
-        backgroundColor = UIColor.Accent.Teal,
+        backgroundColor = PokeColor.Accent.Teal,
         onClick = {
             onPageSelected {
                 LanguageSettingsPage(onFinished = onCloseBottomSheet)

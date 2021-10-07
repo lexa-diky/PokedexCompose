@@ -52,7 +52,7 @@ internal class LimitOffsetPokeApiDataSource<Api: Any, Domain: Any>(
 
     companion object {
 
-        const val NETWORK_PAGE_SIZE = 20
+        const val NETWORK_PAGE_SIZE = 10
         private const val INITIAL_LOAD_SIZE = 0
     }
 }

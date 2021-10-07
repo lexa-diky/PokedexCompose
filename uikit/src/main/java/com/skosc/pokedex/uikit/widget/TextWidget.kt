@@ -8,8 +8,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.skosc.pokedex.uikit.theme.Link
-import com.skosc.pokedex.uikit.theme.UIColor
+import com.skosc.pokedex.uikit.theme.PokeColor
 
 @Composable
 fun PokeHeader(text: String, modifier: Modifier = Modifier) {
@@ -29,7 +28,7 @@ fun SubPokeHeader(text: String, color: Color = Color.Black, modifier: Modifier =
 
 @Composable
 fun PokeLink(text: String, modifier: Modifier = Modifier) {
-    Text(text = text, color = Link, modifier = modifier)
+    Text(text = text, color = PokeColor.Link, modifier = modifier)
 }
 
 @Composable
@@ -71,7 +70,7 @@ fun PokeCardSubHeader(
 fun ListItemText(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = UIColor.TextBlack,
+    color: Color = PokeColor.TextBlack,
     maxLines: Int = 1,
     overflow: TextOverflow = TextOverflow.Ellipsis,
 ) {

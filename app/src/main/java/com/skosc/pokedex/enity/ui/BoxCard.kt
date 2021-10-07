@@ -1,16 +1,17 @@
 package com.skosc.pokedex.enity.ui
 
 import androidx.compose.ui.graphics.Color
+import com.skosc.pokedex.core.localization.text.Text
 import com.skosc.pokedex.enity.domain.SearchResultIcon
 import com.skosc.pokedex.navigation.Destination
 import com.skosc.pokedex.pokemonList
 import com.skosc.pokedex.root
-import com.skosc.pokedex.uikit.theme.PokemonColor
+import com.skosc.pokedex.uikit.theme.PokeColor
 
 sealed class BoxCard {
 
     data class Menu(
-        val title: String,
+        val title: Text,
         val color: Color,
         val destination: Destination
     ) : BoxCard() {
@@ -32,9 +33,9 @@ sealed class BoxCardList {
 }
 
 val BoxCard.Menu.Companion.sample get() = listOf(
-    BoxCard.Menu("Pokemon", PokemonColor.random, root.pokemonList),
-    BoxCard.Menu("Items", PokemonColor.random, root.pokemonList),
-    BoxCard.Menu("Moves", PokemonColor.random, root.pokemonList),
-    BoxCard.Menu("Abilities", PokemonColor.random, root.pokemonList),
-    BoxCard.Menu("Locations", PokemonColor.random, root.pokemonList)
+    BoxCard.Menu(Text("Pokemon"), PokeColor.Pokemon.all.random(), root.pokemonList),
+    BoxCard.Menu(Text("Items"), PokeColor.Pokemon.all.random(), root.pokemonList),
+    BoxCard.Menu(Text("Moves"), PokeColor.Pokemon.all.random(), root.pokemonList),
+    BoxCard.Menu(Text("Abilities"), PokeColor.Pokemon.all.random(), root.pokemonList),
+    BoxCard.Menu(Text("Locations"), PokeColor.Pokemon.all.random(), root.pokemonList)
 )

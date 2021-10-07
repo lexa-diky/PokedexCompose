@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.skosc.pokedex.uikit.R
 import com.skosc.pokedex.uikit.theme.PokeCardShape
-import com.skosc.pokedex.uikit.theme.UIColor
+import com.skosc.pokedex.uikit.theme.PokeColor
 
 @Composable
 fun SettingsCard(
@@ -23,7 +23,7 @@ fun SettingsCard(
     modifier: Modifier = Modifier,
     subtitle: String? = null,
     icon: @Composable () -> Unit,
-    backgroundColor: Color,
+    backgroundColor: androidx.compose.ui.graphics.Color,
     onClick: () -> Unit = {}
 ) {
     Row(
@@ -61,7 +61,7 @@ private fun Preview_MenuCard() {
                 modifier = Modifier.size(32.dp) // TODO make dynamic
             )
         },
-        backgroundColor = UIColor.Accent.Teal,
+        backgroundColor = PokeColor.Accent.Teal,
         modifier = Modifier
             .fillMaxWidth()
             .padding(32.dp)

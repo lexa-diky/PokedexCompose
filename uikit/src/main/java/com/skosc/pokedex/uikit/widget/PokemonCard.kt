@@ -5,12 +5,10 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
@@ -22,8 +20,7 @@ import coil.compose.rememberImagePainter
 import com.skosc.pokedex.uikit.R
 import com.skosc.pokedex.uikit.modifier.halfBackground
 import com.skosc.pokedex.uikit.theme.PokeCardShape
-import com.skosc.pokedex.uikit.theme.ShadowWhite
-import com.skosc.pokedex.uikit.theme.UIColor
+import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.titlecase
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -33,8 +30,8 @@ fun PokemonCard(
     order: Int,
     tags: List<String>,
     imageUrl: String,
-    leftBackgroundColor: Color,
-    rightBackgroundColor: Color,
+    leftBackgroundColor: androidx.compose.ui.graphics.Color,
+    rightBackgroundColor: androidx.compose.ui.graphics.Color,
     modifier: Modifier = Modifier
 ) {
     val animatedLeftBackgroundColor by animateColorAsState(leftBackgroundColor)
@@ -105,7 +102,7 @@ fun PokemonCard(
             Image(
                 painter = painterResource(id = R.drawable.ic_pokeball_filed),
                 contentDescription = "pokeball icon",
-                colorFilter = ColorFilter.tint(ShadowWhite),
+                colorFilter = ColorFilter.tint(PokeColor.ShadowWhite),
                 modifier = Modifier
                     .size(80.dp)
                     .offset(34.dp, 34.dp)
@@ -124,8 +121,8 @@ private fun PokemonCardPreview() {
             name = "MegaSuperPikachu",
             order = 0,
             tags = listOf("Grass", "Fire"),
-            leftBackgroundColor = UIColor.Accent.Teal,
-            rightBackgroundColor = UIColor.Accent.Magenta,
+            leftBackgroundColor = PokeColor.Accent.Teal,
+            rightBackgroundColor = PokeColor.Accent.Magenta,
             imageUrl = ""
         )
     }

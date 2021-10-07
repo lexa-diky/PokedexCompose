@@ -1,26 +1,21 @@
 package com.skosc.pokedex.feature.pokemondetails
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.dp
 import com.skosc.pokedex.domain.pokemon.entity.Pokemon
 import com.skosc.pokedex.domain.pokemon.entity.PokemonSpecies
-import com.skosc.pokedex.domain.pokemon.entity.PokemonStat
 import com.skosc.pokedex.domain.pokemon.entity.primaryType
 import com.skosc.pokedex.uikit.coloristics.Coloristic
 import com.skosc.pokedex.uikit.theme.CardShape
-import com.skosc.pokedex.uikit.theme.UIColor
+import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.FillBar
-import com.skosc.pokedex.uikit.widget.StatBar
 import java.util.*
 
 @Composable
@@ -60,7 +55,7 @@ fun PokemonDetailsInfoPage(species: PokemonSpecies, pokemon: Pokemon) {
             )
             FillBar(
                 fill = species.catchRate.toFloat() / Pokemon.MAX_CATCH_RATE,
-                backgroundColor = UIColor.ShadowGray,
+                backgroundColor = PokeColor.ShadowGray,
                 fillColor = Coloristic.getPokeColorForType(pokemon.primaryType.defaultName),
                 modifier = Modifier
                     .height(8.dp)
@@ -77,7 +72,7 @@ fun PokemonDetailsInfoPage(species: PokemonSpecies, pokemon: Pokemon) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp)
-                    .background(UIColor.ShadowGray, CardShape)
+                    .background(PokeColor.ShadowGray, CardShape)
             )
         }
         Spacer(modifier = Modifier.height(16.dp))

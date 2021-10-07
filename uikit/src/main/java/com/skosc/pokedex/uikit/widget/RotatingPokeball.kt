@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import com.skosc.pokedex.uikit.R
 import com.skosc.pokedex.uikit.animation.animateRotation
-import com.skosc.pokedex.uikit.theme.ShadowWitheBackground
+import com.skosc.pokedex.uikit.theme.PokeColor
 
 @Composable
 fun BoxScope.RotatingPokeBall(modifier: Modifier = Modifier) {
@@ -19,7 +19,7 @@ fun BoxScope.RotatingPokeBall(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(id = R.drawable.ic_pokeball_filed),
         contentDescription = null,
-        colorFilter = ColorFilter.tint(ShadowWitheBackground),
+        colorFilter = ColorFilter.tint(PokeColor.ShadowWitheBackground),
         modifier = modifier.rotate(rotation)
     )
 }

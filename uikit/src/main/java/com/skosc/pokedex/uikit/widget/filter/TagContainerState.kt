@@ -5,9 +5,9 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import com.skosc.pokedex.uikit.theme.UIColor
+import com.skosc.pokedex.uikit.theme.PokeColor
 
-data class TagContainerState(val backgroundColor: Color = UIColor.ShadowGray) {
+data class TagContainerState(val backgroundColor: androidx.compose.ui.graphics.Color = PokeColor.ShadowGray) {
 
     companion object {
 

@@ -5,6 +5,7 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,8 +38,9 @@ fun <T : Any> GenericItemListPage(
 
         item { Spacer(modifier = Modifier.size(16.dp)) }
 
+        Log.i("LOOOO","${state.layoutInfo.visibleItemsInfo.firstOrNull()?.index}")
         stickyHeader(SEARCH_ITEM_KEY) {
-            SearchBlock(filters = spec.filters, isScrollInProgress = state.isScrollInProgress)
+            SearchBlock(filters = spec.filters, scrollState = state)
         }
 
         Log.i("LSTATE", pagingItems.loadState.toString())
@@ -47,7 +49,7 @@ fun <T : Any> GenericItemListPage(
         FixedPairTileLayout(
             displayItems = pagingItems,
             placeholderItems = placeholderItems,
-            edgePadding = 16.dp,
+            edgePadding = 20.dp,
             displayContent = { item ->
                 PokemonCard(
                     name = item.name,
@@ -60,7 +62,7 @@ fun <T : Any> GenericItemListPage(
                         .width(200.dp)
                         .height(125.dp)
                         .clickable { onItemSelected(item.id) }
-                        .padding(8.dp)
+                        .padding(4.dp)
                 )
             },
         )
@@ -78,11 +80,12 @@ private fun makePlaceholders() = flowOf(PagingData.from((0..15).map {
 }))
 
 @Composable
-private fun <T> SearchBlock(filters: List<ListFilter<T>>, isScrollInProgress: Boolean) {
-    val topPadding by animateDpAsState(targetValue = if (isScrollInProgress) 16.dp else 0.dp)
+private fun <T> SearchBlock(filters: List<ListFilter<T>>, scrollState: LazyListState) {
+    val shouldAddPadding = scrollState.firstVisibleItemIndex >= 1
+    val topPadding by animateDpAsState(targetValue = if (shouldAddPadding) 16.dp else 0.dp)
 
     FilterLayout(
-        modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp, top = topPadding)
+        modifier = Modifier.padding(bottom = 16.dp, start = 24.dp, end = 24.dp, top = topPadding)
     ) {
         filters.forEach { filter ->
             FilterTagContainer(

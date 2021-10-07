@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.skosc.pokedex.uikit.theme.ListItemShape
-import com.skosc.pokedex.uikit.theme.UIColor
+import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.PokeLink
 
 @Composable
@@ -20,7 +20,7 @@ fun Basement(onSettingsClicked: () -> Unit) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .background(UIColor.ShadowTransparent)
+            .background(PokeColor.ShadowTransparent)
             .fillMaxWidth()
             .height(64.dp)
     ) {

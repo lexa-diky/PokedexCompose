@@ -1,6 +1,5 @@
 package com.skosc.pokedex.feature.pokemondetails
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,11 +12,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.skosc.pokedex.domain.pokemon.entity.Pokemon
-import com.skosc.pokedex.domain.pokemon.entity.PokemonSpecies
 import com.skosc.pokedex.domain.pokemon.entity.PokemonStat
 import com.skosc.pokedex.domain.pokemon.entity.primaryType
 import com.skosc.pokedex.uikit.coloristics.Coloristic
-import com.skosc.pokedex.uikit.theme.UIColor
+import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.FillBar
 
 @Composable
@@ -38,7 +36,7 @@ fun PokemonDetailsStatsPage(pokemon: Pokemon) {
                 )
                 FillBar(
                     fill = stat.value.toFloat() / PokemonStat.MAX_VALUE,
-                    backgroundColor = UIColor.ShadowGray,
+                    backgroundColor = PokeColor.ShadowGray,
                     fillColor = Coloristic.getPokeColorForType(pokemon.primaryType.defaultName),
                     modifier = Modifier.weight(0.7f)
                         .height(8.dp)
