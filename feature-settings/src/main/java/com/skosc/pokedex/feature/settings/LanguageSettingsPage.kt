@@ -49,7 +49,7 @@ private fun LanguageSettingsItem(localName: String, globalName: String, onClick:
             .wrapContentHeight()
             .padding(horizontal = 8.dp, vertical = 4.dp)
     ) {
-        PokeCardHeader(text = localName)
-        PokeCardSubHeader(text = globalName)
+        PokeCardHeader(text = localName, secondary = false)
+        PokeCardSubHeader(text = globalName, secondary = false)
     }
 }

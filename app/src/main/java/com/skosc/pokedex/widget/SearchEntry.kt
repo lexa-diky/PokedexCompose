@@ -26,6 +26,7 @@ fun SearchEntry(
     Row(modifier = modifier) {
         PokeCardHeader(
             text = title,
+            secondary = true,
             modifier = Modifier.weight(1f)
                 .align(Alignment.CenterVertically)
         )

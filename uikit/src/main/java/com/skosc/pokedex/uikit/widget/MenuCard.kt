@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
@@ -38,9 +39,9 @@ fun SettingsCard(
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
-            PokeCardHeader(text = title)
+            PokeCardHeader(text = title, secondary = true)
             if (subtitle != null) {
-                PokeCardSubHeader(text = subtitle)
+                PokeCardSubHeader(text = subtitle, secondary = true)
             }
         }
     }

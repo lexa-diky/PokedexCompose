@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -90,10 +91,10 @@ private fun CardBox(cards: BoxCardList, onQueryUpdated: (String) -> Unit) {
     Box(
         modifier = Modifier
             .padding(16.dp)
-            .animateContentSize()
     ) {
         Column(
             modifier = Modifier
+                .shadow(16.dp, CardShape)
                 .background(LocalColoristic.current.backgroundAccent, CardShape)
         ) {
             SearchField(

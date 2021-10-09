@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
@@ -59,10 +60,10 @@ fun <T : Any> GenericItemListPage(
                     rightBackgroundColor = coloristic.from(item.rightColor),
                     imageUrl = item.image,
                     shimmer = item.isPlaceholder,
+                    onClick = { onItemSelected(item.id) },
                     modifier = Modifier
                         .width(200.dp)
                         .height(125.dp)
-                        .clickable { onItemSelected(item.id) }
                         .padding(4.dp)
                 )
             },

@@ -5,10 +5,13 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
@@ -35,14 +38,17 @@ fun PokemonCard(
     rightBackgroundColor: Color,
     modifier: Modifier = Modifier,
     shimmer: Boolean = false,
+    onClick: () -> Unit
 ) {
     val animatedLeftBackgroundColor by animateColorAsState(leftBackgroundColor)
     val animatedRightBackgroundColor by animateColorAsState(rightBackgroundColor)
 
     ConstraintLayout(
         modifier = modifier
+            .clip(PokeCardShape)
+            .clickable { onClick() }
             .shimmer(shimmer)
-            .halfBackground(animatedLeftBackgroundColor, animatedRightBackgroundColor, PokeCardShape)
+            .halfBackground(animatedLeftBackgroundColor, animatedRightBackgroundColor)
             .padding(16.dp)
             .defaultMinSize(minHeight = 100.dp)
     ) {
@@ -53,6 +59,7 @@ fun PokemonCard(
 
         PokeCardHeader(
             text = name.titlecase(),
+            secondary = true,
             modifier = Modifier
                 .animateContentSize()
                 .constrainAs(nameRef) {
@@ -126,7 +133,8 @@ private fun PokemonCardPreview() {
             tags = listOf("Grass", "Fire"),
             leftBackgroundColor = Color.Red,
             rightBackgroundColor = Color.Blue,
-            imageUrl = ""
+            imageUrl = "",
+            onClick = {}
         )
     }
 }

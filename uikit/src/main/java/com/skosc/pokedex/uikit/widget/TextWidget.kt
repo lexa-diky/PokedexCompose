@@ -69,13 +69,14 @@ fun PokeLink(text: String, modifier: Modifier = Modifier) {
 fun PokeCardHeader(
     text: String,
     maxLines: Int = 1,
+    secondary: Boolean,
     overflow: TextOverflow = TextOverflow.Ellipsis,
     modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
         fontWeight = FontWeight.Bold,
-        color = LocalColoristic.current.textSecondaryAccent,
+        color = if (secondary) LocalColoristic.current.textSecondaryAccent else LocalColoristic.current.textPrimaryAccent,
         maxLines = maxLines,
         overflow = overflow,
         modifier = modifier
@@ -87,11 +88,12 @@ fun PokeCardSubHeader(
     text: String,
     maxLines: Int = 1,
     overflow: TextOverflow = TextOverflow.Ellipsis,
+    secondary: Boolean,
     modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
-        color = LocalColoristic.current.textSecondaryAccent,
+        color = if (secondary) LocalColoristic.current.textSecondaryAccent else LocalColoristic.current.textPrimaryAccent,
         maxLines = maxLines,
         overflow = overflow,
         modifier = modifier
