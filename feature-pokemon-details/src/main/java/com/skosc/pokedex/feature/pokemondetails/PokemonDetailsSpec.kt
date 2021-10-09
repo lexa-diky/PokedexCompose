@@ -13,6 +13,7 @@ import com.skosc.pokedex.feature.core.details.entity.TabRowItem
 import com.skosc.pokedex.uikit.coloristics.ColorPicker
 
 class PokemonDetailsSpec(
+    private val sid: Int,
     private val settings: PokeAppSettings,
     override val source: suspend () -> Pair<PokemonSpecies, Pokemon>
 ) : GenericDetailsSpec<Pair<PokemonSpecies, Pokemon>> {
@@ -36,10 +37,10 @@ class PokemonDetailsSpec(
 
     override val backgroundMapper: (Pair<PokemonSpecies, Pokemon>) -> DetailsBackground = { (species, pokemon) ->
         val left = ColorPicker.getPokeColorForType(pokemon.types.first().defaultName)
+        val right = (pokemon.types.getOrNull(1)?.defaultName?.let(ColorPicker::getPokeColorForType) ?: left)
         DetailsBackground(
-            left = left,
-            right = pokemon.types.getOrNull(1)?.defaultName?.let(ColorPicker::getPokeColorForType)
-                ?: left,
+            left = if (sid.mod(2) == 0) left else right,
+            right = if (sid.mod(2) == 0) right else left,
             base = left
         )
     }

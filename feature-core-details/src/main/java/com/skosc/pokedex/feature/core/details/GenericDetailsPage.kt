@@ -17,6 +17,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalDensity
@@ -62,7 +63,8 @@ fun GenericDetailsPageScope.GenericDetailsPage(details: BaseDetailsItem) {
 
         LazyColumn(
             state = lazyListState,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxHeight()
         ) {
             item(ITEM_HEADER) {
                 DetailsHeader(
@@ -73,25 +75,31 @@ fun GenericDetailsPageScope.GenericDetailsPage(details: BaseDetailsItem) {
                 )
             }
 
-
-            item(ITEM_POKE_BALL) {
-
-                PokemonImage(
-                    imageUrl = details.header.image,
-                    modifier = Modifier
-                        .size(200.dp)
-                        .zIndex(1f)
-                )
-            }
-
             item(ITEM_CONTENT_SHEET) {
-                BottomSheetImpl(
-                    details.pages,
-                    modifier = Modifier
-                        .offset(y = -52.dp)
-                        .animateContentSize()
-                        .padding(horizontal = 8.dp)
-                )
+                Box(
+                    contentAlignment = Alignment.TopCenter,
+                    modifier = Modifier.padding(bottom = 64.dp)
+                ) {
+                    RotatingPokeBall(
+                        modifier = Modifier.size(200.dp)
+                    )
+
+                    BottomSheetImpl(
+                        details.pages,
+                        modifier = Modifier
+                            .offset(y = 130.dp)
+                            .wrapContentHeight()
+                            .padding(start = 8.dp, end = 8.dp, top = 8.dp)
+                            .zIndex(-1f)
+                    )
+
+                    PokemonImage(
+                        imageUrl = details.header.image,
+                        modifier = Modifier
+                            .size(200.dp)
+                            .zIndex(1f)
+                    )
+                }
             }
         }
     }
@@ -132,11 +140,6 @@ private fun GenericDetailsPageScope.PokemonImage(imageUrl: String, modifier: Mod
         contentAlignment = Alignment.Center,
         modifier = modifier
     ) {
-
-        RotatingPokeBall(
-            modifier = Modifier.fillMaxSize()
-                .zIndex(-1f)
-        )
 
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -309,10 +312,12 @@ private fun TabRow(
 @OptIn(ExperimentalPagerApi::class)
 private fun DetailsBottomSheet(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     Box(
-        modifier = modifier.background(
-            LocalColoristic.current.backgroundAccent,
-            RoundedCornerShape(32.dp)
-        )
+        modifier = modifier
+            .shadow(16.dp, RoundedCornerShape(32.dp), clip = false)
+            .background(
+                LocalColoristic.current.backgroundAccent,
+                RoundedCornerShape(32.dp)
+            )
     ) {
         content()
     }

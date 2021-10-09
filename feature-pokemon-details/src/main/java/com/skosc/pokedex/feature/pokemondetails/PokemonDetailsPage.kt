@@ -1,10 +1,6 @@
 package com.skosc.pokedex.feature.pokemondetails
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -15,7 +11,6 @@ import com.skosc.pokedex.feature.core.details.GenericDetailsPage
 import com.skosc.pokedex.feature.core.details.GenericDetailsPageScope
 import org.kodein.di.compose.LocalDI
 import org.kodein.di.instance
-import timber.log.Timber
 
 
 @OptIn(ExperimentalPagerApi::class)

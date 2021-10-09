@@ -10,8 +10,9 @@ class PokemonDetailsSpecFactory(
 
     suspend fun buildForId(id: Int, settings: PokeAppSettings): List<PokemonDetailsSpec> {
         val pokemonSpecies = repository.getPokemonSpecies(id)
-        return pokemonSpecies.varieties.map {  pokemon ->
+        return pokemonSpecies.varieties.mapIndexed { idx, pokemon ->
             PokemonDetailsSpec(
+                sid = idx,
                 settings = settings,
                 source = { pokemonSpecies to pokemon }
             )
