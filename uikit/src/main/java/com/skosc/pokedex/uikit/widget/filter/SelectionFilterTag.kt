@@ -33,7 +33,7 @@ fun <T> TagContainerScope.SelectionFilterTag(
 
     PokeText(
         text = options.find { it.value == selected }?.title ?: placeholder,
-        onCard = false,
+        secondary = false,
         modifier = Modifier
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
@@ -54,10 +54,10 @@ fun <T> TagContainerScope.SelectionFilterTag(
                     },
                     modifier = Modifier.padding(16.dp),
                 ) {
-                    PokeText(text = "Default", onCard = false)
+                    PokeText(text = "Default", secondary = false)
                 }
             },
-            title = { PokeText(text = placeholder, onCard = false) },
+            title = { PokeText(text = placeholder, secondary = false) },
             text = {
                 Column {
                     options.forEach {

@@ -26,7 +26,7 @@ fun StatBar(
     ) {
         PokeLabel(
             text = label,
-            onColor = false,
+            secondary = false,
         )
         FillBar(
             fill = fill,

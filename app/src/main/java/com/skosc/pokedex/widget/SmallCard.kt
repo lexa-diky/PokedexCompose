@@ -34,7 +34,7 @@ fun SmallCard(
 
         PokeLabel(
             text = text,
-            onColor = true,
+            secondary = true,
             modifier = Modifier.constrainAs(textConst) {
                 top.linkTo(parent.top, margin = 24.dp)
                 bottom.linkTo(parent.bottom, margin = 24.dp)

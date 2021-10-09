@@ -36,7 +36,6 @@ import com.skosc.pokedex.uikit.image.CropTransparentTransformation
 import com.skosc.pokedex.uikit.modifier.halfBackground
 import com.skosc.pokedex.uikit.theme.ColorDef
 import com.skosc.pokedex.uikit.theme.LocalColoristic
-import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.*
 import kotlinx.coroutines.launch
 import kotlin.random.Random
@@ -198,7 +197,7 @@ private fun DetailsHeader(
 ) {
     Row(modifier = modifier) {
         Column {
-            SubPokeHeader(text = title)
+            SubPokeHeader(text = title, secondary = true)
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 tags.forEach { tag ->
                     TypeChip(type = tag)

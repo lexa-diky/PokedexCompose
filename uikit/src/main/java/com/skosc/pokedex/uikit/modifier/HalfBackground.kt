@@ -29,16 +29,6 @@ class HalfSplitBackground(
             path = Path().apply {
                 moveTo(0f, 0f)
                 lineTo(canvasWidth, canvasHeight)
-                lineTo(0f, canvasWidth)
-                lineTo(0f, 0f)
-            },
-            brush = SolidColor(leftColor)
-        )
-
-        drawPath(
-            path = Path().apply {
-                moveTo(0f, 0f)
-                lineTo(canvasWidth, canvasHeight)
                 lineTo(canvasWidth, 0f)
                 lineTo(0f, 0f)
             },

@@ -1,10 +1,7 @@
 package com.skosc.pokedex.uikit.widget
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
@@ -28,7 +25,7 @@ fun SearchField(onQueryUpdated: (String) -> Unit, modifier: Modifier = Modifier)
             onQueryUpdated(newQuery)
         },
         shape = RoundedCornerShape(16.dp),
-        placeholder = { PokeText("Query", onCard = false) },
+        placeholder = { PokeText("Query", secondary = false) },
         leadingIcon = { Image(Icons.Default.Search, "search icon") },
         colors = TextFieldDefaults.textFieldColors(
             focusedIndicatorColor = Color.Transparent,

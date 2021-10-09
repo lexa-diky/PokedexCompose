@@ -4,13 +4,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import coil.transform.RoundedCornersTransformation
 import com.skosc.pokedex.core.util.BrowserUtils
@@ -34,7 +32,7 @@ fun NewsBlock(title: String, time: Instant, image: String, url: String) {
                 Column(modifier = Modifier.weight(1f)) {
                     PokeLabel(
                         text = title,
-                        onColor = false,
+                        secondary = false,
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 2,
                         modifier = Modifier.padding(end = 8.dp)
@@ -42,7 +40,7 @@ fun NewsBlock(title: String, time: Instant, image: String, url: String) {
 
                     PokeSubLabel(
                         text = time.formatLocal(),
-                        onCard = false
+                        secondary = false
                     )
                 }
 

@@ -12,7 +12,6 @@ import com.skosc.pokedex.domain.pokemon.entity.primaryType
 import com.skosc.pokedex.uikit.coloristics.ColorPicker
 import com.skosc.pokedex.uikit.theme.CardShape
 import com.skosc.pokedex.uikit.theme.LocalColoristic
-import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.FillBar
 import com.skosc.pokedex.uikit.widget.PokeLabel
 import com.skosc.pokedex.uikit.widget.PokeText
@@ -31,13 +30,13 @@ fun PokemonDetailsInfoPage(species: PokemonSpecies, pokemon: Pokemon) {
         ) {
             PokeLabel(
                 text = "Generation: ",
-                onColor = false,
+                secondary = false,
                 modifier = Modifier.weight(0.3f)
             )
 
             PokeLabel(
                 text = species.generation.uppercase(),
-                onColor = false,
+                secondary = false,
                 modifier = Modifier
                     .weight(0.7f)
             )
@@ -53,7 +52,7 @@ fun PokemonDetailsInfoPage(species: PokemonSpecies, pokemon: Pokemon) {
         ) {
             PokeLabel(
                 text = "Catch Rate:",
-                onColor = false,
+                secondary = false,
                 modifier = Modifier.weight(0.3f)
             )
             FillBar(
@@ -83,7 +82,7 @@ fun PokemonDetailsInfoPage(species: PokemonSpecies, pokemon: Pokemon) {
         Column {
             species.normalizedFlavorText.forEach { (version, text) ->
                 PokeLabel(
-                    onColor = false,
+                    secondary = false,
                     text = version
                 )
 
@@ -91,7 +90,7 @@ fun PokemonDetailsInfoPage(species: PokemonSpecies, pokemon: Pokemon) {
 
                 PokeText(
                     text = text,
-                    onCard = false
+                    secondary = false
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))

@@ -2,10 +2,8 @@ package com.skosc.pokedex.uikit.widget.filter
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.PokeText
 
 @Composable
@@ -14,7 +12,7 @@ fun TagContainerScope.ToggleFilterTag(text: String, modifier: Modifier = Modifie
 
     PokeText(
         text = text,
-        onCard = false,
+        secondary = false,
         modifier = Modifier
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },

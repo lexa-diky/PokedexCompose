@@ -10,44 +10,46 @@ import androidx.compose.ui.unit.sp
 import com.skosc.pokedex.uikit.theme.LocalColoristic
 
 @Composable
-fun PokeText(text: String, onCard: Boolean, modifier: Modifier = Modifier) {
-    val color = if (onCard) LocalColoristic.current.textSecondaryAccent else LocalColoristic.current.textPrimaryAccent
+fun PokeText(text: String, secondary: Boolean = false, modifier: Modifier = Modifier) {
+    val color = if (secondary) LocalColoristic.current.textSecondaryAccent else LocalColoristic.current.textPrimaryAccent
     Text(text = text, color = color, modifier = modifier)
 }
 
 @Composable
 fun PokeLabel(
     text: String,
-    onColor: Boolean,
+    secondary: Boolean = false,
     modifier: Modifier = Modifier,
     overflow: TextOverflow = TextOverflow.Clip,
     maxLines: Int = Int.MAX_VALUE,
 ) {
-    val color = if (onColor) LocalColoristic.current.textSecondaryAccent else LocalColoristic.current.textPrimaryAccent
+    val color = if (secondary) LocalColoristic.current.textSecondaryAccent else LocalColoristic.current.textPrimaryAccent
     Text(text = text, color = color, overflow = overflow, maxLines = maxLines, fontWeight = FontWeight.Bold, modifier = modifier)
 }
 
 @Composable
-fun PokeSubLabel(text: String, onCard: Boolean, modifier: Modifier = Modifier) {
-    val color = if (onCard) LocalColoristic.current.textSecondaryAccent else LocalColoristic.current.textPrimaryAccent
+fun PokeSubLabel(text: String, secondary: Boolean = false, modifier: Modifier = Modifier) {
+    val color = if (secondary) LocalColoristic.current.textSecondaryAccent else LocalColoristic.current.textPrimaryAccent
     Text(text = text, color = color, fontSize = 12.sp, fontWeight = FontWeight.Bold, modifier = modifier)
 }
 
 @Composable
-fun PokeHeader(text: String, modifier: Modifier = Modifier) {
+fun PokeHeader(text: String, secondary: Boolean = false, modifier: Modifier = Modifier) {
+    val color = if (secondary) LocalColoristic.current.textSecondaryAccent else LocalColoristic.current.textPrimaryAccent
     Text(
         text = text,
-        color = LocalColoristic.current.textPrimaryAccent,
+        color = color,
         fontWeight = FontWeight.Bold,
         fontSize = 32.sp,
         modifier = modifier)
 }
 
 @Composable
-fun SubPokeHeader(text: String, modifier: Modifier = Modifier) {
+fun SubPokeHeader(text: String, secondary: Boolean = false, modifier: Modifier = Modifier) {
+    val color = if (secondary) LocalColoristic.current.textSecondaryAccent else LocalColoristic.current.textPrimaryAccent
     Text(
         text = text,
-        color = LocalColoristic.current.textPrimaryAccent,
+        color = color,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
         modifier = modifier

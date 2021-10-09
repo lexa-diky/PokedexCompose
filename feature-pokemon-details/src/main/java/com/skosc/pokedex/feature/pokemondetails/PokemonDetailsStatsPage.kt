@@ -13,7 +13,6 @@ import com.skosc.pokedex.domain.pokemon.entity.PokemonStat
 import com.skosc.pokedex.domain.pokemon.entity.primaryType
 import com.skosc.pokedex.uikit.coloristics.ColorPicker
 import com.skosc.pokedex.uikit.theme.LocalColoristic
-import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.FillBar
 import com.skosc.pokedex.uikit.widget.PokeLabel
 
@@ -31,12 +30,12 @@ fun PokemonDetailsStatsPage(pokemon: Pokemon) {
             ) {
                 PokeLabel(
                     text = stat.type.toString(),
-                    onColor = false,
+                    secondary = false,
                     modifier = Modifier.weight(0.3f)
                 )
                 FillBar(
                     fill = stat.value.toFloat() / PokemonStat.MAX_VALUE,
-                    backgroundColor = LocalColoristic.current.accentShadow,
+                    backgroundColor = LocalColoristic.current.backgroundShadow,
                     fillColor = coloristic.from(ColorPicker.getPokeColorForType(pokemon.primaryType.defaultName)),
                     modifier = Modifier.weight(0.7f)
                         .height(8.dp)
