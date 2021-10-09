@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -16,6 +16,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
+import com.skosc.pokedex.R
 import com.skosc.pokedex.enity.domain.SearchResultIcon
 import com.skosc.pokedex.enity.ui.BoxCard
 import com.skosc.pokedex.enity.ui.BoxCardList
@@ -31,7 +32,6 @@ import com.skosc.pokedex.uikit.image.CropTransparentTransformation
 import com.skosc.pokedex.uikit.diViewModel
 import com.skosc.pokedex.uikit.theme.CardShape
 import com.skosc.pokedex.uikit.theme.LocalColoristic
-import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.*
 import com.skosc.pokedex.widget.*
 
@@ -59,7 +59,7 @@ private fun InnerMainPage(
     onQueryUpdated: (String) -> Unit,
     onSettingsClicked: () -> Unit
 ) {
-    RootLayout("Pokédex") {
+    RootLayout(stringResource(id = R.string.main_title)) {
         item {
             CardBox(cards, onQueryUpdated)
         }
@@ -75,7 +75,7 @@ private fun InnerMainPage(
             Spacer(modifier = Modifier.padding(16.dp))
         }
         item {
-            Basement(onSettingsClicked)
+            Basement(stringResource(id = R.string.main_basement_label_settings), onSettingsClicked)
         }
     }
 }
@@ -154,6 +154,7 @@ private val BoxCard.SearchResult.iconPainter
 @Composable
 private fun SmallMenuCards(cards: List<BoxCard.Menu>) {
     val navController = LocalNavController.current
+    val coloristic = LocalColoristic.current
 
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -166,7 +167,7 @@ private fun SmallMenuCards(cards: List<BoxCard.Menu>) {
             Row(Modifier.padding(horizontal = 16.dp)) {
                 SmallCard(
                     text = left.title.render(),
-                    color = left.color,
+                    color = coloristic.from(left.color),
                     onClick = { navController.navigate(left.destination) },
                     modifier = Modifier.weight(1f)
                 )
@@ -174,7 +175,7 @@ private fun SmallMenuCards(cards: List<BoxCard.Menu>) {
                     Spacer(modifier = Modifier.weight(0.1f))
                     SmallCard(
                         text = it.title.render(),
-                        color = it.color,
+                        color = coloristic.from(it.color),
                         onClick = { navController.navigate(it.destination) },
                         modifier = Modifier.weight(1f)
                     )

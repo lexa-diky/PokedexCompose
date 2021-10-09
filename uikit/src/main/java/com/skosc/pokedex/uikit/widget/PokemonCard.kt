@@ -19,9 +19,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberImagePainter
 import com.skosc.pokedex.uikit.R
 import com.skosc.pokedex.uikit.modifier.halfBackground
+import com.skosc.pokedex.uikit.modifier.shimmer
 import com.skosc.pokedex.uikit.theme.LocalColoristic
 import com.skosc.pokedex.uikit.theme.PokeCardShape
-import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.titlecase
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -33,13 +33,15 @@ fun PokemonCard(
     imageUrl: String,
     leftBackgroundColor: Color,
     rightBackgroundColor: Color,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    shimmer: Boolean = false,
 ) {
     val animatedLeftBackgroundColor by animateColorAsState(leftBackgroundColor)
     val animatedRightBackgroundColor by animateColorAsState(rightBackgroundColor)
 
     ConstraintLayout(
         modifier = modifier
+            .shimmer(shimmer)
             .halfBackground(animatedLeftBackgroundColor, animatedRightBackgroundColor, PokeCardShape)
             .padding(16.dp)
             .defaultMinSize(minHeight = 100.dp)
@@ -59,11 +61,12 @@ fun PokemonCard(
                 }
         )
 
-        OrderText(order = order, modifier = Modifier.constrainAs(idRef) {
-            start.linkTo(nameRef.end, margin = 16.dp)
-            end.linkTo(parent.end)
-            top.linkTo(parent.top)
-        })
+        OrderText(order = order, modifier = Modifier
+            .constrainAs(idRef) {
+                start.linkTo(nameRef.end, margin = 16.dp)
+                end.linkTo(parent.end)
+                top.linkTo(parent.top)
+            })
 
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -113,7 +116,6 @@ fun PokemonCard(
 }
 
 
-
 @Composable
 @Preview(showBackground = true)
 private fun PokemonCardPreview() {
@@ -122,8 +124,8 @@ private fun PokemonCardPreview() {
             name = "MegaSuperPikachu",
             order = 0,
             tags = listOf("Grass", "Fire"),
-            leftBackgroundColor = PokeColor.Accent.Teal,
-            rightBackgroundColor = PokeColor.Accent.Magenta,
+            leftBackgroundColor = Color.Red,
+            rightBackgroundColor = Color.Blue,
             imageUrl = ""
         )
     }

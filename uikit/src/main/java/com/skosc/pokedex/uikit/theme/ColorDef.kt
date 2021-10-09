@@ -36,5 +36,4 @@ sealed interface ColorDef {
     object TypeUnknown : ColorDef
 
     class Value(val color: Color) : ColorDef
-
 }

@@ -135,6 +135,7 @@ private fun GenericDetailsPageScope.PokemonImage(imageUrl: String, modifier: Mod
 
         RotatingPokeBall(
             modifier = Modifier.fillMaxSize()
+                .zIndex(-1f)
         )
 
         Row(
@@ -218,7 +219,7 @@ private fun BottomSheetImpl(pages: List<DetailsPageItem>, modifier: Modifier = M
         return
     }
 
-    DetailsBottomSheet(modifier = modifier) {
+    DetailsBottomSheet(modifier = modifier.zIndex(1f)) {
         val titles = pages.map { it.title }
 
         val pagerState = rememberPagerState(pageCount = pages.size)

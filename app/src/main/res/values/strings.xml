@@ -7,4 +7,8 @@
     <string name="menu_box_abilities">Abilities</string>
     <string name="menu_box_locations">Locations</string>
 
+    <string name="main_title">Pokédex</string>
+
+    <string name="main_basement_label_settings">Settings</string>
+
 </resources>

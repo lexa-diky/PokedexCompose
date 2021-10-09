@@ -10,23 +10,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.skosc.pokedex.R
 import com.skosc.pokedex.uikit.theme.ListItemShape
 import com.skosc.pokedex.uikit.theme.LocalColoristic
-import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.PokeLink
 
 @Composable
-fun Basement(onSettingsClicked: () -> Unit) {
+fun Basement(text: String, onSettingsClicked: () -> Unit) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .background(LocalColoristic.current.accentShadow)
+            .background(LocalColoristic.current.backgroundShadow)
             .fillMaxWidth()
             .height(64.dp)
     ) {
         PokeLink(
-            text = "Settings",
+            text = text,
             modifier = Modifier
                 .clip(ListItemShape)
                 .clickable { onSettingsClicked() }

@@ -42,13 +42,9 @@ fun <T : Any> GenericItemListPage(
 
         item { Spacer(modifier = Modifier.size(16.dp)) }
 
-        Log.i("LOOOO","${state.layoutInfo.visibleItemsInfo.firstOrNull()?.index}")
         stickyHeader(SEARCH_ITEM_KEY) {
             SearchBlock(filters = spec.filters, scrollState = state)
         }
-
-        Log.i("LSTATE", pagingItems.loadState.toString())
-
 
         FixedPairTileLayout(
             displayItems = pagingItems,
@@ -62,6 +58,7 @@ fun <T : Any> GenericItemListPage(
                     leftBackgroundColor = coloristic.from(item.leftColor),
                     rightBackgroundColor = coloristic.from(item.rightColor),
                     imageUrl = item.image,
+                    shimmer = item.isPlaceholder,
                     modifier = Modifier
                         .width(200.dp)
                         .height(125.dp)
@@ -76,10 +73,11 @@ fun <T : Any> GenericItemListPage(
 private fun makePlaceholders() = flowOf(PagingData.from((0..15).map {
     BaseListItem(
         id = 0,
-        name = "",
+        name = "...",
         tags = emptyList(),
         color = ColorDef.BackgroundShadow,
-        image = ""
+        image = "",
+        isPlaceholder = true
     )
 }))
 

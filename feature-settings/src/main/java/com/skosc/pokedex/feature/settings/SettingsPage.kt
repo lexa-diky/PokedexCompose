@@ -1,6 +1,7 @@
 package com.skosc.pokedex.feature.settings
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -15,12 +16,13 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.skosc.pokedex.domain.settings.LocalSettings
 import com.skosc.pokedex.uikit.R
-import com.skosc.pokedex.uikit.theme.PokeColor
+import com.skosc.pokedex.uikit.theme.LocalColoristic
 import com.skosc.pokedex.uikit.widget.SettingsCard
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 fun NavGraphBuilder.SettingsPage() = composable(SettingsDestination.path) {
+    val coloristic = LocalColoristic.current
     val coroutineScope = rememberCoroutineScope()
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
@@ -51,18 +53,23 @@ fun NavGraphBuilder.SettingsPage() = composable(SettingsDestination.path) {
                             bottomSheetScaffoldState.bottomSheetState.expand()
                         }
                     }
-                })
+                },
+                modifier = Modifier.background(coloristic.background)
+                    .fillMaxSize()
+            )
         })
 }
 
 @Composable
 private fun SettingsPageContent(
     onPageSelected: (@Composable () -> Unit) -> Unit,
-    onCloseBottomSheet: () -> Unit
+    onCloseBottomSheet: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(16.dp),
+        modifier = modifier
     ) {
         LanguageSettingsCard(onPageSelected = onPageSelected, onCloseBottomSheet = onCloseBottomSheet)
         ResetAndSupportDevCard()
@@ -70,6 +77,8 @@ private fun SettingsPageContent(
 }
 
 private fun LazyListScope.ResetAndSupportDevCard() = item("__RESET_SUPPORT_DEV") {
+    val coloristic = LocalColoristic.current
+
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -83,7 +92,7 @@ private fun LazyListScope.ResetAndSupportDevCard() = item("__RESET_SUPPORT_DEV")
                     modifier = Modifier.size(32.dp) // TODO make dynamic
                 )
             },
-            backgroundColor = PokeColor.Accent.Red,
+            backgroundColor = coloristic.type.fire,
             modifier = Modifier
                 .wrapContentHeight()
         )
@@ -98,7 +107,7 @@ private fun LazyListScope.ResetAndSupportDevCard() = item("__RESET_SUPPORT_DEV")
                     modifier = Modifier.size(32.dp) // TODO make dynamic
                 )
             },
-            backgroundColor = PokeColor.Accent.Green,
+            backgroundColor = coloristic.type.grass,
             modifier = Modifier
                 .weight(1f)
                 .wrapContentHeight()
@@ -111,6 +120,7 @@ private fun LazyListScope.LanguageSettingsCard(
     onCloseBottomSheet: () -> Unit,
 ) = item("__ITEM_SETTINGS_LANGUAGE") {
     val settings = LocalSettings.current
+    val coloristic = LocalColoristic.current
 
     SettingsCard(
         title = "Language",
@@ -123,7 +133,7 @@ private fun LazyListScope.LanguageSettingsCard(
                 modifier = Modifier.size(32.dp) // TODO make dynamic
             )
         },
-        backgroundColor = PokeColor.Accent.Teal,
+        backgroundColor = coloristic.type.water,
         onClick = {
             onPageSelected {
                 LanguageSettingsPage(onFinished = onCloseBottomSheet)

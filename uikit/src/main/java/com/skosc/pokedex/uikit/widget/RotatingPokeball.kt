@@ -18,7 +18,7 @@ fun RotatingPokeBall(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(id = R.drawable.ic_pokeball_filed),
         contentDescription = null,
-        colorFilter = ColorFilter.tint(LocalColoristic.current.accentShadow),
+        colorFilter = ColorFilter.tint(LocalColoristic.current.backgroundShadow),
         modifier = modifier.rotate(rotation)
     )
 }

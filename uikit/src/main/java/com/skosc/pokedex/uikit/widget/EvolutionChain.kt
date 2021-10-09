@@ -38,7 +38,7 @@ fun EvolutionChain(items: List<EvolutionChainItem>, modifier: Modifier = Modifie
                         contentDescription = item.name,
                         modifier = Modifier.size(48.dp)
                     )
-                    Text(text = item.name, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                    PokeSubLabel(text = item.name)
                 }
 
             }

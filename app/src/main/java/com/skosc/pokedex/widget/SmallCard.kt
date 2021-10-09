@@ -59,12 +59,12 @@ fun SmallCard(
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+private fun DefaultPreview() {
     PokedexTheme {
         Row(modifier = Modifier.padding(32.dp)) {
-            SmallCard("Pokemons", PokeColor.Accent.Magenta, {}, Modifier.weight(1f))
+            SmallCard("Pokemons", Color.Red, {}, Modifier.weight(1f))
             Box(modifier = Modifier.weight(0.1f))
-            SmallCard("Moves", PokeColor.Accent.Green, {}, Modifier.weight(1f))
+            SmallCard("Moves", Color.Blue, {}, Modifier.weight(1f))
         }
     }
 }

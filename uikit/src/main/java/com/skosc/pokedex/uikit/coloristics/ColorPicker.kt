@@ -2,7 +2,6 @@ package com.skosc.pokedex.uikit.coloristics
 
 import android.content.Context
 import android.graphics.Bitmap
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
@@ -10,8 +9,6 @@ import androidx.palette.graphics.Target
 import coil.ImageLoader
 import coil.request.ImageRequest
 import com.skosc.pokedex.uikit.theme.ColorDef
-import com.skosc.pokedex.uikit.theme.LocalColoristic
-import com.skosc.pokedex.uikit.theme.PokeColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.lang.RuntimeException
@@ -23,30 +20,29 @@ import kotlin.coroutines.suspendCoroutine
 object ColorPicker {
 
     private val safeAccent = listOf(
-        PokeColor.Accent.Green,
-        PokeColor.Accent.Magenta,
-        PokeColor.Accent.Purple,
-        PokeColor.Accent.Red,
-        PokeColor.Accent.SoftSwampGreen,
-        PokeColor.Accent.Teal,
-        PokeColor.Accent.Yellow
+        ColorDef.TypeNormal,
+        ColorDef.TypeFighting,
+        ColorDef.TypeFlying,
+        ColorDef.TypePoison,
+        ColorDef.TypeGround,
+        ColorDef.TypeRock,
+        ColorDef.TypeBug,
+        ColorDef.TypeGhost,
+        ColorDef.TypeSteel,
+        ColorDef.TypeFire,
+        ColorDef.TypeWater,
+        ColorDef.TypeGrass,
+        ColorDef.TypeElectric,
+        ColorDef.TypePsychic,
+        ColorDef.TypeIce,
+        ColorDef.TypeDragon,
+        ColorDef.TypeDark,
+        ColorDef.TypeFairy,
+        ColorDef.TypeShadow,
+        ColorDef.TypeUnknown,
     )
 
     private val norepat: MutableMap<String, Int> = HashMap()
-
-    fun getPokeColorForName(name: String): Color = when (name.lowercase(Locale.getDefault())) {
-        "black" -> PokeColor.Pokemon.Black
-        "blue" -> PokeColor.Pokemon.Blue
-        "brown" -> PokeColor.Pokemon.Brown
-        "gray" -> PokeColor.Pokemon.Gray
-        "green" -> PokeColor.Pokemon.Green
-        "pink" -> PokeColor.Pokemon.Pink
-        "purple" -> PokeColor.Pokemon.Purple
-        "red" -> PokeColor.Pokemon.Red
-        "white" -> PokeColor.Pokemon.White
-        "yellow" -> PokeColor.Pokemon.Yellow
-        else -> PokeColor.Pokemon.Green
-    }
 
     fun getPokeColorForType(name: String): ColorDef {
         return when (name.lowercase(Locale.getDefault())) {
@@ -73,22 +69,22 @@ object ColorPicker {
         }
     }
 
-    fun getColorNoRepeat(space: String) : Color {
+    fun getColorNoRepeat(space: String) : ColorDef {
         val noRepeatValue = norepat.getOrPut(space) { 0 }
         norepat[space] = noRepeatValue + 1
-        return safeAccent[noRepeatValue.mod(PokeColor.Pokemon.all.size)]
+        return safeAccent[noRepeatValue.mod(safeAccent.size)]
     }
 
     suspend fun getPokeColor(context: Context, bitmapUrl: String): ColorDef {
         val bitmap = loadBitmap(context, bitmapUrl) ?: return ColorDef.AccentPrimary
-        return ColorDef.Value(getPokeColor(bitmap))
+        return getPokeColor(bitmap)
     }
 
-    private suspend fun getPokeColor(bitmap: Bitmap): Color {
+    private suspend fun getPokeColor(bitmap: Bitmap): ColorDef {
         return withContext(Dispatchers.IO) {
             val palette = paletteForImage(bitmap)
-            val vibrantSwatch = palette.selectCloseVibrant() ?: return@withContext PokeColor.Accent.Default
-            Color(vibrantSwatch.rgb).copy(alpha = 1f)
+            val vibrantSwatch = palette.selectCloseVibrant() ?: return@withContext ColorDef.AccentPrimary
+            ColorDef.Value(Color(vibrantSwatch.rgb).copy(alpha = 1f))
         }
     }
 
