@@ -66,6 +66,11 @@ private fun InnerMainPage(
         item {
             NewsHeader()
         }
+        if (news.isEmpty()) {
+            item {
+                Spacer(modifier = Modifier.height(600.dp))
+            }
+        }
         news.forEach {
             item {
                 NewsBlock(it.title, it.time, it.image, it.url)

@@ -29,7 +29,7 @@ fun RootLayout(header: String, items: LazyListScope.(LazyListState) -> Unit) {
             modifier = Modifier.fillMaxSize()
         ) {
             item(HEADER_KEY) {
-                PokeHeader(header, modifier = Modifier.padding(start = 32.dp, top = 32.dp))
+                PokeHeader(header, modifier = Modifier.padding(start = 32.dp, top = 64.dp))
             }
             items(lazyState)
         }

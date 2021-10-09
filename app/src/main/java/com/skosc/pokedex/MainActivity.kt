@@ -1,7 +1,10 @@
 package com.skosc.pokedex
 
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.view.Window
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
@@ -20,6 +23,10 @@ import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.compose.LocalDI
 import org.kodein.di.instance
+import android.view.WindowManager
+
+
+
 
 
 class MainActivity : ComponentActivity(), DIAware {
@@ -32,8 +39,14 @@ class MainActivity : ComponentActivity(), DIAware {
         val analytics = FirebaseAnalyticsController(this)
         val settingsRepository by di.instance<SettingsRepository>()
 
+        val window: Window = window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = Color.TRANSPARENT
+
         setContent {
             val settings by settingsRepository.flow.collectAsState(initial = defaultSettings())
+
+
 
             CompositionLocalProvider(
                 LocalDI provides di,

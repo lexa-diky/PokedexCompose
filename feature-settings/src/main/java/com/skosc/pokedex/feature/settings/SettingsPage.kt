@@ -11,12 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.skosc.pokedex.domain.settings.LocalSettings
-import com.skosc.pokedex.uikit.R
 import com.skosc.pokedex.uikit.theme.LocalColoristic
+import com.skosc.pokedex.uikit.widget.PokeHeader
 import com.skosc.pokedex.uikit.widget.SettingsCard
 import kotlinx.coroutines.launch
 
@@ -54,7 +55,8 @@ fun NavGraphBuilder.SettingsPage() = composable(SettingsDestination.path) {
                         }
                     }
                 },
-                modifier = Modifier.background(coloristic.background)
+                modifier = Modifier
+                    .background(coloristic.background)
                     .fillMaxSize()
             )
         })
@@ -71,6 +73,7 @@ private fun SettingsPageContent(
         contentPadding = PaddingValues(16.dp),
         modifier = modifier
     ) {
+        item { PokeHeader(stringResource(id = R.string.settings_title), modifier = Modifier.padding(top = 32.dp, bottom = 16.dp)) }
         LanguageSettingsCard(onPageSelected = onPageSelected, onCloseBottomSheet = onCloseBottomSheet)
         ResetAndSupportDevCard()
     }

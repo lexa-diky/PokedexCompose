@@ -10,9 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.skosc.pokedex.R
 import com.skosc.pokedex.uikit.theme.ListItemShape
 import com.skosc.pokedex.uikit.theme.LocalColoristic
 import com.skosc.pokedex.uikit.widget.PokeLink

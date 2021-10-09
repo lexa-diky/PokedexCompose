@@ -69,7 +69,7 @@ fun GenericDetailsPageScope.GenericDetailsPage(details: BaseDetailsItem) {
                     order = details.header.order,
                     title = details.header.title,
                     tags = details.header.tags,
-                    modifier = Modifier.padding(top = 32.dp, start = 32.dp, end = 32.dp)
+                    modifier = Modifier.padding(top = 48.dp, start = 32.dp, end = 32.dp)
                 )
             }
 

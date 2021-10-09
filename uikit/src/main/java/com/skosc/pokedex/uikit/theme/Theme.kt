@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = Coloristic(
     background = Color(0xFF000000),
-    backgroundAccent = Color(0xFF272727),
+    backgroundAccent = Color(0xFF2E2E2E),
     backgroundShadow = Color(0x19E6E6E6),
     textPrimaryAccent = Color(0xFFFFFFFF),
     textSecondaryAccent = Color(0xFFCACACA),
@@ -45,7 +45,7 @@ private val DarkColorPalette = Coloristic(
 private val LightColorPalette = Coloristic(
     background = Color(0xFFF7F7F7),
     backgroundAccent = Color(0xFFFFFFFF),
-    backgroundShadow = Color(0x19000000),
+    backgroundShadow = Color(0xF000000),
     textPrimaryAccent = Color(0xFF000000),
     textSecondaryAccent = Color(0xFFFFFFFF),
     textLink = Color(0xFF009AFF),
