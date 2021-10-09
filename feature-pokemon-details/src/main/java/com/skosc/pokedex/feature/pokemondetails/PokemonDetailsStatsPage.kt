@@ -4,22 +4,22 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.skosc.pokedex.domain.pokemon.entity.Pokemon
 import com.skosc.pokedex.domain.pokemon.entity.PokemonStat
 import com.skosc.pokedex.domain.pokemon.entity.primaryType
-import com.skosc.pokedex.uikit.coloristics.Coloristic
+import com.skosc.pokedex.uikit.coloristics.ColorPicker
+import com.skosc.pokedex.uikit.theme.LocalColoristic
 import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.FillBar
+import com.skosc.pokedex.uikit.widget.PokeLabel
 
 @Composable
 fun PokemonDetailsStatsPage(pokemon: Pokemon) {
+    val coloristic = LocalColoristic.current
 
     Column {
         pokemon.baseStats.forEach { stat ->
@@ -29,15 +29,15 @@ fun PokemonDetailsStatsPage(pokemon: Pokemon) {
                     .fillMaxWidth()
                     .height(32.dp)
             ) {
-                Text(
+                PokeLabel(
                     text = stat.type.toString(),
-                    fontWeight = FontWeight.SemiBold,
+                    onColor = false,
                     modifier = Modifier.weight(0.3f)
                 )
                 FillBar(
                     fill = stat.value.toFloat() / PokemonStat.MAX_VALUE,
-                    backgroundColor = PokeColor.ShadowGray,
-                    fillColor = Coloristic.getPokeColorForType(pokemon.primaryType.defaultName),
+                    backgroundColor = LocalColoristic.current.accentShadow,
+                    fillColor = coloristic.from(ColorPicker.getPokeColorForType(pokemon.primaryType.defaultName)),
                     modifier = Modifier.weight(0.7f)
                         .height(8.dp)
                 )

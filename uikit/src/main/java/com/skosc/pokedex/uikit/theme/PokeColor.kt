@@ -3,20 +3,6 @@ package com.skosc.pokedex.uikit.theme
 import androidx.compose.ui.graphics.Color
 
 object PokeColor {
-    object Background {
-        val LightDefault = Color(0xFFF7F7F7)
-        val LightAccent = Color(0xFFFFFFFF)
-    }
-
-    val ShadowBlack = Color.Black.copy(alpha = 0.4f)
-    val ShadowGray = Color.Black.copy(alpha = 0.1f)
-    val ShadowTransparent = Color.Black.copy(alpha = 0.03f)
-    val TextBlack = Color.Black
-    val TextGray = Color.Gray
-
-    val Link = Color(0xFF4286F4)
-    val ShadowWhite = Color.White.copy(alpha = 0.2f)
-    val ShadowWitheBackground = Color(0x41FFFFFF)
 
     object Accent {
         val Purple = Color(0xFF6200EE)

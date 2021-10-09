@@ -7,6 +7,7 @@ import com.skosc.pokedex.domain.pokemon.entity.PokemonMove
 import com.skosc.pokedex.domain.settings.LocalSettings
 import com.skosc.pokedex.feature.core.list.BaseListItem
 import com.skosc.pokedex.feature.core.list.GenericItemListPage
+import com.skosc.pokedex.uikit.theme.ColorDef
 import com.skosc.pokedex.uikit.theme.PokeColor
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -18,7 +19,7 @@ fun NavGraphBuilder.MoveListPage() = composable(MoveListDestination.path) {
             it.name,
             listOf(it.type.getLocalized(settings.localization)),
             "",
-            PokeColor.Accent.Red
+            ColorDef.AccentPrimary
         )
     }
 }

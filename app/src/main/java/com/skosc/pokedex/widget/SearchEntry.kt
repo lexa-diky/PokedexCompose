@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.skosc.pokedex.R
 import com.skosc.pokedex.uikit.theme.PokedexTheme
+import com.skosc.pokedex.uikit.widget.PokeCardHeader
 
 @Composable
 fun SearchEntry(
@@ -23,10 +24,8 @@ fun SearchEntry(
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier) {
-        Text(
+        PokeCardHeader(
             text = title,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.SemiBold,
             modifier = Modifier.weight(1f)
                 .align(Alignment.CenterVertically)
         )

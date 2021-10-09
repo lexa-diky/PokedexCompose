@@ -2,24 +2,26 @@ package com.skosc.pokedex.feature.pokemondetails
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.skosc.pokedex.domain.pokemon.entity.Pokemon
 import com.skosc.pokedex.domain.pokemon.entity.PokemonSpecies
 import com.skosc.pokedex.domain.pokemon.entity.primaryType
-import com.skosc.pokedex.uikit.coloristics.Coloristic
+import com.skosc.pokedex.uikit.coloristics.ColorPicker
 import com.skosc.pokedex.uikit.theme.CardShape
+import com.skosc.pokedex.uikit.theme.LocalColoristic
 import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.FillBar
+import com.skosc.pokedex.uikit.widget.PokeLabel
+import com.skosc.pokedex.uikit.widget.PokeText
 import java.util.*
 
 @Composable
 fun PokemonDetailsInfoPage(species: PokemonSpecies, pokemon: Pokemon) {
+    val coloristic = LocalColoristic.current
+
     Column {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -27,14 +29,15 @@ fun PokemonDetailsInfoPage(species: PokemonSpecies, pokemon: Pokemon) {
                 .fillMaxWidth()
                 .height(32.dp)
         ) {
-            Text(
+            PokeLabel(
                 text = "Generation: ",
-                fontWeight = FontWeight.SemiBold,
+                onColor = false,
                 modifier = Modifier.weight(0.3f)
             )
 
-            Text(
+            PokeLabel(
                 text = species.generation.uppercase(),
+                onColor = false,
                 modifier = Modifier
                     .weight(0.7f)
             )
@@ -48,15 +51,15 @@ fun PokemonDetailsInfoPage(species: PokemonSpecies, pokemon: Pokemon) {
                 .fillMaxWidth()
                 .height(32.dp)
         ) {
-            Text(
+            PokeLabel(
                 text = "Catch Rate:",
-                fontWeight = FontWeight.SemiBold,
+                onColor = false,
                 modifier = Modifier.weight(0.3f)
             )
             FillBar(
                 fill = species.catchRate.toFloat() / Pokemon.MAX_CATCH_RATE,
-                backgroundColor = PokeColor.ShadowGray,
-                fillColor = Coloristic.getPokeColorForType(pokemon.primaryType.defaultName),
+                backgroundColor = LocalColoristic.current.accentShadow,
+                fillColor = coloristic.from(ColorPicker.getPokeColorForType(pokemon.primaryType.defaultName)),
                 modifier = Modifier
                     .height(8.dp)
                     .weight(0.7f)
@@ -72,22 +75,23 @@ fun PokemonDetailsInfoPage(species: PokemonSpecies, pokemon: Pokemon) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp)
-                    .background(PokeColor.ShadowGray, CardShape)
+                    .background(LocalColoristic.current.accentShadow, CardShape)
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
 
         Column {
             species.normalizedFlavorText.forEach { (version, text) ->
-                Text(
-                    fontWeight = FontWeight.SemiBold,
+                PokeLabel(
+                    onColor = false,
                     text = version
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Text(
-                    text = text
+                PokeText(
+                    text = text,
+                    onCard = false
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))

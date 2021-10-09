@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.Color
 
 interface TagContainerScope {
 
-    fun toggleBackgroundColor(color: Color)
+    fun toggleBackgroundColor()
 
     fun toggleBackgroundColorDefault()
 
@@ -20,13 +20,11 @@ interface TagContainerScope {
 
 internal class TagContainerScopeImpl(private val state: MutableState<TagContainerState>) : TagContainerScope {
 
-    override fun toggleBackgroundColor(color: Color) {
-        Log.i("ATHERE", "toggle on")
-        state.value = state.value.copy(backgroundColor = color)
+    override fun toggleBackgroundColor() {
+        state.value = state.value.copy(toggled = true)
     }
 
     override fun toggleBackgroundColorDefault() {
-        Log.i("ATHERE", "toggle off")
-        state.value = state.value.copy(backgroundColor = TagContainerState.DEFAULT.backgroundColor)
+        state.value = state.value.copy(toggled = false)
     }
 }

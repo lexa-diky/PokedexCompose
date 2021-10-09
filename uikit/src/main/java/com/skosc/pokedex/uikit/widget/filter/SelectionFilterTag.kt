@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import com.skosc.pokedex.uikit.widget.ListItemText
+import com.skosc.pokedex.uikit.widget.PokeText
 
 data class SelectionTagOption<T>(
     val value: T,
@@ -30,8 +31,9 @@ fun <T> TagContainerScope.SelectionFilterTag(
     var selected: T? by remember { mutableStateOf(default) }
     var isSelectionMode: Boolean by remember { mutableStateOf(false) }
 
-    Text(
+    PokeText(
         text = options.find { it.value == selected }?.title ?: placeholder,
+        onCard = false,
         modifier = Modifier
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
@@ -52,10 +54,10 @@ fun <T> TagContainerScope.SelectionFilterTag(
                     },
                     modifier = Modifier.padding(16.dp),
                 ) {
-                    Text(text = "Default")
+                    PokeText(text = "Default", onCard = false)
                 }
             },
-            title = { Text(text = placeholder) },
+            title = { PokeText(text = placeholder, onCard = false) },
             text = {
                 Column {
                     options.forEach {

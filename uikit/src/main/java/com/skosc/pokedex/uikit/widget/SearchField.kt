@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.skosc.pokedex.uikit.theme.LocalColoristic
 
 @Composable
 fun SearchField(onQueryUpdated: (String) -> Unit, modifier: Modifier = Modifier) {
@@ -27,12 +28,13 @@ fun SearchField(onQueryUpdated: (String) -> Unit, modifier: Modifier = Modifier)
             onQueryUpdated(newQuery)
         },
         shape = RoundedCornerShape(16.dp),
-        placeholder = { Text("Query") },
+        placeholder = { PokeText("Query", onCard = false) },
         leadingIcon = { Image(Icons.Default.Search, "search icon") },
         colors = TextFieldDefaults.textFieldColors(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
+            disabledIndicatorColor = Color.Transparent,
+            backgroundColor = LocalColoristic.current.backgroundShadow
         ),
         modifier = modifier
     )

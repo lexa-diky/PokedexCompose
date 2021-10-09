@@ -1,6 +1,7 @@
 package com.skosc.pokedex.feature.core.list
 
 import androidx.compose.ui.graphics.Color
+import com.skosc.pokedex.uikit.theme.ColorDef
 
 interface BaseListItem {
 
@@ -12,30 +13,30 @@ interface BaseListItem {
 
     val image: String
 
-    val leftColor: Color
-    val rightColor: Color
+    val leftColor: ColorDef
+    val rightColor: ColorDef
 
     companion object {
 
-        operator fun invoke(id: Int, name: String, tags: List<String>, image: String, color: Color): BaseListItem {
+        operator fun invoke(id: Int, name: String, tags: List<String>, image: String, color: ColorDef): BaseListItem {
             return object : BaseListItem {
                 override val id: Int = id
                 override val name: String = name
                 override val tags: List<String> = tags
                 override val image: String = image
-                override val leftColor: Color = color
-                override val rightColor: Color = color
+                override val leftColor: ColorDef = color
+                override val rightColor: ColorDef = color
             }
         }
 
-        operator fun invoke(id: Int, name: String, tags: List<String>, image: String, leftColor: Color, rightColor: Color): BaseListItem {
+        operator fun invoke(id: Int, name: String, tags: List<String>, image: String, leftColor: ColorDef, rightColor: ColorDef): BaseListItem {
             return object : BaseListItem {
                 override val id: Int = id
                 override val name: String = name
                 override val tags: List<String> = tags
                 override val image: String = image
-                override val leftColor: Color = leftColor
-                override val rightColor: Color = rightColor
+                override val leftColor: ColorDef = leftColor
+                override val rightColor: ColorDef = rightColor
             }
         }
     }

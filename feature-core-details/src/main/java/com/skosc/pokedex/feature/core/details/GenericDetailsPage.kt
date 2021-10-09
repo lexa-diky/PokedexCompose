@@ -34,6 +34,8 @@ import com.google.accompanist.pager.rememberPagerState
 import com.skosc.pokedex.feature.core.details.entity.*
 import com.skosc.pokedex.uikit.image.CropTransparentTransformation
 import com.skosc.pokedex.uikit.modifier.halfBackground
+import com.skosc.pokedex.uikit.theme.ColorDef
+import com.skosc.pokedex.uikit.theme.LocalColoristic
 import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.*
 import kotlinx.coroutines.launch
@@ -45,10 +47,16 @@ private val ITEM_CONTENT_SHEET = "__ITEM_CONTENT_SHEET"
 
 @Composable
 fun GenericDetailsPageScope.GenericDetailsPage(details: BaseDetailsItem) {
+    val coloristic = LocalColoristic.current
+
     Box(
         modifier = Modifier
-            .background(details.background.base)
-            .halfBackground(details.background.left, details.background.right, RectangleShape)
+            .background(coloristic.from(details.background.base))
+            .halfBackground(
+                coloristic.from(details.background.left),
+                coloristic.from(details.background.right),
+                RectangleShape
+            )
             .fillMaxSize()
     ) {
         val lazyListState = rememberLazyListState()
@@ -190,7 +198,7 @@ private fun DetailsHeader(
 ) {
     Row(modifier = modifier) {
         Column {
-            SubPokeHeader(text = title, color = Color.White)
+            SubPokeHeader(text = title)
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 tags.forEach { tag ->
                     TypeChip(type = tag)
@@ -200,7 +208,7 @@ private fun DetailsHeader(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        OrderText(order, color = PokeColor.Background.LightAccent)
+        OrderText(order)
     }
 }
 
@@ -254,13 +262,15 @@ private fun TabRow(
     onItemSelected: (TabRowItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val coloristic = LocalColoristic.current
+
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(0.dp, Alignment.CenterHorizontally),
         modifier = modifier
     ) {
         items(rowItems) { item ->
             val isItemSelected = item == selectedItem
-            val bottomLineColor by animateColorAsState(if (isItemSelected) PokeColor.ShadowBlack else Color.Transparent)
+            val bottomLineColor by animateColorAsState(if (isItemSelected) coloristic.accentShadow else Color.Transparent)
 
             var textLayout: TextLayoutResult? by remember { mutableStateOf(null) }
 
@@ -273,6 +283,7 @@ private fun TabRow(
             ) {
                 Text(
                     text = item.title,
+                    color = LocalColoristic.current.textPrimaryAccent,
                     fontWeight = FontWeight.SemiBold,
                     onTextLayout = { textLayout = it }
                 )
@@ -299,7 +310,7 @@ private fun TabRow(
 private fun DetailsBottomSheet(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     Box(
         modifier = modifier.background(
-            PokeColor.Background.LightAccent,
+            LocalColoristic.current.backgroundAccent,
             RoundedCornerShape(32.dp)
         )
     ) {
@@ -312,7 +323,7 @@ private fun DetailsBottomSheet(modifier: Modifier = Modifier, content: @Composab
 @OptIn(ExperimentalPagerApi::class)
 private fun Preview_GenericDetailsPage() {
     GenericDetailsPageScope(rememberPagerState(pageCount = 1)).GenericDetailsPage(BaseDetailsItem(
-        background = DetailsBackground(PokeColor.Pokemon.Red, PokeColor.Pokemon.Blue, PokeColor.Pokemon.Green),
+        background = DetailsBackground(ColorDef.TypeFairy, ColorDef.TypeFairy, ColorDef.TypeFairy),
         header = DetailsHeaderItem(
             title = "Bulbasaur",
             order = 1,

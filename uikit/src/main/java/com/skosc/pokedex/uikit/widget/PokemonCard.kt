@@ -19,6 +19,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberImagePainter
 import com.skosc.pokedex.uikit.R
 import com.skosc.pokedex.uikit.modifier.halfBackground
+import com.skosc.pokedex.uikit.theme.LocalColoristic
 import com.skosc.pokedex.uikit.theme.PokeCardShape
 import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.titlecase
@@ -30,8 +31,8 @@ fun PokemonCard(
     order: Int,
     tags: List<String>,
     imageUrl: String,
-    leftBackgroundColor: androidx.compose.ui.graphics.Color,
-    rightBackgroundColor: androidx.compose.ui.graphics.Color,
+    leftBackgroundColor: Color,
+    rightBackgroundColor: Color,
     modifier: Modifier = Modifier
 ) {
     val animatedLeftBackgroundColor by animateColorAsState(leftBackgroundColor)
@@ -102,7 +103,7 @@ fun PokemonCard(
             Image(
                 painter = painterResource(id = R.drawable.ic_pokeball_filed),
                 contentDescription = "pokeball icon",
-                colorFilter = ColorFilter.tint(PokeColor.ShadowWhite),
+                colorFilter = ColorFilter.tint(LocalColoristic.current.accentShadow),
                 modifier = Modifier
                     .size(80.dp)
                     .offset(34.dp, 34.dp)

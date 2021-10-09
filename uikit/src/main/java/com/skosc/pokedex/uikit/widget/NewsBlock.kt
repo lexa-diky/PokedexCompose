@@ -8,7 +8,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,17 +32,17 @@ fun NewsBlock(title: String, time: Instant, image: String, url: String) {
                     .fillMaxWidth()
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(
+                    PokeLabel(
                         text = title,
-                        fontWeight = FontWeight.Bold,
+                        onColor = false,
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 2,
                         modifier = Modifier.padding(end = 8.dp)
                     )
 
-                    Text(
+                    PokeSubLabel(
                         text = time.formatLocal(),
-                        fontSize = 12.sp,
+                        onCard = false
                     )
                 }
 

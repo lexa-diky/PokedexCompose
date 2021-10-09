@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.skosc.pokedex.uikit.theme.LocalColoristic
 import com.skosc.pokedex.uikit.theme.PokeShapes
 
 @Composable
@@ -18,11 +19,12 @@ fun FilterTagContainer(
 ) {
     val scope = TagContainerScope(state)
 
-    Log.i("ATHERE", state.value.backgroundColor.toString())
+    val coloristic = LocalColoristic.current
+    val background = if (state.value.toggled) coloristic.accentPrimary else  coloristic.backgroundShadow
 
     Box(
         modifier = Modifier
-            .background(state.value.backgroundColor, PokeShapes.ChipShape)
+            .background(background, PokeShapes.ChipShape)
             .padding(vertical = 8.dp, horizontal = 12.dp)
             .animateContentSize()
             .then(modifier)

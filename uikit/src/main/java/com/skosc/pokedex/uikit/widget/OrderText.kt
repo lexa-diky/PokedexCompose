@@ -5,16 +5,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.skosc.pokedex.uikit.theme.LocalColoristic
 
 @Composable
 fun OrderText(
     order: Int,
     modifier: Modifier = Modifier,
-    color: Color = Color.Black.copy(alpha = 0.2f)
 ) {
     Text(
         text = formatAsOrder(order),
-        color = color,
+        color = LocalColoristic.current.textSecondaryAccent,
         modifier = modifier
     )
 }

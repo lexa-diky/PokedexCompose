@@ -9,7 +9,7 @@ import com.skosc.pokedex.repository.MenuRepository
 import com.skosc.pokedex.core.resources.ResourceResolver
 import com.skosc.pokedex.navigation.Destination
 import com.skosc.pokedex.navigation.root.RootDestination
-import com.skosc.pokedex.uikit.coloristics.Coloristic
+import com.skosc.pokedex.uikit.coloristics.ColorPicker
 
 class LoadBoxCards(
     private val menuRepository: MenuRepository,
@@ -25,7 +25,7 @@ class LoadBoxCards(
     private fun toBoxCard(entry: MenuEntry): BoxCard.Menu {
         return BoxCard.Menu(
             title = getTitle(entry),
-            color = Coloristic.getColorNoRepeat(NO_REPEAT_SPACE),
+            color = ColorPicker.getColorNoRepeat(NO_REPEAT_SPACE),
             destination = entry.getDestination()
         )
     }

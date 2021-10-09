@@ -14,6 +14,7 @@ import com.skosc.pokedex.domain.settings.LocalSettings
 import com.skosc.pokedex.domain.settings.SettingsRepository
 import com.skosc.pokedex.domain.settings.entity.defaultSettings
 import com.skosc.pokedex.page.RootPage
+import com.skosc.pokedex.uikit.theme.LocalColoristic
 import com.skosc.pokedex.uikit.theme.PokedexTheme
 import org.kodein.di.DI
 import org.kodein.di.DIAware
@@ -42,7 +43,7 @@ class MainActivity : ComponentActivity(), DIAware {
                 // launchIgnition()
 
                 PokedexTheme {
-                    Surface(color = MaterialTheme.colors.background) {
+                    Surface(color = LocalColoristic.current.background) {
                         RootPage()
                     }
                 }

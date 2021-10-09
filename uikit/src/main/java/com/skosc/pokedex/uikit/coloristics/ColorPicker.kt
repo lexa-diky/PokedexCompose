@@ -2,12 +2,15 @@ package com.skosc.pokedex.uikit.coloristics
 
 import android.content.Context
 import android.graphics.Bitmap
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
 import androidx.palette.graphics.Target
 import coil.ImageLoader
 import coil.request.ImageRequest
+import com.skosc.pokedex.uikit.theme.ColorDef
+import com.skosc.pokedex.uikit.theme.LocalColoristic
 import com.skosc.pokedex.uikit.theme.PokeColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,7 +20,7 @@ import kotlin.collections.HashMap
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-object Coloristic {
+object ColorPicker {
 
     private val safeAccent = listOf(
         PokeColor.Accent.Green,
@@ -31,7 +34,7 @@ object Coloristic {
 
     private val norepat: MutableMap<String, Int> = HashMap()
 
-    fun getPokeColorForName(name: String): androidx.compose.ui.graphics.Color = when (name.lowercase(Locale.getDefault())) {
+    fun getPokeColorForName(name: String): Color = when (name.lowercase(Locale.getDefault())) {
         "black" -> PokeColor.Pokemon.Black
         "blue" -> PokeColor.Pokemon.Blue
         "brown" -> PokeColor.Pokemon.Brown
@@ -45,28 +48,29 @@ object Coloristic {
         else -> PokeColor.Pokemon.Green
     }
 
-    fun getPokeColorForType(name: String): androidx.compose.ui.graphics.Color = when (name.lowercase(Locale.getDefault())) {
-        "normal" -> PokeColor.Pokemon.White
-        "fighting" -> PokeColor.Pokemon.Pink
-        "flying" -> PokeColor.Pokemon.Blue
-        "poison" -> PokeColor.Pokemon.Purple
-        "ground" -> PokeColor.Pokemon.Brown
-        "rock" -> PokeColor.Pokemon.Brown
-        "bug" -> PokeColor.Pokemon.Green
-        "ghost" -> PokeColor.Pokemon.Black
-        "steel" -> PokeColor.Pokemon.Black
-        "fire" -> PokeColor.Pokemon.Red
-        "water" -> PokeColor.Pokemon.Blue
-        "grass" -> PokeColor.Pokemon.Green
-        "electric" -> PokeColor.Pokemon.Yellow
-        "psychic" -> PokeColor.Pokemon.Purple
-        "ice" -> PokeColor.Pokemon.Blue
-        "dragon" -> PokeColor.Pokemon.Red
-        "dark" -> PokeColor.Pokemon.Black
-        "fairy" -> PokeColor.Pokemon.Pink
-        "unknown" -> PokeColor.Pokemon.White
-        "shadow" -> PokeColor.Pokemon.Black
-        else -> PokeColor.Pokemon.Purple
+    fun getPokeColorForType(name: String): ColorDef {
+        return when (name.lowercase(Locale.getDefault())) {
+            "normal" -> ColorDef.TypeNormal
+            "fighting" -> ColorDef.TypeFighting
+            "flying" -> ColorDef.TypeFlying
+            "poison" -> ColorDef.TypePoison
+            "ground" -> ColorDef.TypeGround
+            "rock" ->  ColorDef.TypeRock
+            "bug" -> ColorDef.TypeBug
+            "ghost" -> ColorDef.TypeGhost
+            "steel" -> ColorDef.TypeSteel
+            "fire" ->  ColorDef.TypeFire
+            "water" -> ColorDef.TypeWater
+            "grass" -> ColorDef.TypeGrass
+            "electric" -> ColorDef.TypeElectric
+            "psychic" -> ColorDef.TypePsychic
+            "ice" -> ColorDef.TypeIce
+            "dragon" -> ColorDef.TypeDragon
+            "dark" ->  ColorDef.TypeDark
+            "fairy" -> ColorDef.TypeFairy
+            "shadow" -> ColorDef.TypeShadow
+            else -> ColorDef.TypeUnknown
+        }
     }
 
     fun getColorNoRepeat(space: String) : Color {
@@ -75,17 +79,17 @@ object Coloristic {
         return safeAccent[noRepeatValue.mod(PokeColor.Pokemon.all.size)]
     }
 
-    suspend fun getPokeColor(bitmap: Bitmap): androidx.compose.ui.graphics.Color {
+    suspend fun getPokeColor(context: Context, bitmapUrl: String): ColorDef {
+        val bitmap = loadBitmap(context, bitmapUrl) ?: return ColorDef.AccentPrimary
+        return ColorDef.Value(getPokeColor(bitmap))
+    }
+
+    private suspend fun getPokeColor(bitmap: Bitmap): Color {
         return withContext(Dispatchers.IO) {
             val palette = paletteForImage(bitmap)
             val vibrantSwatch = palette.selectCloseVibrant() ?: return@withContext PokeColor.Accent.Default
             Color(vibrantSwatch.rgb).copy(alpha = 1f)
         }
-    }
-
-    suspend fun getPokeColor(context: Context, bitmapUrl: String): androidx.compose.ui.graphics.Color {
-        val bitmap = loadBitmap(context, bitmapUrl) ?: return PokeColor.Accent.Default
-        return getPokeColor(bitmap)
     }
 
     private fun Palette.selectCloseVibrant(): Palette.Swatch? =

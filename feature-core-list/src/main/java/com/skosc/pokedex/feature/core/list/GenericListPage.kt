@@ -13,6 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.skosc.pokedex.uikit.localViewModel
+import com.skosc.pokedex.uikit.theme.ColorDef
+import com.skosc.pokedex.uikit.theme.LocalColoristic
 import com.skosc.pokedex.uikit.widget.*
 import com.skosc.pokedex.uikit.widget.filter.FieldFilterTag
 import com.skosc.pokedex.uikit.widget.filter.FilterLayout
@@ -28,6 +30,8 @@ fun <T : Any> GenericItemListPage(
     onItemSelected: (Int) -> Unit,
     spec: GenericListSpec<T>
 ) {
+    val coloristic = LocalColoristic.current
+
     val viewModel = localViewModel { GenericListPageViewModel(spec) }
     val items = remember { viewModel.items() }
 
@@ -55,8 +59,8 @@ fun <T : Any> GenericItemListPage(
                     name = item.name,
                     order = item.id,
                     tags = item.tags,
-                    leftBackgroundColor = item.leftColor,
-                    rightBackgroundColor = item.rightColor,
+                    leftBackgroundColor = coloristic.from(item.leftColor),
+                    rightBackgroundColor = coloristic.from(item.rightColor),
                     imageUrl = item.image,
                     modifier = Modifier
                         .width(200.dp)
@@ -74,7 +78,7 @@ private fun makePlaceholders() = flowOf(PagingData.from((0..15).map {
         id = 0,
         name = "",
         tags = emptyList(),
-        color = Color.Gray,
+        color = ColorDef.BackgroundShadow,
         image = ""
     )
 }))

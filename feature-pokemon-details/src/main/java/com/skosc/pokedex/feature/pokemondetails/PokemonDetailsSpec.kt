@@ -1,8 +1,8 @@
 package com.skosc.pokedex.feature.pokemondetails
 
+import androidx.compose.runtime.Composable
 import com.skosc.pokedex.domain.pokemon.entity.Pokemon
 import com.skosc.pokedex.domain.pokemon.entity.PokemonSpecies
-import com.skosc.pokedex.domain.pokemon.repository.PokemonRepository
 import com.skosc.pokedex.domain.pokemon.util.getLocalized
 import com.skosc.pokedex.domain.settings.entity.PokeAppSettings
 import com.skosc.pokedex.feature.core.details.GenericDetailsSpec
@@ -10,7 +10,7 @@ import com.skosc.pokedex.feature.core.details.entity.DetailsBackground
 import com.skosc.pokedex.feature.core.details.entity.DetailsHeaderItem
 import com.skosc.pokedex.feature.core.details.entity.DetailsPageItem
 import com.skosc.pokedex.feature.core.details.entity.TabRowItem
-import com.skosc.pokedex.uikit.coloristics.Coloristic
+import com.skosc.pokedex.uikit.coloristics.ColorPicker
 
 class PokemonDetailsSpec(
     private val settings: PokeAppSettings,
@@ -35,12 +35,12 @@ class PokemonDetailsSpec(
     }
 
     override val backgroundMapper: (Pair<PokemonSpecies, Pokemon>) -> DetailsBackground = { (species, pokemon) ->
-        val left = Coloristic.getPokeColorForType(pokemon.types.first().defaultName)
+        val left = ColorPicker.getPokeColorForType(pokemon.types.first().defaultName)
         DetailsBackground(
             left = left,
-            right = pokemon.types.getOrNull(1)?.defaultName?.let(Coloristic::getPokeColorForType)
+            right = pokemon.types.getOrNull(1)?.defaultName?.let(ColorPicker::getPokeColorForType)
                 ?: left,
-            base = Coloristic.getPokeColorForName(species.color.name)
+            base = left
         )
     }
 }

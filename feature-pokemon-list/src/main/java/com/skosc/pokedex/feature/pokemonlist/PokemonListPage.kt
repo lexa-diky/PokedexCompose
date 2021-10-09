@@ -1,5 +1,6 @@
 package com.skosc.pokedex.feature.pokemonlist
 
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -12,7 +13,8 @@ import com.skosc.pokedex.feature.core.list.ListFilter
 import com.skosc.pokedex.feature.pokemondetails.PokemonDetailsDestination
 import com.skosc.pokedex.navigation.LocalNavController
 import com.skosc.pokedex.navigation.navigate
-import com.skosc.pokedex.uikit.coloristics.Coloristic
+import com.skosc.pokedex.uikit.coloristics.ColorPicker
+import com.skosc.pokedex.uikit.theme.ColorDef
 
 fun NavGraphBuilder.PokemonListPage() = composable(PokemonListDestination.path) {
     val navController = LocalNavController.current
@@ -44,14 +46,14 @@ fun NavGraphBuilder.PokemonListPage() = composable(PokemonListDestination.path) 
     )
 }
 
-private fun getLeftColor(species: PokemonSpecies): Color {
-    return Coloristic.getPokeColorForType(species.defaultVariety.types.first().defaultName)
+private fun getLeftColor(species: PokemonSpecies): ColorDef {
+    return ColorPicker.getPokeColorForType(species.defaultVariety.types.first().defaultName)
 }
 
-private fun getRightColor(species: PokemonSpecies, leftColor: Color): Color {
+private fun getRightColor(species: PokemonSpecies, leftColor: ColorDef): ColorDef {
     val second = species.defaultVariety.types.getOrNull(1)
     return if (second != null) {
-        Coloristic.getPokeColorForType(second.defaultName)
+        ColorPicker.getPokeColorForType(second.defaultName)
     } else {
         leftColor
     }

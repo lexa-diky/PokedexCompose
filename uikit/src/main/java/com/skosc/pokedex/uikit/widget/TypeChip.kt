@@ -12,10 +12,9 @@ import com.skosc.pokedex.uikit.theme.PokeShapes
 
 @Composable
 fun TypeChip(type: String) {
-    Text(
+    PokeSubLabel(
         text = type,
-        fontSize = 11.sp,
-        color = Color.White,
+        onCard = true,
         modifier = Modifier
             .background(
                 Color.White.copy(alpha = 0.2f),

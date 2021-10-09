@@ -30,6 +30,7 @@ import com.skosc.pokedex.settings
 import com.skosc.pokedex.uikit.image.CropTransparentTransformation
 import com.skosc.pokedex.uikit.diViewModel
 import com.skosc.pokedex.uikit.theme.CardShape
+import com.skosc.pokedex.uikit.theme.LocalColoristic
 import com.skosc.pokedex.uikit.theme.PokeColor
 import com.skosc.pokedex.uikit.widget.*
 import com.skosc.pokedex.widget.*
@@ -88,7 +89,7 @@ private fun CardBox(cards: BoxCardList, onQueryUpdated: (String) -> Unit) {
     ) {
         Column(
             modifier = Modifier
-                .background(PokeColor.Background.LightAccent, CardShape)
+                .background(LocalColoristic.current.backgroundAccent, CardShape)
         ) {
             SearchField(
                 onQueryUpdated = onQueryUpdated,

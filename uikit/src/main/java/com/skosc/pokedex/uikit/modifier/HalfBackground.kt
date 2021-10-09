@@ -23,11 +23,13 @@ class HalfSplitBackground(
         val canvasWidth = size.width
         val canvasHeight = size.height
 
+        drawRect(leftColor)
+
         drawPath(
             path = Path().apply {
-                moveTo(-5f, -5f)
-                lineTo(canvasWidth - 5f, canvasHeight - 5f)
-                lineTo(0f, canvasWidth - 5f)
+                moveTo(0f, 0f)
+                lineTo(canvasWidth, canvasHeight)
+                lineTo(0f, canvasWidth)
                 lineTo(0f, 0f)
             },
             brush = SolidColor(leftColor)

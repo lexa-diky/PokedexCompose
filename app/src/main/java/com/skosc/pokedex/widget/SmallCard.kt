@@ -4,19 +4,18 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.skosc.pokedex.R
 import com.skosc.pokedex.uikit.theme.*
+import com.skosc.pokedex.uikit.widget.PokeLabel
 
 @Composable
 fun SmallCard(
@@ -33,10 +32,9 @@ fun SmallCard(
     ) {
         val (textConst, topIconConst) = createRefs()
 
-        Text(
+        PokeLabel(
             text = text,
-            color = Color.White.copy(alpha = 0.8f),
-            fontWeight = FontWeight.Bold,
+            onColor = true,
             modifier = Modifier.constrainAs(textConst) {
                 top.linkTo(parent.top, margin = 24.dp)
                 bottom.linkTo(parent.bottom, margin = 24.dp)
@@ -47,7 +45,7 @@ fun SmallCard(
         Image(
             painter = painterResource(id = R.drawable.ic_pokeball_filed),
             contentDescription = "pokeball icon",
-            colorFilter = ColorFilter.tint(PokeColor.ShadowWhite),
+            colorFilter = ColorFilter.tint(LocalColoristic.current.accentShadow),
             modifier = Modifier
                 .size(64.dp)
                 .offset(10.dp)

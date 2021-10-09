@@ -8,7 +8,7 @@ import com.skosc.pokedex.domain.pokemon.entity.PokemonItem
 import com.skosc.pokedex.domain.settings.LocalSettings
 import com.skosc.pokedex.feature.core.list.BaseListItem
 import com.skosc.pokedex.feature.core.list.GenericItemListPage
-import com.skosc.pokedex.uikit.coloristics.Coloristic
+import com.skosc.pokedex.uikit.coloristics.ColorPicker
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.ItemListPage() = composable(ItemListDestination.path) {
@@ -20,7 +20,7 @@ fun NavGraphBuilder.ItemListPage() = composable(ItemListDestination.path) {
             it.name(settings.localization.locale()),
             emptyList(),
             it.sprite,
-            Coloristic.getPokeColor(context, it.sprite)
+            ColorPicker.getPokeColor(context, it.sprite)
         )
     }
 }

@@ -6,13 +6,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.skosc.pokedex.uikit.theme.PokeColor
+import com.skosc.pokedex.uikit.widget.PokeText
 
 @Composable
 fun TagContainerScope.ToggleFilterTag(text: String, modifier: Modifier = Modifier, isToggledDefault: Boolean = false, onClick: (Boolean) -> Unit = {}) {
     var isToggled by remember { mutableStateOf(isToggledDefault) }
 
-    Text(
+    PokeText(
         text = text,
+        onCard = false,
         modifier = Modifier
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
@@ -21,7 +23,7 @@ fun TagContainerScope.ToggleFilterTag(text: String, modifier: Modifier = Modifie
                     if (isToggled) {
                         toggleBackgroundColorDefault()
                     } else {
-                        toggleBackgroundColor(PokeColor.Accent.SoftSwampGreen)
+                        toggleBackgroundColor()
                     }
                     isToggled = !isToggled
                 }
