@@ -1,6 +1,5 @@
 package com.skosc.pokedex.feature.pokemondetails
 
-import androidx.compose.runtime.Composable
 import com.skosc.pokedex.domain.pokemon.entity.Pokemon
 import com.skosc.pokedex.domain.pokemon.entity.PokemonSpecies
 import com.skosc.pokedex.domain.pokemon.util.getLocalized
@@ -18,13 +17,15 @@ class PokemonDetailsSpec(
     override val source: suspend () -> Pair<PokemonSpecies, Pokemon>
 ) : GenericDetailsSpec<Pair<PokemonSpecies, Pokemon>> {
 
+
     override val headerMapper: (Pair<PokemonSpecies, Pokemon>) -> DetailsHeaderItem = { (species, pokemon) ->
-        DetailsHeaderItem(
-            title = pokemon.name,
-            order = species.id, // TODO change to order
-            tags = pokemon.types.map { it.names.getLocalized(settings.localization) },
-            image = pokemon.imageUrl
-        )
+        DetailsHeaderItem(pokemon.imageUrl) {
+            PokemonDetailsHeader(
+                order = species.id,
+                title = pokemon.name,
+                types = pokemon.types
+            )
+        }
     }
 
     override val pagesMapper: (Pair<PokemonSpecies, Pokemon>) -> List<DetailsPageItem> = { (species, pokemon) ->

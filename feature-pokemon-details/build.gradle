@@ -12,6 +12,7 @@ dependencies {
     implementation project(':core-network')
     implementation project(':core-localization')
     implementation project(':feature-core-details')
+    implementation project(':feature-type-details')
 
     implementation project(':uikit')
     implementation project(':navigation')

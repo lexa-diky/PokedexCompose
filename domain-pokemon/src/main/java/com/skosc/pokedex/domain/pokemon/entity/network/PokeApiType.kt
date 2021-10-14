@@ -11,5 +11,7 @@ internal data class PokeApiType(
     @SerialName("name")
     val name: String,
     @SerialName("names")
-    val names: List<PokeApiName>
+    val names: List<PokeApiName>,
+    @SerialName("damage_relations")
+    val damageRelations: PokeApiDamageRelations
 )

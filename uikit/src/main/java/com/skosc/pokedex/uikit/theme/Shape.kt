@@ -5,14 +5,9 @@ import androidx.compose.material.Shapes
 import androidx.compose.ui.unit.dp
 import com.google.android.material.chip.Chip
 
-val Shapes = Shapes(
-    small = RoundedCornerShape(4.dp),
-    medium = RoundedCornerShape(4.dp),
-    large = RoundedCornerShape(0.dp)
-)
-
 object PokeShapes {
     val ChipShape = RoundedCornerShape(12.dp)
+    val CapsuleShape = RoundedCornerShape(4.dp)
 }
 
 val ListItemShape = RoundedCornerShape(6.dp)

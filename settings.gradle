@@ -9,6 +9,7 @@ dependencyResolutionManagement {
 rootProject.name = "pokedex"
 
 include ':app'
+include ':app-mini-type-calculator'
 include ':uikit-demo'
 
 include ':core'
@@ -25,6 +26,7 @@ include ':domain-ignition'
 
 include ':feature-core-list'
 include ':feature-core-details'
+include ':feature-core-pokemon'
 
 include ':feature-pokemon-list'
 include ':feature-pokemon-details'
@@ -32,3 +34,4 @@ include ':feature-news-list'
 include ':feature-move-list'
 include ':feature-item-list'
 include ':feature-settings'
+include ':feature-type-details'

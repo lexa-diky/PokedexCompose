@@ -13,6 +13,7 @@ import com.skosc.pokedex.domain.pokemon.PokemonDomainModule
 import com.skosc.pokedex.domain.settings.SettingsDomainModule
 import com.skosc.pokedex.feature.pokemondetails.PokemonDetailsModule
 import com.skosc.pokedex.feature.settings.SettingsFeatureModule
+import com.skosc.pokedex.feature.typedetails.TypeDetailsModule
 import org.kodein.di.*
 
 class PokedexApplication : Application(), DIAware {
@@ -24,6 +25,7 @@ class PokedexApplication : Application(), DIAware {
         // Feature
         importOnce(PokemonDetailsModule)
         importOnce(SettingsFeatureModule)
+        importOnce(TypeDetailsModule)
 
         // Domin
         importOnce(PokemonDomainModule)

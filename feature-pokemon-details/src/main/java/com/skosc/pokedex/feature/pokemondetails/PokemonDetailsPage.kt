@@ -27,8 +27,8 @@ fun NavGraphBuilder.PokemonDetailsPage() = composable(PokemonDetailsDestination.
         specs = specFactory.buildForId(id, settings)
     }
 
-    val state = rememberPagerState(pageCount = specs.size)
-    HorizontalPager(state = state, dragEnabled = false) { page ->
+    val state = rememberPagerState(initialPage = 0)
+    HorizontalPager(count = specs.size, state = state) { page ->
         val genericDetailsPageScope = remember { GenericDetailsPageScope(state) }
         genericDetailsPageScope.GenericDetailsPage(specs[page])
     }

@@ -2,9 +2,6 @@ package com.skosc.pokedex.domain.pokemon.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.skosc.pokedex.domain.pokemon.entity.PokemonItem
-import com.skosc.pokedex.domain.pokemon.entity.PokemonMove
-import com.skosc.pokedex.domain.pokemon.entity.PokemonSpecies
 import com.skosc.pokedex.domain.pokemon.entity.network.PokeApiResource
 import com.skosc.pokedex.domain.pokemon.mapper.PokeApiItemMapper
 import com.skosc.pokedex.domain.pokemon.mapper.PokeApiMoveMapper
@@ -12,12 +9,28 @@ import com.skosc.pokedex.domain.pokemon.mapper.PokeApiPokemonSpeciesMapper
 import com.skosc.pokedex.domain.pokemon.paging.LimitOffsetPokeApiDataSource
 import com.skosc.pokedex.domain.pokemon.service.PokeApiService
 import com.skosc.pokedex.core.network.PaginatedFlowReader
+import com.skosc.pokedex.domain.pokemon.entity.*
+import com.skosc.pokedex.domain.pokemon.mapper.PokeApiTypeMapper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.withContext
 
 class PokemonRepository internal constructor(private val service: PokeApiService) {
 
     suspend fun getPokemonSpecies(id: Int): PokemonSpecies {
         return service.getPokemonSpecies(id)
             .let(PokeApiPokemonSpeciesMapper::map)
+    }
+
+    suspend fun getType(type: PokemonTypeExpected) : PokemonType {
+        return service.getType(type.defaultName)
+            .let(PokeApiTypeMapper::map)
+    }
+
+    suspend fun allTypes(): List<PokemonType> = withContext(Dispatchers.IO) {
+        PokemonTypeExpected.values().map { async { getType(it) } }
+            .awaitAll()
     }
 
     fun getPokemonSpeciesPaginatedReader(): PaginatedFlowReader<PokemonSpecies> = PaginatedFlowReader {

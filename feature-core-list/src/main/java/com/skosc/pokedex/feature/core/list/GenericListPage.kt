@@ -60,7 +60,7 @@ fun <T : Any> GenericItemListPage(
                     rightBackgroundColor = coloristic.from(item.rightColor),
                     imageUrl = item.image,
                     shimmer = item.isPlaceholder,
-                    onClick = { onItemSelected(item.id) },
+                    onClick = { if (!item.isPlaceholder) { onItemSelected(item.id) } },
                     modifier = Modifier
                         .width(200.dp)
                         .height(125.dp)

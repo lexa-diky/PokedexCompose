@@ -11,7 +11,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.skosc.pokedex.uikit.theme.BarShape
 import com.skosc.pokedex.uikit.theme.PokedexTheme
-import com.skosc.pokedex.uikit.theme.Shapes
 
 @Composable
 fun FillBar(

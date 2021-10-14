@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="type_details_title_mixed">%s/%s</string>
+    <string name="type_details_good_damamge">Good Damage</string>
+    <string name="type_details_bad_damamge">Bad Damage</string>
+    <string name="type_details_good_defence">Good Defence</string>
+    <string name="type_details_bad_defence">Bad Defence</string>
+    <string name="type_details_ok">OK</string>
+    <string name="type_details_types">Select Types</string>
+
+</resources>

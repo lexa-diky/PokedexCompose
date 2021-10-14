@@ -57,6 +57,18 @@ fun SubPokeHeader(text: String, secondary: Boolean = false, modifier: Modifier =
 }
 
 @Composable
+fun ParagraphPokeHeader(text: String, modifier: Modifier = Modifier, secondary: Boolean = false) {
+    val color = if (secondary) LocalColoristic.current.textSecondaryAccent else LocalColoristic.current.textPrimaryAccent
+    Text(
+        text = text,
+        color = color,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 18.sp,
+        modifier = modifier
+    )
+}
+
+@Composable
 fun PokeLink(text: String, modifier: Modifier = Modifier) {
     Text(
         text = text,

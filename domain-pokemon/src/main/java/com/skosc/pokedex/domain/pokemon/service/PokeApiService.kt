@@ -40,6 +40,10 @@ internal class PokeApiService(private val client: HttpClient) {
         return client.getPokeApi(PokeApiResource.Item.id, id)
     }
 
+    suspend fun getType(name: String): PokeApiType {
+        return client.getPokeApi(PokeApiResource.Type.id, name)
+    }
+
     suspend fun getPaginated(resource: PokeApiResource, offset: Int, limit: Int): PokeApiPage {
         return client.get("https://pokeapi.co/api/v2/${resource.id}?offset=$offset&limit=$limit") {
             heavyCache()
@@ -54,5 +58,9 @@ internal class PokeApiService(private val client: HttpClient) {
 
     private suspend inline fun <reified T> HttpClient.getPokeApi(resource: String, id: Int): T {
         return getPokeApi("https://pokeapi.co/api/v2/$resource/$id")
+    }
+
+    private suspend inline fun <reified T> HttpClient.getPokeApi(resource: String, name: String): T {
+        return getPokeApi("https://pokeapi.co/api/v2/$resource/$name")
     }
 }

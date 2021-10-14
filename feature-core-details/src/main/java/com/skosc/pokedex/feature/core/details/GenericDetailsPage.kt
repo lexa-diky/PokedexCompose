@@ -42,7 +42,6 @@ import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 private val ITEM_HEADER = "__ITEM_HEADER"
-private val ITEM_POKE_BALL = "__ITEM_POKEBALL"
 private val ITEM_CONTENT_SHEET = "__ITEM_CONTENT_SHEET"
 
 @Composable
@@ -67,12 +66,7 @@ fun GenericDetailsPageScope.GenericDetailsPage(details: BaseDetailsItem) {
             modifier = Modifier.fillMaxHeight()
         ) {
             item(ITEM_HEADER) {
-                DetailsHeader(
-                    order = details.header.order,
-                    title = details.header.title,
-                    tags = details.header.tags,
-                    modifier = Modifier.padding(top = 48.dp, start = 32.dp, end = 32.dp)
-                )
+                details.header.content()
             }
 
             item(ITEM_CONTENT_SHEET) {
@@ -193,29 +187,6 @@ private fun GenericDetailsPageScope.PokemonImage(imageUrl: String, modifier: Mod
 }
 
 @Composable
-private fun DetailsHeader(
-    order: Int,
-    title: String,
-    tags: List<String>,
-    modifier: Modifier = Modifier
-) {
-    Row(modifier = modifier) {
-        Column {
-            SubPokeHeader(text = title, secondary = true)
-            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                tags.forEach { tag ->
-                    TypeChip(type = tag)
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.weight(1f))
-
-        OrderText(order)
-    }
-}
-
-@Composable
 @OptIn(ExperimentalPagerApi::class, ExperimentalAnimationApi::class)
 private fun BottomSheetImpl(pages: List<DetailsPageItem>, modifier: Modifier = Modifier) {
     if (pages.isEmpty()) {
@@ -225,7 +196,7 @@ private fun BottomSheetImpl(pages: List<DetailsPageItem>, modifier: Modifier = M
     DetailsBottomSheet(modifier = modifier.zIndex(1f)) {
         val titles = pages.map { it.title }
 
-        val pagerState = rememberPagerState(pageCount = pages.size)
+        val pagerState = rememberPagerState(initialPage = 0)
         var selectedTabItem by remember { mutableStateOf(pages.first().title) }
 
         LaunchedEffect(selectedTabItem) {
@@ -243,8 +214,10 @@ private fun BottomSheetImpl(pages: List<DetailsPageItem>, modifier: Modifier = M
             )
 
             HorizontalPager(
+                count = pages.size,
                 state = pagerState,
-                verticalAlignment = Alignment.Top
+                verticalAlignment = Alignment.Top,
+                modifier = Modifier.animateContentSize()
             ) { page ->
                 Column(
                     modifier = Modifier
@@ -327,13 +300,11 @@ private fun DetailsBottomSheet(modifier: Modifier = Modifier, content: @Composab
 @Preview(name = "Generics Details Page", showBackground = true, showSystemUi = true)
 @OptIn(ExperimentalPagerApi::class)
 private fun Preview_GenericDetailsPage() {
-    GenericDetailsPageScope(rememberPagerState(pageCount = 1)).GenericDetailsPage(BaseDetailsItem(
+    GenericDetailsPageScope(rememberPagerState(initialPage = 0)).GenericDetailsPage(BaseDetailsItem(
         background = DetailsBackground(ColorDef.TypeFairy, ColorDef.TypeFairy, ColorDef.TypeFairy),
         header = DetailsHeaderItem(
-            title = "Bulbasaur",
-            order = 1,
-            tags = listOf("Grass", "Normal"),
-            image = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
+            image = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+            content = {}
         ),
         pages = listOf(
             DetailsPageItem(
