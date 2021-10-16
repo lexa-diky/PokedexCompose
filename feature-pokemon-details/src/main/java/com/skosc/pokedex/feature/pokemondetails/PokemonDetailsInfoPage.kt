@@ -57,7 +57,7 @@ fun PokemonDetailsInfoPage(species: PokemonSpecies, pokemon: Pokemon) {
             )
             FillBar(
                 fill = species.catchRate.toFloat() / Pokemon.MAX_CATCH_RATE,
-                backgroundColor = LocalColoristic.current.accentShadow,
+                backgroundColor = LocalColoristic.current.backgroundShadow,
                 fillColor = coloristic.from(ColorPicker.getPokeColorForType(pokemon.primaryType.defaultName)),
                 modifier = Modifier
                     .height(8.dp)

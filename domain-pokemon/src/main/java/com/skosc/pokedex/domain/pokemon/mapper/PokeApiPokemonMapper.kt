@@ -1,6 +1,7 @@
 package com.skosc.pokedex.domain.pokemon.mapper
 
 import com.skosc.pokedex.domain.pokemon.entity.Pokemon
+import com.skosc.pokedex.domain.pokemon.entity.PokemonAbilityLink
 import com.skosc.pokedex.domain.pokemon.entity.PokemonStat
 import com.skosc.pokedex.domain.pokemon.entity.PokemonStatType
 import com.skosc.pokedex.domain.pokemon.entity.network.PokeApiPokemonSpec
@@ -16,6 +17,14 @@ internal object PokeApiPokemonMapper {
             imageUrl = spec.pokemon.sprites.frontDefault,
             types = spec.types.map { PokeApiTypeMapper.map(it) },
             baseStats = mapStats(spec.pokemon.stats),
+            abilities = mapAbilityLinks(spec)
+        )
+    }
+
+    private fun mapAbilityLinks(spec: PokeApiPokemonSpec) = spec.pokemon.abilities.map {
+        PokemonAbilityLink(
+            resource = it.ability.name!!,
+            isHidden = it.isHidden
         )
     }
 

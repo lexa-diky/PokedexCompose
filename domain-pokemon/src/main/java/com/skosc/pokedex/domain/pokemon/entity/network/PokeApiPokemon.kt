@@ -18,5 +18,7 @@ internal data class PokeApiPokemon(
     @SerialName("stats")
     val stats: List<PokeApiStat>,
     @SerialName("species")
-    val species: PokeApiLink
+    val species: PokeApiLink,
+    @SerialName("abilities")
+    val abilities: List<PokeApiPokemonAbility>
 )

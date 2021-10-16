@@ -2,13 +2,13 @@ package com.skosc.pokedex.feature.pokemondetails
 
 import com.skosc.pokedex.domain.pokemon.entity.Pokemon
 import com.skosc.pokedex.domain.pokemon.entity.PokemonSpecies
-import com.skosc.pokedex.domain.pokemon.util.getLocalized
 import com.skosc.pokedex.domain.settings.entity.PokeAppSettings
 import com.skosc.pokedex.feature.core.details.GenericDetailsSpec
 import com.skosc.pokedex.feature.core.details.entity.DetailsBackground
 import com.skosc.pokedex.feature.core.details.entity.DetailsHeaderItem
 import com.skosc.pokedex.feature.core.details.entity.DetailsPageItem
 import com.skosc.pokedex.feature.core.details.entity.TabRowItem
+import com.skosc.pokedex.feature.pokemondetails.battle.PokemonDetailsBattlePage
 import com.skosc.pokedex.uikit.coloristics.ColorPicker
 
 class PokemonDetailsSpec(
@@ -31,8 +31,9 @@ class PokemonDetailsSpec(
     override val pagesMapper: (Pair<PokemonSpecies, Pokemon>) -> List<DetailsPageItem> = { (species, pokemon) ->
         listOf(
             DetailsPageItem(TabRowItem("Stats")) { PokemonDetailsStatsPage(pokemon) },
+            DetailsPageItem(TabRowItem("Battle")) { PokemonDetailsBattlePage(species, pokemon) },
             DetailsPageItem(TabRowItem("Info")) { PokemonDetailsInfoPage(species, pokemon) },
-            DetailsPageItem(TabRowItem("Evolution")) { PokemonDetailsEvolutionPage(pokemon) }
+            DetailsPageItem(TabRowItem("Evolution")) { PokemonDetailsEvolutionPage(pokemon) },
         )
     }
 

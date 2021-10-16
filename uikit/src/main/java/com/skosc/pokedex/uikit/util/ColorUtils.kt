@@ -8,3 +8,7 @@ fun Color.dimmed(dx: Float = 0.5f) = copy(
     blue = blue * dx,
     green = green * dx
 )
+
+fun Color.transparent(dx: Float = 0.5f) = copy(
+    alpha = this.alpha * dx,
+)

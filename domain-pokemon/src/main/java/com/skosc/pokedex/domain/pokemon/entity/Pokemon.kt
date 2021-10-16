@@ -6,6 +6,7 @@ data class Pokemon(
     val imageUrl: String,
     val types: List<PokemonType>,
     val baseStats: List<PokemonStat>,
+    val abilities: List<PokemonAbilityLink>
 ) {
 
     companion object {

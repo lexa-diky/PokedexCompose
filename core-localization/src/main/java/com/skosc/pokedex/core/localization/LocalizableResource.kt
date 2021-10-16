@@ -4,3 +4,4 @@ interface LocalizableResource {
 
     fun getLocalized(localization: Localization): String
 }
+
