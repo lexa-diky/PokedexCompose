@@ -1,22 +1,22 @@
 package com.skosc.pokedex.feature.core.list
 
-import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.skosc.pokedex.uikit.localViewModel
 import com.skosc.pokedex.uikit.theme.ColorDef
 import com.skosc.pokedex.uikit.theme.LocalColoristic
-import com.skosc.pokedex.uikit.widget.*
+import com.skosc.pokedex.uikit.widget.FixedPairTileLayout
+import com.skosc.pokedex.uikit.widget.PokemonCard
+import com.skosc.pokedex.uikit.widget.RootLayout
 import com.skosc.pokedex.uikit.widget.filter.FieldFilterTag
 import com.skosc.pokedex.uikit.widget.filter.FilterLayout
 import com.skosc.pokedex.uikit.widget.filter.FilterTagContainer
@@ -85,7 +85,7 @@ private fun makePlaceholders() = flowOf(PagingData.from((0..15).map {
 @Composable
 private fun <T> SearchBlock(filters: List<ListFilter<T>>, scrollState: LazyListState) {
     val shouldAddPadding = scrollState.firstVisibleItemIndex >= 1
-    val topPadding by animateDpAsState(targetValue = if (shouldAddPadding) 16.dp else 0.dp)
+    val topPadding by animateDpAsState(targetValue = if (shouldAddPadding) 40.dp else 0.dp)
 
     FilterLayout(
         modifier = Modifier.padding(bottom = 16.dp, start = 24.dp, end = 24.dp, top = topPadding)

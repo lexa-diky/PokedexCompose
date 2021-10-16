@@ -1,14 +1,17 @@
 package com.skosc.pokedex.page.main
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
+import androidx.compose.material.Surface
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -18,12 +21,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.skosc.pokedex.R
+import com.skosc.pokedex.domain.pokemon.entity.PokemonTypeExpected
 import com.skosc.pokedex.enity.domain.SearchResultIcon
 import com.skosc.pokedex.enity.ui.BoxCard
 import com.skosc.pokedex.enity.ui.BoxCardList
 import com.skosc.pokedex.enity.ui.NewsBriefingEntry
 import com.skosc.pokedex.enity.ui.sample
 import com.skosc.pokedex.feature.pokemondetails.PokemonDetailsDestination
+import com.skosc.pokedex.feature.typedetails.TypeDetailsDestination
+import com.skosc.pokedex.feature.typedetails.TypeDetailsInit
 import com.skosc.pokedex.navigation.LocalNavController
 import com.skosc.pokedex.navigation.navigate
 import com.skosc.pokedex.newsList
@@ -63,6 +69,9 @@ private fun InnerMainPage(
     RootLayout(stringResource(id = R.string.main_title)) {
         item {
             CardBox(cards, onQueryUpdated)
+        }
+        item {
+            Toolbar()
         }
         item {
             NewsHeader()
@@ -147,6 +156,59 @@ private fun SearchMenuCards(cards: List<BoxCard.SearchResult>) {
     }
 }
 
+@Composable
+private fun Toolbar() {
+    val navController = LocalNavController.current
+
+    Surface(
+        elevation = 16.dp,
+        shape = CardShape,
+        modifier = Modifier
+            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+            .fillMaxWidth()
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier
+                .horizontalScroll(rememberScrollState())
+                .padding(8.dp)
+        ) {
+            ToolbarItem(
+                icon = painterResource(id = R.drawable.ic_type_dragon),
+                title = stringResource(id = R.string.main_menu_calculator),
+                onClick = {
+                    navController.navigate(
+                        TypeDetailsDestination, args = mapOf(
+                            TypeDetailsDestination.ARG_INIT to TypeDetailsInit(
+                                primaryType = PokemonTypeExpected.Dragon,
+                                secondaryType = null,
+                                isEditable = true
+                            )
+                        )
+                    )
+                }
+            )
+        }
+    }
+}
+
+@Composable
+private fun ToolbarItem(icon: Painter, title: String, onClick: () -> Unit) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .clip(CardShape)
+            .clickable { onClick() }
+            .padding(8.dp)
+    ) {
+        Image(
+            painter = icon,
+            contentDescription = null,
+            modifier = Modifier.size(32.dp)
+        )
+        PokeSubLabel(text = title)
+    }
+}
 
 private val BoxCard.SearchResult.iconPainter
     @Composable get() = rememberImagePainter(
@@ -198,13 +260,6 @@ private fun NewsHeader() {
         Modifier
             .padding(vertical = 8.dp, horizontal = 32.dp)
             .fillMaxWidth()
-            .clickable {
-                navContoller.navigate(
-                    PokemonDetailsDestination, mapOf(
-                        PokemonDetailsDestination.ARG_ID to 25
-                    )
-                )
-            }
     ) {
         val navController = LocalNavController.current
         val (titleRef, linkRef) = createRefs()
