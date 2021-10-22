@@ -6,14 +6,12 @@ import com.skosc.pokedex.enity.domain.MenuEntry
 import com.skosc.pokedex.enity.ui.BoxCard
 import com.skosc.pokedex.enity.ui.BoxCardList
 import com.skosc.pokedex.repository.MenuRepository
-import com.skosc.pokedex.core.resources.ResourceResolver
 import com.skosc.pokedex.navigation.Destination
 import com.skosc.pokedex.navigation.root.RootDestination
 import com.skosc.pokedex.uikit.coloristics.ColorPicker
 
 class LoadBoxCards(
-    private val menuRepository: MenuRepository,
-    private val resources: ResourceResolver,
+    private val menuRepository: MenuRepository
 ) {
 
     suspend operator fun invoke(): BoxCardList.Menu {

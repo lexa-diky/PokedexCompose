@@ -9,5 +9,5 @@ import org.kodein.di.singleton
 
 
 val ServiceModule = PokeModule("service") {
-    bind<PokemonNewsService>() with singleton { PokemonNewsService(instance())  }
+    bind<PokemonNewsService>() with singleton { PokemonNewsService(instance(), instance())  }
 }

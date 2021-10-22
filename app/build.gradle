@@ -5,6 +5,9 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+def Properties properties = new Properties()
+properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
 android {
     compileSdk 31
 
@@ -25,6 +28,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "NEWS_API_KEY", "\"" + properties.get("pdxc.secret.news_api_key") + "\"")
+
+        }
+        debug {
+            buildConfigField("String", "NEWS_API_KEY", "\"" + properties.get("pdxc.secret.news_api_key") + "\"")
         }
     }
     compileOptions {

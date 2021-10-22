@@ -3,11 +3,11 @@ package com.skosc.pokedex
 import android.app.Application
 import android.content.Context
 import com.skosc.pokedex.core.network.NetworkModule
+import com.skosc.pokedex.core.resources.ApplicationStaticConfiguration
 import com.skosc.pokedex.di.RepositoryModule
 import com.skosc.pokedex.di.ServiceModule
 import com.skosc.pokedex.di.UseCaseModule
 import com.skosc.pokedex.di.ViewModelModule
-import com.skosc.pokedex.core.resources.ResourceResolver
 import com.skosc.pokedex.domain.ignition.IgnitionModule
 import com.skosc.pokedex.domain.pokemon.PokemonDomainModule
 import com.skosc.pokedex.domain.settings.SettingsDomainModule
@@ -39,6 +39,10 @@ class PokedexApplication : Application(), DIAware {
         importOnce(ServiceModule)
 
         bind<Context>() with instance(this@PokedexApplication)
-        bind<ResourceResolver>() with singleton { ResourceResolver(instance()) }
+        bind<ApplicationStaticConfiguration>() with instance(
+            ApplicationStaticConfiguration(
+                newsApiKey = BuildConfig.NEWS_API_KEY
+            )
+        )
     }
 }

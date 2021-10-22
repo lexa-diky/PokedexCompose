@@ -3,7 +3,6 @@ package com.skosc.pokedex.mini.typecalc
 import android.app.Application
 import android.content.Context
 import com.skosc.pokedex.core.network.NetworkModule
-import com.skosc.pokedex.core.resources.ResourceResolver
 import com.skosc.pokedex.domain.pokemon.PokemonDomainModule
 import com.skosc.pokedex.domain.settings.SettingsDomainModule
 import com.skosc.pokedex.feature.settings.SettingsFeatureModule
@@ -22,6 +21,5 @@ class PokedexMiniTypeCalcApplication : Application(), DIAware {
         importOnce(TypeDetailsModule)
 
         bind<Context>() with instance(this@PokedexMiniTypeCalcApplication)
-        bind<ResourceResolver>() with singleton { ResourceResolver(instance()) }
     }
 }

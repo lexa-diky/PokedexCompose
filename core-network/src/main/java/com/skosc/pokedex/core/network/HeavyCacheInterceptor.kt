@@ -28,17 +28,21 @@ internal class HeavyCacheInterceptor : Interceptor {
 
         val headers = request.headers.newBuilder()
             .removeAll(PDXCacheController.Header.CACHE_MODE)
-            .add("Cache-Control", heavyCacheControl.toString())
             .build()
 
         return request.newBuilder()
             .headers(headers)
+            .cacheControl(
+                CacheControl.Builder()
+                    .maxAge(HEAVY_CACHE_TIME_DAYS, TimeUnit.DAYS)
+                    .build()
+            )
             .build()
             .let(chain::proceed)
     }
 
     companion object {
 
-        private const val HEAVY_CACHE_TIME_DAYS = 3
+        private const val HEAVY_CACHE_TIME_DAYS = 7
     }
 }

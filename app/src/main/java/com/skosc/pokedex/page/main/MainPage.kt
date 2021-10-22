@@ -1,6 +1,10 @@
 package com.skosc.pokedex.page.main
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
@@ -39,6 +43,8 @@ import com.skosc.pokedex.uikit.image.CropTransparentTransformation
 import com.skosc.pokedex.uikit.diViewModel
 import com.skosc.pokedex.uikit.theme.CardShape
 import com.skosc.pokedex.uikit.theme.LocalColoristic
+import com.skosc.pokedex.uikit.theme.PokedexTheme
+import com.skosc.pokedex.uikit.util.ScreenDimensionTools
 import com.skosc.pokedex.uikit.widget.*
 import com.skosc.pokedex.widget.*
 
@@ -54,7 +60,8 @@ fun NavGraphBuilder.MainPage() = composable(root.path) {
         cards = cards,
         news = news,
         onQueryUpdated = { cardBoxViewModel.reload() },
-        onSettingsClicked = { navController.navigate(root.settings) }
+        onSettingsClicked = { navController.navigate(root.settings) },
+        onViewAllNewsClick = { navController.navigate(root.newsList) }
     )
 }
 
@@ -62,9 +69,10 @@ fun NavGraphBuilder.MainPage() = composable(root.path) {
 @OptIn(ExperimentalFoundationApi::class)
 private fun InnerMainPage(
     cards: BoxCardList,
-    news: List<NewsBriefingEntry>,
+    news: NewsState,
     onQueryUpdated: (String) -> Unit,
-    onSettingsClicked: () -> Unit
+    onSettingsClicked: () -> Unit,
+    onViewAllNewsClick: () -> Unit
 ) {
     RootLayout(stringResource(id = R.string.main_title)) {
         item {
@@ -74,16 +82,21 @@ private fun InnerMainPage(
             Toolbar()
         }
         item {
-            NewsHeader()
+            NewsHeader(
+                isVisible = news !is NewsState.Error,
+                onViewAllClick = onViewAllNewsClick
+            )
         }
-        if (news.isEmpty()) {
+        if (news is NewsState.Loading || news is NewsState.Error) {
             item {
-                Spacer(modifier = Modifier.height(600.dp))
+                Spacer(modifier = Modifier.height(ScreenDimensionTools.screenHeight() / 3))
             }
         }
-        news.forEach {
-            item {
-                NewsBlock(it.title, it.time, it.image, it.url)
+        if (news is NewsState.Loaded) {
+            news.entries.forEach {
+                item {
+                    NewsBlock(it.title, it.time, it.image, it.url)
+                }
             }
         }
         item {
@@ -254,51 +267,54 @@ private fun SmallMenuCards(cards: List<BoxCard.Menu>) {
 }
 
 @Composable
-private fun NewsHeader() {
-    val navContoller = LocalNavController.current
-    ConstraintLayout(
-        Modifier
-            .padding(vertical = 8.dp, horizontal = 32.dp)
-            .fillMaxWidth()
-    ) {
-        val navController = LocalNavController.current
-        val (titleRef, linkRef) = createRefs()
+@OptIn(ExperimentalAnimationApi::class)
+private fun NewsHeader(isVisible: Boolean, onViewAllClick: () -> Unit) {
+    AnimatedVisibility(visible = isVisible, enter = fadeIn(), exit = fadeOut()) {
+        ConstraintLayout(
+            Modifier
+                .padding(vertical = 8.dp, horizontal = 32.dp)
+                .fillMaxWidth()
+        ) {
+            val (titleRef, linkRef) = createRefs()
 
-        SubPokeHeader("Pokémon News",
-            modifier = Modifier.constrainAs(titleRef) {
-                top.linkTo(parent.top)
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-            }
-        )
-
-        Box(
-            modifier = Modifier
-                .clickable { navController.navigate(root.newsList) }
-                .padding(horizontal = 8.dp)
-                .constrainAs(linkRef) {
+            SubPokeHeader("Pokémon News",
+                modifier = Modifier.constrainAs(titleRef) {
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
-                    end.linkTo(parent.end)
-                }) {
-            PokeLink(
-                text = "View all",
-                modifier = Modifier
-
+                    start.linkTo(parent.start)
+                }
             )
-        }
 
+            Box(
+                modifier = Modifier
+                    .clickable { onViewAllClick() }
+                    .padding(horizontal = 8.dp)
+                    .constrainAs(linkRef) {
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        end.linkTo(parent.end)
+                    }) {
+                PokeLink(
+                    text = "View all",
+                    modifier = Modifier
+
+                )
+            }
+
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+private fun DefaultPreview() = PokedexTheme {
     CompositionLocalProvider(LocalNavController provides rememberNavController()) {
         InnerMainPage(
             BoxCardList.Menu(BoxCard.Menu.sample),
-            NewsBriefingEntry.sample,
+            NewsState.Loaded(NewsBriefingEntry.sample),
             onQueryUpdated = {},
-            onSettingsClicked = {})
+            onSettingsClicked = {},
+            onViewAllNewsClick = {}
+        )
     }
 }
