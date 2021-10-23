@@ -8,6 +8,7 @@ import com.google.android.material.chip.Chip
 object PokeShapes {
     val ChipShape = RoundedCornerShape(12.dp)
     val CapsuleShape = RoundedCornerShape(4.dp)
+    val HighlightSectionShape = RoundedCornerShape(8.dp)
 }
 
 val ListItemShape = RoundedCornerShape(6.dp)

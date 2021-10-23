@@ -9,6 +9,8 @@ enum class Localization(val locale: () -> Locale) {
 
     companion object {
 
+        val DEFAULT = English
+
         val nameCache = values().associateBy { it.locale().displayLanguage }
     }
 }

@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
+import com.skosc.pokedex.feature.abilitydetails.AbilityDetailsPageBottomSheet
 import com.skosc.pokedex.feature.itemlist.ItemListPage
 import com.skosc.pokedex.feature.itemlist.MoveListPage
 import com.skosc.pokedex.feature.newslist.NewsListPage
@@ -35,6 +36,7 @@ fun RootPage() {
     CompositionLocalProvider(LocalNavController provides navController) {
         ModalBottomSheetLayout(bottomSheetNavigator = bottomSheetNavigator) {
             NavHost(navController, root.path) {
+                // fullscreen
                 MainPage()
                 PokemonListPage()
                 NewsListPage()
@@ -43,7 +45,9 @@ fun RootPage() {
                 PokemonDetailsPage()
                 SettingsPage()
 
+                // bottom sheet
                 TypeDetailsPageBottomSheet()
+                AbilityDetailsPageBottomSheet()
             }
         }
     }

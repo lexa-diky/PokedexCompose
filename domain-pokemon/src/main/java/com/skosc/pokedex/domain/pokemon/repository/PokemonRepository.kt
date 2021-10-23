@@ -31,9 +31,13 @@ class PokemonRepository internal constructor(private val service: PokeApiService
     }
 
     suspend fun getAbilities(abilities: List<PokemonAbilityLink>): List<PokemonAbility> = withContext(Dispatchers.IO) {
-        abilities.map { async { it to service.getAbility(it.resource) } }
+        abilities.map { link -> async { getAbility(link) } }
             .awaitAll()
-            .map { (link, ability) -> PokeApiAbilityMapper.map(link, ability) }
+    }
+
+    suspend fun getAbility(link: PokemonAbilityLink): PokemonAbility {
+        val ability = service.getAbility(link.resource)
+        return PokeApiAbilityMapper.map(link, ability)
     }
 
     suspend fun allTypes(): List<PokemonType> = withContext(Dispatchers.IO) {

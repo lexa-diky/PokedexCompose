@@ -11,6 +11,7 @@ import com.skosc.pokedex.di.ViewModelModule
 import com.skosc.pokedex.domain.ignition.IgnitionModule
 import com.skosc.pokedex.domain.pokemon.PokemonDomainModule
 import com.skosc.pokedex.domain.settings.SettingsDomainModule
+import com.skosc.pokedex.feature.abilitydetails.AbilityDetailsModule
 import com.skosc.pokedex.feature.pokemondetails.PokemonDetailsModule
 import com.skosc.pokedex.feature.settings.SettingsFeatureModule
 import com.skosc.pokedex.feature.typedetails.TypeDetailsModule
@@ -26,6 +27,7 @@ class PokedexApplication : Application(), DIAware {
         importOnce(PokemonDetailsModule)
         importOnce(SettingsFeatureModule)
         importOnce(TypeDetailsModule)
+        importOnce(AbilityDetailsModule)
 
         // Domin
         importOnce(PokemonDomainModule)

@@ -7,7 +7,9 @@ import java.util.*
 class PokemonAbility(
     val name: String,
     val names: List<EntityName>,
-    val isHidden: Boolean
+    val isHidden: Boolean,
+    val currentEffect: PokemonAbilityEntries,
+    val link: PokemonAbilityLink
 ): Named, LocalizableResource {
 
     override fun name(locale: Locale): String {

@@ -2,6 +2,7 @@
 <resources>
 
     <string name="pokemon_details_page_battle_abilities_title">Abilities</string>
+    <string name="pokemon_details_page_battle_moves_title">Moves</string>
     <string name="pokemon_details_page_battle_abilities_hidden">Hidden</string>
     <string name="pokemon_details_page_battle_abilities_separator">OR</string>
 

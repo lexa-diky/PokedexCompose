@@ -8,16 +8,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.flowlayout.MainAxisAlignment
 import com.skosc.pokedex.domain.pokemon.entity.Pokemon
 import com.skosc.pokedex.domain.pokemon.entity.PokemonAbility
 import com.skosc.pokedex.domain.pokemon.entity.PokemonSpecies
 import com.skosc.pokedex.domain.pokemon.entity.primaryType
 import com.skosc.pokedex.domain.settings.utils.localized
+import com.skosc.pokedex.feature.abilitydetails.AbilityDetailsDestination
 import com.skosc.pokedex.feature.pokemondetails.R
+import com.skosc.pokedex.navigation.LocalNavController
+import com.skosc.pokedex.navigation.navigate
 import com.skosc.pokedex.uikit.coloristics.ColorPicker
 import com.skosc.pokedex.uikit.diViewModel
-import com.skosc.pokedex.uikit.theme.LocalColoristic
 import com.skosc.pokedex.uikit.util.local
 import com.skosc.pokedex.uikit.widget.Capsule
 import com.skosc.pokedex.uikit.widget.CapsuleSize
@@ -26,8 +27,6 @@ import com.skosc.pokedex.uikit.widget.PokeSubLabel
 
 @Composable
 fun PokemonDetailsBattlePage(species: PokemonSpecies, pokemon: Pokemon) {
-    val coloristic = LocalColoristic.current
-
     val viewModel: PokemonDetailsBattlePageViewModel = diViewModel(arg = pokemon)
 
     val state by viewModel.state.collectAsState()
@@ -46,7 +45,7 @@ fun PokemonDetailsBattlePage(species: PokemonSpecies, pokemon: Pokemon) {
             secondary = false
         )
 
-        (abilities + abilities.first()).chunked(2).forEach { chunk ->
+        abilities.chunked(2).forEach { chunk ->
             if (chunk.size > 1) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -60,7 +59,7 @@ fun PokemonDetailsBattlePage(species: PokemonSpecies, pokemon: Pokemon) {
 
                     PokeSubLabel(text = stringResource(id = R.string.pokemon_details_page_battle_abilities_separator))
 
-                    AbilityCapsule(first, pokemon, isHiddenText)
+                    AbilityCapsule(second, pokemon, isHiddenText)
 
                 }
             } else {
@@ -73,17 +72,30 @@ fun PokemonDetailsBattlePage(species: PokemonSpecies, pokemon: Pokemon) {
                 }
             }
         }
+
+        PokeLabel(
+            text = stringResource(id = R.string.pokemon_details_page_battle_moves_title),
+            secondary = false
+        )
     }
 }
 
 @Composable
-private fun RowScope.AbilityCapsule(first: PokemonAbility, pokemon: Pokemon, isHiddenText: String) {
+private fun RowScope.AbilityCapsule(ability: PokemonAbility, pokemon: Pokemon, isHiddenText: String) {
+    val navController = LocalNavController.current
+
     Capsule(
-        label = first.localized,
+        label = ability.localized,
         background = ColorPicker.getPokeColorForType(pokemon.primaryType.defaultName).local,
         size = CapsuleSize.Large,
-        subLabel = if (first.isHidden) isHiddenText else null,
-        onClick = {},
+        subLabel = if (ability.isHidden) isHiddenText else null,
+        onClick = {
+            navController.navigate(
+                AbilityDetailsDestination, mapOf(
+                    AbilityDetailsDestination.ARG_ABILITY_LINK to ability.link
+                )
+            )
+        },
         modifier = Modifier.Companion.weight(1f),
     )
 }
