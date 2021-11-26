@@ -13,16 +13,15 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import com.skosc.pokedex.domain.settings.LocalSettings
+import com.skosc.pokedex.navigation.RouteComposable
 import com.skosc.pokedex.uikit.theme.LocalColoristic
 import com.skosc.pokedex.uikit.widget.PokeHeader
 import com.skosc.pokedex.uikit.widget.SettingsCard
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
-fun NavGraphBuilder.SettingsPage() = composable(SettingsDestination.path) {
+val SettingsPage = RouteComposable("/settings") {
     val coloristic = LocalColoristic.current
     val coroutineScope = rememberCoroutineScope()
 
@@ -43,7 +42,7 @@ fun NavGraphBuilder.SettingsPage() = composable(SettingsDestination.path) {
         }, content = {
             SettingsPageContent(
                 onCloseBottomSheet = {
-                  coroutineScope.launch { bottomSheetScaffoldState.bottomSheetState.collapse() }
+                    coroutineScope.launch { bottomSheetScaffoldState.bottomSheetState.collapse() }
                 },
                 onPageSelected = {
                     bottomSheetContent = it

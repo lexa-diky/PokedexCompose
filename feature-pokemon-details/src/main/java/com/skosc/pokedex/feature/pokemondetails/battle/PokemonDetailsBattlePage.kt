@@ -13,10 +13,9 @@ import com.skosc.pokedex.domain.pokemon.entity.PokemonAbility
 import com.skosc.pokedex.domain.pokemon.entity.PokemonSpecies
 import com.skosc.pokedex.domain.pokemon.entity.primaryType
 import com.skosc.pokedex.domain.settings.utils.localized
-import com.skosc.pokedex.feature.abilitydetails.AbilityDetailsDestination
+import com.skosc.pokedex.feature.abilitydetails.AbilityDetailsPage
 import com.skosc.pokedex.feature.pokemondetails.R
-import com.skosc.pokedex.navigation.LocalNavController
-import com.skosc.pokedex.navigation.navigate
+import com.skosc.pokedex.navigation.LocalNavigator
 import com.skosc.pokedex.uikit.coloristics.ColorPicker
 import com.skosc.pokedex.uikit.diViewModel
 import com.skosc.pokedex.uikit.util.local
@@ -82,20 +81,14 @@ fun PokemonDetailsBattlePage(species: PokemonSpecies, pokemon: Pokemon) {
 
 @Composable
 private fun RowScope.AbilityCapsule(ability: PokemonAbility, pokemon: Pokemon, isHiddenText: String) {
-    val navController = LocalNavController.current
+    val navigator = LocalNavigator.current
 
     Capsule(
         label = ability.localized,
         background = ColorPicker.getPokeColorForType(pokemon.primaryType.defaultName).local,
         size = CapsuleSize.Large,
         subLabel = if (ability.isHidden) isHiddenText else null,
-        onClick = {
-            navController.navigate(
-                AbilityDetailsDestination, mapOf(
-                    AbilityDetailsDestination.ARG_ABILITY_LINK to ability.link
-                )
-            )
-        },
+        onClick = { navigator.navigate(AbilityDetailsPage, ability.link) },
         modifier = Modifier.Companion.weight(1f),
     )
 }

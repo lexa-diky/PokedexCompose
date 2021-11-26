@@ -5,9 +5,10 @@ import com.skosc.pokedex.core.localization.text.Text
 import com.skosc.pokedex.enity.domain.MenuEntry
 import com.skosc.pokedex.enity.ui.BoxCard
 import com.skosc.pokedex.enity.ui.BoxCardList
+import com.skosc.pokedex.feature.pokemonlist.PokemonListPage
 import com.skosc.pokedex.repository.MenuRepository
-import com.skosc.pokedex.navigation.Destination
-import com.skosc.pokedex.navigation.root.RootDestination
+import com.skosc.pokedex.navigation.NoArg
+import com.skosc.pokedex.navigation.Route
 import com.skosc.pokedex.uikit.coloristics.ColorPicker
 
 class LoadBoxCards(
@@ -28,11 +29,11 @@ class LoadBoxCards(
         )
     }
 
-    private fun MenuEntry.getDestination(): Destination = when(this) {
-        MenuEntry.Pokemon -> root.pokemonList
-        MenuEntry.Moves -> root.moveList
-        MenuEntry.Items -> root.itemList
-        else -> RootDestination
+    private fun MenuEntry.getDestination(): Route<NoArg> = when(this) {
+        MenuEntry.Pokemon -> PokemonListPage
+        MenuEntry.Moves -> PokemonListPage
+        MenuEntry.Items -> PokemonListPage
+        else -> PokemonListPage
     }
 
     private fun getTitle(entry: MenuEntry): Text = when (entry) {

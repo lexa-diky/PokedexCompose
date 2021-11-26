@@ -18,30 +18,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
-import com.google.accompanist.navigation.material.bottomSheet
 import com.skosc.pokedex.core.util.applyIf
 import com.skosc.pokedex.domain.pokemon.entity.PokemonTypeExpected
 import com.skosc.pokedex.domain.pokemon.entity.PokemonWeaknessRelation
 import com.skosc.pokedex.domain.settings.LocalSettings
 import com.skosc.pokedex.feature.core.pokemon.icon
+import com.skosc.pokedex.navigation.RouteComposable
 import com.skosc.pokedex.uikit.coloristics.ColorPicker
 import com.skosc.pokedex.uikit.diViewModel
 import com.skosc.pokedex.uikit.theme.LocalColoristic
 import com.skosc.pokedex.uikit.widget.*
 
-@OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalAnimationApi::class)
-fun NavGraphBuilder.TypeDetailsPageBottomSheet() = bottomSheet(TypeDetailsDestination.path) { currentBackStack ->
-    val init: TypeDetailsInit = remember(currentBackStack) { currentBackStack.arguments?.getSerializable(TypeDetailsDestination.ARG_INIT) as TypeDetailsInit }
+val TypeDetailsPage = RouteComposable<TypeDetailsInit>("/type/details") { init ->
     TypeDetailsPage(init)
 }
 
 
 @Composable
 @OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalAnimationApi::class)
-fun TypeDetailsPage(init: TypeDetailsInit, modifier: Modifier = Modifier) {
+private fun TypeDetailsPage(init: TypeDetailsInit, modifier: Modifier = Modifier) {
     val viewModel = diViewModel<TypeDetailsBottomSheetViewModel, TypeDetailsInit>(arg = init)
     val typeInfo by viewModel.typeInfo.collectAsState()
     AnimatedVisibility(visible = typeInfo != null, enter = expandVertically()) {

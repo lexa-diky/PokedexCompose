@@ -8,10 +8,10 @@ import com.skosc.pokedex.domain.pokemon.entity.PokemonItem
 import com.skosc.pokedex.domain.settings.LocalSettings
 import com.skosc.pokedex.feature.core.list.BaseListItem
 import com.skosc.pokedex.feature.core.list.GenericItemListPage
+import com.skosc.pokedex.navigation.RouteComposable
 import com.skosc.pokedex.uikit.coloristics.ColorPicker
 
-@OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.ItemListPage() = composable(ItemListDestination.path) {
+val ItemListPage = RouteComposable("/item-list") {
     val context = LocalContext.current
     val settings = LocalSettings.current
     GenericItemListPage<PokemonItem>("Items") {

@@ -8,11 +8,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.skosc.pokedex.navigation.Route
+import com.skosc.pokedex.navigation.RouteComposable
 import com.skosc.pokedex.uikit.diViewModel
 import com.skosc.pokedex.uikit.widget.NewsBlock
 import com.skosc.pokedex.uikit.widget.RootLayout
 
-fun NavGraphBuilder.NewsListPage() = composable(NewsListDestination.path) {
+val NewsListPage = RouteComposable("/news-list") {
     val viewModel: NewsListViewModel = diViewModel()
 
     val news by viewModel.news.collectAsState(emptyList())

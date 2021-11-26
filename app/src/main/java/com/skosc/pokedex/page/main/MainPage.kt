@@ -2,7 +2,6 @@ package com.skosc.pokedex.page.main
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.*
@@ -31,16 +30,15 @@ import com.skosc.pokedex.enity.ui.BoxCard
 import com.skosc.pokedex.enity.ui.BoxCardList
 import com.skosc.pokedex.enity.ui.NewsBriefingEntry
 import com.skosc.pokedex.enity.ui.sample
-import com.skosc.pokedex.feature.pokemondetails.PokemonDetailsDestination
-import com.skosc.pokedex.feature.typedetails.TypeDetailsDestination
+import com.skosc.pokedex.feature.newslist.NewsListPage
+import com.skosc.pokedex.feature.settings.SettingsPage
 import com.skosc.pokedex.feature.typedetails.TypeDetailsInit
-import com.skosc.pokedex.navigation.LocalNavController
+import com.skosc.pokedex.feature.typedetails.TypeDetailsPage
+import com.skosc.pokedex.navigation.LocalNavigator
+import com.skosc.pokedex.navigation.RouteComposable
 import com.skosc.pokedex.navigation.navigate
-import com.skosc.pokedex.newsList
-import com.skosc.pokedex.root
-import com.skosc.pokedex.settings
-import com.skosc.pokedex.uikit.image.CropTransparentTransformation
 import com.skosc.pokedex.uikit.diViewModel
+import com.skosc.pokedex.uikit.image.CropTransparentTransformation
 import com.skosc.pokedex.uikit.theme.CardShape
 import com.skosc.pokedex.uikit.theme.LocalColoristic
 import com.skosc.pokedex.uikit.theme.PokedexTheme
@@ -48,10 +46,10 @@ import com.skosc.pokedex.uikit.util.ScreenDimensionTools
 import com.skosc.pokedex.uikit.widget.*
 import com.skosc.pokedex.widget.*
 
-fun NavGraphBuilder.MainPage() = composable(root.path) {
+val MainPage = RouteComposable("/root") {
     val cardBoxViewModel = diViewModel<CardBoxViewModel>()
     val newsBriefingViewModel = diViewModel<NewsBriefingViewModel>()
-    val navController = LocalNavController.current
+    val navigator = LocalNavigator.current
 
     val cards by cardBoxViewModel.cards.collectAsState()
     val news by newsBriefingViewModel.news.collectAsState()
@@ -60,8 +58,8 @@ fun NavGraphBuilder.MainPage() = composable(root.path) {
         cards = cards,
         news = news,
         onQueryUpdated = { cardBoxViewModel.reload() },
-        onSettingsClicked = { navController.navigate(root.settings) },
-        onViewAllNewsClick = { navController.navigate(root.newsList) }
+        onSettingsClicked = { navigator.navigate(SettingsPage) },
+        onViewAllNewsClick = { navigator.navigate(NewsListPage) }
     )
 }
 
@@ -171,7 +169,7 @@ private fun SearchMenuCards(cards: List<BoxCard.SearchResult>) {
 
 @Composable
 private fun Toolbar() {
-    val navController = LocalNavController.current
+    val navigator = LocalNavigator.current
 
     Surface(
         elevation = 16.dp,
@@ -190,13 +188,11 @@ private fun Toolbar() {
                 icon = painterResource(id = R.drawable.ic_type_dragon),
                 title = stringResource(id = R.string.main_menu_calculator),
                 onClick = {
-                    navController.navigate(
-                        TypeDetailsDestination, args = mapOf(
-                            TypeDetailsDestination.ARG_INIT to TypeDetailsInit(
-                                primaryType = PokemonTypeExpected.Dragon,
-                                secondaryType = null,
-                                isEditable = true
-                            )
+                    navigator.navigate(
+                        TypeDetailsPage, TypeDetailsInit(
+                            primaryType = PokemonTypeExpected.Dragon,
+                            secondaryType = null,
+                            isEditable = true
                         )
                     )
                 }
@@ -234,7 +230,7 @@ private val BoxCard.SearchResult.iconPainter
 
 @Composable
 private fun SmallMenuCards(cards: List<BoxCard.Menu>) {
-    val navController = LocalNavController.current
+    val navigator = LocalNavigator.current
     val coloristic = LocalColoristic.current
 
     Column(
@@ -249,7 +245,7 @@ private fun SmallMenuCards(cards: List<BoxCard.Menu>) {
                 SmallCard(
                     text = left.title.render(),
                     color = coloristic.from(left.color),
-                    onClick = { navController.navigate(left.destination) },
+                    onClick = { navigator.navigate(left.destination) },
                     modifier = Modifier.weight(1f)
                 )
                 right?.let {
@@ -257,7 +253,7 @@ private fun SmallMenuCards(cards: List<BoxCard.Menu>) {
                     SmallCard(
                         text = it.title.render(),
                         color = coloristic.from(it.color),
-                        onClick = { navController.navigate(it.destination) },
+                        onClick = { navigator.navigate(it.destination) },
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -308,7 +304,6 @@ private fun NewsHeader(isVisible: Boolean, onViewAllClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 private fun DefaultPreview() = PokedexTheme {
-    CompositionLocalProvider(LocalNavController provides rememberNavController()) {
         InnerMainPage(
             BoxCardList.Menu(BoxCard.Menu.sample),
             NewsState.Loaded(NewsBriefingEntry.sample),
@@ -316,5 +311,4 @@ private fun DefaultPreview() = PokedexTheme {
             onSettingsClicked = {},
             onViewAllNewsClick = {}
         )
-    }
 }

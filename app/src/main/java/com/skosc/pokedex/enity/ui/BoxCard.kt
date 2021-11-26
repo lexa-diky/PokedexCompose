@@ -2,9 +2,9 @@ package com.skosc.pokedex.enity.ui
 
 import com.skosc.pokedex.core.localization.text.Text
 import com.skosc.pokedex.enity.domain.SearchResultIcon
-import com.skosc.pokedex.navigation.Destination
-import com.skosc.pokedex.pokemonList
-import com.skosc.pokedex.root
+import com.skosc.pokedex.feature.pokemonlist.PokemonListPage
+import com.skosc.pokedex.navigation.NoArg
+import com.skosc.pokedex.navigation.Route
 import com.skosc.pokedex.uikit.theme.ColorDef
 
 sealed class BoxCard {
@@ -12,7 +12,7 @@ sealed class BoxCard {
     data class Menu(
         val title: Text,
         val color: ColorDef,
-        val destination: Destination
+        val destination: Route<NoArg>
     ) : BoxCard() {
 
         companion object
@@ -32,9 +32,9 @@ sealed class BoxCardList {
 }
 
 val BoxCard.Menu.Companion.sample get() = listOf(
-    BoxCard.Menu(Text("Pokemon"), ColorDef.TypeElectric, root.pokemonList),
-    BoxCard.Menu(Text("Items"), ColorDef.TypeElectric, root.pokemonList),
-    BoxCard.Menu(Text("Moves"), ColorDef.TypeElectric, root.pokemonList),
-    BoxCard.Menu(Text("Abilities"), ColorDef.TypeElectric, root.pokemonList),
-    BoxCard.Menu(Text("Locations"), ColorDef.TypeElectric, root.pokemonList)
+    BoxCard.Menu(Text("Pokemon"), ColorDef.TypeElectric, PokemonListPage),
+    BoxCard.Menu(Text("Items"), ColorDef.TypeElectric, PokemonListPage),
+    BoxCard.Menu(Text("Moves"), ColorDef.TypeElectric, PokemonListPage),
+    BoxCard.Menu(Text("Abilities"), ColorDef.TypeElectric, PokemonListPage),
+    BoxCard.Menu(Text("Locations"), ColorDef.TypeElectric, PokemonListPage)
 )

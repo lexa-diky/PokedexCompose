@@ -1,34 +1,24 @@
 package com.skosc.pokedex.feature.pokemonlist
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import com.skosc.pokedex.domain.pokemon.entity.PokemonSpecies
 import com.skosc.pokedex.domain.pokemon.util.getLocalized
 import com.skosc.pokedex.domain.settings.LocalSettings
 import com.skosc.pokedex.feature.core.list.BaseListItem
 import com.skosc.pokedex.feature.core.list.GenericItemListPage
 import com.skosc.pokedex.feature.core.list.ListFilter
-import com.skosc.pokedex.feature.pokemondetails.PokemonDetailsDestination
-import com.skosc.pokedex.navigation.LocalNavController
-import com.skosc.pokedex.navigation.navigate
+import com.skosc.pokedex.feature.pokemondetails.PokemonDetailsPage
+import com.skosc.pokedex.navigation.LocalNavigator
+import com.skosc.pokedex.navigation.RouteComposable
 import com.skosc.pokedex.uikit.coloristics.ColorPicker
 import com.skosc.pokedex.uikit.theme.ColorDef
 
-fun NavGraphBuilder.PokemonListPage() = composable(PokemonListDestination.path) {
-    val navController = LocalNavController.current
+val PokemonListPage = RouteComposable("/pokemon-list") {
+    val navigator = LocalNavigator.current
     val settings = LocalSettings.current
 
     GenericItemListPage(
         header = "All Pokémon",
-        onItemSelected = { id ->
-            navController.navigate(
-                PokemonDetailsDestination, mapOf(
-                    PokemonDetailsDestination.ARG_ID to id
-                )
-            )
-        },
+        onItemSelected = { id -> navigator.navigate(PokemonDetailsPage, id) },
         mapper = { species ->
             val leftColor = getLeftColor(species)
             BaseListItem(
